@@ -1,0 +1,44 @@
+{
+  "name": "linkedin-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "datepicker-bootstrap": "^1.8.0",
+    "form-serialize": "^0.7.2",
+    "jquery": "^3.3.1",
+    "query-string": "^6.2.0",
+    "react": "^16.5.2",
+    "react-cookie": "^3.0.4",
+    "react-cookies": "^0.1.0",
+    "react-dom": "^16.5.2",
+    "react-dropzone": "^6.0.0",
+    "react-facebook-login": "^4.1.0",
+    "react-google-button": "^0.5.3",
+    "react-images-upload": "^1.2.3",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "redux": "^4.0.1",
+    "redux-devtools": "^3.4.1",
+    "redux-form": "^7.4.2",
+    "redux-promise": "^0.6.0",
+    "redux-thunk": "^2.3.0",
+    "serialize-form": "^1.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
