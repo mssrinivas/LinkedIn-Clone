@@ -1,0 +1,65 @@
+.active {
+	background-color: blue;
+	color : blue;
+}
+.navbar
+{
+	padding-right: 80px;
+}
+  .navbar-nav > li.navbar-right {
+    float: right !important;
+  }
+
+.padtopnavbar
+  {
+padding-top: 3px;
+  }
+
+.droppy
+{
+  padding-top: 0px;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 970px;
+    }
+}
+
+.lower
+{
+  padding-top: 15px;
+}
+
+.bg
+{
+  background-image: url("https://img.icons8.com/color/200/5e6d77/linkedin.png")
+}
+.navbar
+{
+background-color: blue;
+}
+
+#navbarNavDropdown
+{
+    background-color:  rgb(0, 90, 173) !important;
+}
+
+.paddbetween
+{
+    padding-left: 490px;
+}
+.bgwhite
+{
+    color: #fff !important;
+}
+
+.backwhite
+{
+    color: #fff !important;
+}
+
+.bg-transparent
+{
+    color: #fff !important;
+}
