@@ -1,11 +1,18 @@
-const MONGO_URL = ""
-const MONGO_DB_NAME = ""
+// const MONGO_URL = ""
+// const MONGO_DB_NAME = ""
 
-const MYSQL_DB_NAME = ""
-const MYSQL_DB_USERNAME =""
-const MYSQL_DB_PASSWORD = ""
-const MYSQL_DB_HOST = ""
-const MYSQL_DB_PORT = ""
+// const MYSQL_DB_NAME = ""
+// const MYSQL_DB_USERNAME =""
+// const MYSQL_DB_PASSWORD = ""
+// const MYSQL_DB_HOST = ""
+// const MYSQL_DB_PORT = ""
 
-module.exports= {MONGO_URL,MONGO_DB_NAME};
-moudule.exports = {MYSQL_DB_NAME,MYSQL_DB_USERNAME,MYSQL_DB_PASSWORD,MYSQL_DB_HOST,MYSQL_DB_PORT};
+// module.exports= {MONGO_URL,MONGO_DB_NAME};
+// module.exports = {MYSQL_DB_NAME,MYSQL_DB_USERNAME,MYSQL_DB_PASSWORD,MYSQL_DB_HOST,MYSQL_DB_PORT};
+'use strict';
+module.exports = {
+    'secret': "secretlinkedinstringforshim273courselab1kafkaawsrestapi",
+    
+    'MONGO_URI' : "mongodb://linkedin:linkedin123@ds163683.mlab.com:63683/linkedin"
+   
+};
