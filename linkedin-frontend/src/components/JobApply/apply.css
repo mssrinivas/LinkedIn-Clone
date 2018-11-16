@@ -1,0 +1,75 @@
+.headerback
+{
+    height: 144px;
+    display: block;
+	justify-content: center;
+    
+    background-image: url(http://static.licdn.com/sc/h/3chad3rzxalsf65nuo7hxciac)
+}
+.cent{
+    text-align : center;
+}
+/* .login-form {
+    text-align : center;
+    background-color: white;
+    height: 500px;
+    margin-top : 50px;
+  } */
+  .head{
+    margin-bottom: 0.25em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    font-family: 'Ubuntu',"Arial Black",Verdana;
+  }
+  .login-form{
+    /* border-bottom: solid 1px #ccc; */
+    padding-bottom: 1em;
+    margin-left:240px;
+    margin-top : 70px;
+  }
+  .login-form .form-group1 {
+    margin-bottom:1px;
+    margin-top : 20px;
+  }
+  .login-form .field-label
+  {
+    padding-top: 0.5em;
+    vertical-align: top;
+    width: 200px;
+  }
+  
+  .login-form .form-control1 {
+    height: 30px;
+    width : 30%; 
+  
+  
+  }
+  .form-control8{
+    height: 50px;
+    width : 50%; 
+    padding : 10px;
+    margin-right : 190px;
+    height: 5px;
+  
+  }
+  .form-control9 {
+    height: 40px;
+    width : 20%; 
+    padding : 0px;
+    margin-left : 140px;
+}  
+.login-form  .btn.btn-primary1 {
+    background: #020303 none repeat scroll 0 0;
+    border-color: black;
+    color: #ffffff;
+    margin-top : 50px;
+    font-size: 14px;
+    width: 10%;
+    height: 40px;
+    /* line-height: 50px; */
+    /* padding: 10px; */
+    border-radius: 5px;
+    
+  }
+
