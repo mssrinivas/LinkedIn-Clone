@@ -1,0 +1,79 @@
+.nav-item{
+  color: black;
+  margin-left:200px;
+}
+.linkedin-logo{
+  position: relative;
+  margin-left: -220px;
+  margin-top: 0px;
+  height: 40px;
+
+}
+.btn-primary.loginbutton{
+  margin-top: 0px;
+  margin-left: 30px;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  position: absolute;
+  padding: 5px;
+  width: 70px;
+  height: 40px;
+  background-color: #1f4060 ;
+  color: white;
+  border: 1px solid #white;
+  font-family: sans-serif;
+}
+.linkedin-nav{
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+.linkedin-profile{
+  margin-top: 700px;
+  margin-left: 300px;
+  background-color: #1f4060;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  
+}
+.forgot-pwd{
+  color: white;
+  margin-left: 120px;
+  width: 200px;
+  margin-top: 10px;
+  font-size:13px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+.email-fld{
+  border-radius: 1px;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  padding: 5px;
+  margin-top: 0px;
+  font-family:Serif;
+  font-style: 12px;
+  text-align: left;
+  margin-right: -100px;
+  margin-left: 100px;
+  position: relative;
+  display: float;
+  color: gray;
+  font-weight: bold;
+}
+.pwd-fld{
+  border-radius: 1px;
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  padding: 5px;
+  margin-top: 0px;
+  font-family:Serif;
+  font-style: 12px;
+  text-align: left;
+  margin-right: -150px;
+  margin-left: 150px;
+  position: relative;
+  color: gray;
+  font-weight: bold;
+
+}

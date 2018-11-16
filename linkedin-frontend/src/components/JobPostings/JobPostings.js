@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Stepper from 'react-stepper-horizontal';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
+import {Launcher} from 'react-chat-window'
 
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
 class JobPostings extends Component {
@@ -66,7 +67,7 @@ class JobPostings extends Component {
           console.log('onClick', 3)
         }
       }],
-      currentStep: 0,
+      currentStep: 0
       }
       this.onClickNext = this.onClickNext.bind(this);
       this.onClickBack = this.onClickBack.bind(this);
@@ -143,6 +144,9 @@ SliderChangeBudget = (value) => {
             Budget: value
         })
     };
+
+
+  
 
   onSubmitClicked = () => {
 

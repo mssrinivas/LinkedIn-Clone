@@ -1,0 +1,25 @@
+
+.table.table-hover.active{
+	margin-top: 0px;
+	margin-top: 110px;
+	
+	font-family: monospace;
+}
+	thead.active{
+		margin-top: 0px;
+		padding-top: 0px;
+	}
+	.owner-header{
+		margin-top: 0px;
+		font-size: 18px;
+		color: blue;
+		width:15%;
+		font-family: sans-serif;
+		font-style: oblique;
+	}
+	.owner{
+		color: red;
+	}
+	.active{
+
+	}
