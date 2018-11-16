@@ -12,7 +12,11 @@
     "nodemon": "^1.18.6",
     "query-string": "^6.2.0",
     "react": "^16.5.2",
+<<<<<<< HEAD
+    "react-chat-window": "^1.0.8",
+=======
     "react-bootstrap": "^0.32.4",
+>>>>>>> 6bb25472924b79bf4771c9c6f56ecf238e618b14
     "react-cookie": "^3.0.4",
     "react-cookies": "^0.1.0",
     "react-dom": "^16.5.2",
