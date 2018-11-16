@@ -3,18 +3,40 @@
     height: 144px;
     display: block;
 	justify-content: center;
-    
-    background-image: url(http://static.licdn.com/sc/h/3chad3rzxalsf65nuo7hxciac)
+    background-color : #5c6f7c;
+    /* background-image: url(http://static.licdn.com/sc/h/3chad3rzxalsf65nuo7hxciac) */
+}
+.applytitle{
+  margin-left : 300px;
+  
+}
+.image1{
+  height: 70px;
+  margin-top : 50px;
+
 }
 .cent{
-    text-align : center;
+  margin-left :450px;
+   
+    margin-top : -70px;
+    color : white;
+    font-size: 24px;
+    font-weight: 400;
 }
-/* .login-form {
-    text-align : center;
-    background-color: white;
-    height: 500px;
-    margin-top : 50px;
-  } */
+.cent1{
+  margin-left :450px;
+  margin-top : -1px;
+  color : white;
+  font-size: 24px;
+  font-weight: 400;
+}
+.cent2{
+  margin-left :450px;
+  margin-top : -20px;
+  color : white;
+  font-size: 19px;
+  font-weight: 400;
+}
   .head{
     margin-bottom: 0.25em;
     font-size: 1.2em;
@@ -27,6 +49,7 @@
     padding-bottom: 1em;
     margin-left:240px;
     margin-top : 70px;
+    margin-right : 400px;
   }
   .login-form .form-group1 {
     margin-bottom:1px;
@@ -65,11 +88,10 @@
     color: #ffffff;
     margin-top : 50px;
     font-size: 14px;
-    width: 10%;
+    width: 30%;
     height: 40px;
     /* line-height: 50px; */
     /* padding: 10px; */
     border-radius: 5px;
     
   }
-
