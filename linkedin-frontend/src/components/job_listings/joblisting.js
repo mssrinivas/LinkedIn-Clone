@@ -25,7 +25,7 @@ class JobListing extends Component {
           messageList: [...this.state.messageList, message]
         })
       }
-     
+
       _sendMessage(text) {
         if (text.length > 0) {
           this.setState({
@@ -37,10 +37,10 @@ class JobListing extends Component {
           })
         }
       }
-    
-    render() { 
+
+    render() {
         const {postings} = this.state;
-        return ( 
+        return (
             <div>
                 <div className="row">
                     <div className="col-md-4 postings-parent" style={{ borderRight: '1px solid #E0E0E0' }}>
@@ -64,9 +64,9 @@ class JobListing extends Component {
         showEmoji
       />
             </div>
-            
+
          );
     }
 }
- 
+
 export default JobListing;

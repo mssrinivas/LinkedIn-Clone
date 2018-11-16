@@ -35,7 +35,7 @@ class JobPostings extends Component {
         Redirection_Value : false,
         formActivePanel3: 1,
         formActivePanel3Changed: false,
-        
+
            steps: [{
         title: 'Step One',
         href: 'http://example1.com',
@@ -146,7 +146,7 @@ SliderChangeBudget = (value) => {
     };
 
 
-  
+
 
   onSubmitClicked = () => {
 
@@ -161,7 +161,7 @@ SliderChangeBudget = (value) => {
     let Redirecty = null;
     if(this.state.RedirecttoDescription === true)
     {
-        Redirecty = (<JobDescription 
+        Redirecty = (<JobDescription
         Company = {this.state.Company}
         JobTitle = {this.state.JobTitle}
         Location = {this.state.Location}
@@ -175,17 +175,17 @@ SliderChangeBudget = (value) => {
     }
     if(this.state.RedirecttoQualification === true)
     {
-      Redirecty = (<JobQualifications 
-        Skills = {this.state.Skills} 
+      Redirecty = (<JobQualifications
+        Skills = {this.state.Skills}
         Experience = {this.state.Experience}
         Degree = {this.state.Degree}
         Change = {this.inputHandler}
         SliderChangeExperience = {this.SliderChangeExperience}
         />)
-    } 
+    }
      if(this.state.RedirecttoBudget === true)
     {
-        Redirecty = (<JobBudget 
+        Redirecty = (<JobBudget
         Budget = {this.state.budget}
         Change = {this.inputHandler}
         SliderChangeBudget = {this.SliderChangeBudget}
@@ -193,11 +193,11 @@ SliderChangeBudget = (value) => {
     }
     const { steps, currentStep } = this.state;
     const buttonStyle = { width: 200, padding: 16, textAlign: 'center', margin: '0 auto', marginTop: 32 };
-    return (    
+    return (
             <div>
-            {<Navigation />}   
+            {<Navigation />}
             <Stepper steps={ steps } activeStep={ currentStep }/>
-            <div class ="addtexttocenter"> 
+            <div class ="addtexttocenter">
             </div>
             {Redirecty}
             <div style={ buttonStyle } >
