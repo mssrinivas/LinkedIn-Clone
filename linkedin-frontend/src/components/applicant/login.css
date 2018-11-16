@@ -12,16 +12,8 @@
   background-size: cover;
   height:800px;
 }
-.form-group{
-	background-color: white;
-	position: relative;
-	height:550px;
-	width:430px;
-	margin-left: 100px;
-	margin-top: 0px;
 
-}
-.form-group1{
+.form-group2{
 	background-color: white;
 	position: relative;
 	height:580px;
@@ -109,44 +101,17 @@
 	margin-left: 15px;
 	margin-top: 10px;
 }
-
 .fb-image{
 	width:20px;
 	height:25px;
 	float:left;
 }
-.fb-button {
-	background-color: #39559f;
-	width:310px;
-	color:white;
-	text-align:center;
-	font-size: 14px;
-  	width: 310px;
-  	height:35px;
-  	line-height: 30px;
-  	margin-top: 0px;
-
-}
-
-.google-button {
-	background-color: rgba(192,192,192,0.3);
-	color:black;
-	text-align:center;
-	padding:5px;
-	font-size: 14px;
-  width: 310px;
-  height: 40px;
-  line-height: 30px;
-  margin-top: 10px;
-}
-
 .footer {
 	color:black;
 	font-size: 10px;
 	margin-top: 10px;
 	margin-right: 50px;
 }
-
 .txt-field-lg {
 		position: relative;
 	  margin-left: -50px;
@@ -270,4 +235,7 @@
 	font-family: sans-serif;
 	font-size: 20px;
 
+}
+.navbar{
+	color:white;
 }

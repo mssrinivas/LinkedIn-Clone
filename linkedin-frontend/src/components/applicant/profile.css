@@ -24,11 +24,7 @@
   border: 1px solid #white;
   font-family: sans-serif;
 }
-.linkedin-nav{
-  display: flex;
-  justify-content: space-between;
-  margin: auto;
-}
+
 .linkedin-profile{
   margin-top: 700px;
   margin-left: 300px;
@@ -76,6 +72,9 @@
   font-weight: bold;
 
 }
-.nav-bar{
-  background: transparent;
+.linkedin-nav{
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  background-color:#1f4060;
 }

@@ -28,7 +28,7 @@ class Login extends Component {
 			</div>
 				<div className="home-login">
 					<div className="form-login">
-						<form className="form-group1">
+						<form className="form-group2">
     						<table className="login-table">
                   <tr className="first-line">Be great at what you do</tr>
 

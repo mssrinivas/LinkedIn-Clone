@@ -33,7 +33,7 @@ export const userLogin = function(userDetail){
          console.log(result);
          dispatch(userLoggedIn(result.current_user));
          alert("Applicant logged in successfully");
-         history.push('/postings');
+         history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -60,7 +60,7 @@ export const userSignUp = function(userDetail){
          console.log("result",result," token :",result.servertoken)
          UTIL.saveServerToken(result);
          dispatch(userSignupAction(result));
-         history.push('/postings');
+         history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Login!!!");
