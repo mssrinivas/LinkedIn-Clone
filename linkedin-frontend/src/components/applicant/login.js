@@ -58,7 +58,8 @@ class Login extends Component {
                           this.userDetails.password=userinput.target.value}}/>
                       </td></tr>
                       <p className="footer">By clicking Join now, you agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy.</p>
-    						      <button type="button" onClick={() =>this.props.userSignUp(this.userDetails)} className="btn btn-primary join">Join Now</button>
+    						      <button type="button" onClick={() =>this.props.userSignUp(this.userDetails)} className="btn btn-primary join">Applicant Join</button>
+											<button type="button" onClick={() =>this.props.userSignUp(this.userDetails)} className="btn btn-primary join">Recruiter Join</button>
     							</table>
 						   </form>
 					   </div>

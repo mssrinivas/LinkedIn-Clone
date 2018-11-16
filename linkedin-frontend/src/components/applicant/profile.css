@@ -36,7 +36,6 @@
   display: flex;
   justify-content: space-between;
   margin: auto;
-  
 }
 .forgot-pwd{
   color: white;
@@ -76,4 +75,7 @@
   color: gray;
   font-weight: bold;
 
+}
+.nav-bar{
+  background: transparent;
 }

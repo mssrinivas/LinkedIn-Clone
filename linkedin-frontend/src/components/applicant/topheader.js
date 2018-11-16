@@ -27,9 +27,7 @@ class LoginHeader extends Component {
     render() {
         return (
                 <div className="linkedin-profile">
-                  <Navbar light black expand="md" scrolling className="linkedin-nav">
-                    {<NavbarToggler onClick = { this.onClick } />}
-                    <Collapse isOpen = { true } navbar>
+                  <Navbar expand="md" scrolling className="linkedin-nav">
                     <NavbarBrand href="#">
                       <img className="linkedin-logo" src ={linkedinlogo}/>
                     </NavbarBrand>
@@ -48,7 +46,7 @@ class LoginHeader extends Component {
                         <a href="#" className="forgot-pwd"> Forgot password? </a>
                       </NavItem>
                       </NavbarNav>
-                    </Collapse>
+
                   </Navbar>
                 </div>
 

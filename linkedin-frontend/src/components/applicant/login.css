@@ -24,13 +24,10 @@
 .form-group1{
 	background-color: white;
 	position: relative;
-	height:550px;
+	height:580px;
 	width:450px;
 	margin-top: 0px;
 	margin-left: 700px;
-}
-.login-component{
-	background-color: blue;
 }
 
 .txt-field-small1{
@@ -175,34 +172,11 @@
     width: 190px;
     top:100px;
 }
-.logo-home {
-  position: absolute;
-  display: inline;
-  color: #42f44b;
-  top:0px;
-  margin-left:-100px;
-  margin-top:-60px;
-  height: 40px;
-  width: 40px;
-}
 
 .login-table{
 
 	margin-left: 30px;
 	margin-top: 0px;
-}
-
-.fb-button1{
-	background-color: #39559f;
-	width:310px;
-	color:white;
-	text-align:center;
-	font-size: 14px;
-  	width: 310px;
-  	height:35px;
-  	line-height: 30px;
-  	margin-top: 0px;
-  	margin-left: 60px;
 }
 .forgot-pwd1 {
 	position: absolute;
