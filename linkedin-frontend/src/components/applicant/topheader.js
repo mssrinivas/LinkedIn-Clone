@@ -27,7 +27,7 @@ class LoginHeader extends Component {
                 <div className="linkedin-profile">
                   <Navbar expand="md" scrolling className="linkedin-nav">
                     <NavbarBrand href="#">
-                      <img className="linkedin-logo" src ={linkedinlogo}/>
+                      <img className="linkedin-logo" src ="https://static.licdn.com/sc/h/95o6rrc5ws6mlw6wqzy0xgj7y"/>
                     </NavbarBrand>
                     <NavbarNav right className="nav-bar">
                       <NavItem className="nav-item">
