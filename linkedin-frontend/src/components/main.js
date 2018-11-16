@@ -7,7 +7,7 @@ import JobPostings from './JobPostings/JobPostings'
 import CustomJobApply from './JobApply/customApply.js';
 import Login from './applicant/login'
 import {history} from './../util/utils';
-
+//Added a Comment
 class Main extends Component {
     render(){
         return(
