@@ -1,0 +1,106 @@
+.inbox-Info{
+  padding-left: -100px;
+  padding-right: 80px;
+  margin-top: -100px;
+  height: 500px;
+  width:1400px;
+  margin-left: 0px;
+  position: absolute;
+	background-color: white;
+  position: absolute;
+}
+.table.table-hover{
+	margin-top: 0px;
+	padding:7px; border:#4286f4 2px solid;
+	border-radius: 1px solid #AEB0B1;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	margin-top: 110px;
+	color: #4286f4;
+  margin-left: -10px;
+}
+	.table.table-hover{
+		width:100%;
+		border-collapse:collapse;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	.table.table-hover td{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+		padding:7px; border:#4286f4 2px solid;
+	}
+
+	.table.table-hover tr{
+font-family: "Comic Sans MS", cursive, sans-serif;
+		padding:7px; border:#4286f4 2px solid;
+	}
+
+  .table.table-hover th{
+font-family: "Comic Sans MS", cursive, sans-serif;
+    padding:7px; border:#4286f4 2px solid;
+  }
+
+	.table.table-hover tr:nth-child(even){
+    font-family: "Comic Sans MS", cursive, sans-serif;
+		background:#E6EAEC;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	thead.active{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+		margin-top: 0px;
+		padding-top: 0px;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	thead.active1{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+		margin-top: 0px;
+		padding-top: 0px;
+		width:100px;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	.active{
+		background-color: white;
+	}
+  .inbox-header{
+    margin-top: 200px;
+    margin-left: 100px;
+  }
+.reply{
+  margin-top: 10px;
+  width: 70px;
+  height: 30px;
+  margin-left: 10px;
+}
+.inbox-cls{
+  border: 1px solid #4286f4;
+  border-radius: 5px;
+  color: #4286f4;
+  background-color: #e6f2ff;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.mail-heading{
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 22px;
+    margin-top: -100px;
+    color: #4286f4;
+    position: absolute;
+}
+.mailuser{
+  margin-top: 0px;
+  position: absolute;
+  color: #4286f4;
+}
+.inbox-from{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 14px;
+  width: 60px;
+}
+.inbox-from1{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 14px;
+  width: 140px;
+}
+.inbox-from2{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 14px;
+  width: 160px;
+}
