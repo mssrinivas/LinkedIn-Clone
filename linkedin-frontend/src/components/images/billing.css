@@ -1,0 +1,164 @@
+
+.Hotel-billing-Info{
+  padding-left: 50px;
+  padding-right: 80px;
+  margin-top: 0px;
+  height: 500px;
+  width:1400px;
+  margin-left: -80px;
+  position: absolute;
+	background-color: white;
+  position: absolute;
+}
+
+.table.table-hover{
+	margin-top: -100px;
+	padding:7px; border:#4286f4 2px solid;
+	border-radius: 1px solid #AEB0B1;
+	box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	margin-top: 110px;
+	color: #4286f4;
+	font-family: monospace;
+}
+	.table.table-hover{
+		width:100%;
+		border-collapse:collapse;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	.table.table-hover td{
+		padding:7px; border:#4286f4 2px solid;
+	}
+
+	.table.table-hover tr{
+
+		padding:7px; border:#4286f4 2px solid;
+	}
+  .table.table-hover th{
+    background-color: #4286f4;
+    color: white;
+    padding:7px; border:#4286f4 2px solid;
+  }
+	.table.table-hover tr:nth-child(odd){
+
+	}
+
+	.table.table-hover tr:nth-child(even){
+		background:#E6EAEC;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	thead.active{
+		margin-top: 0px;
+		padding-top: 0px;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	thead.active1{
+		margin-top: 0px;
+		padding-top: 0px;
+		width:100px;
+		padding:7px; border:#4286f4 2px solid;
+	}
+	.owner-header{
+		margin-top: -50px;
+		font-size: 20px;
+		color: #4286f4;
+		width:15%;
+		font-family: Comic Sans MS;
+		font-style: oblique;
+	}
+	.owner{
+		color: red;
+	}
+	.active{
+		background-color: white;
+	}
+	.owner-table{
+		margin-top: -100px;
+    margin-left: 0px;
+    width:100%;
+	}
+	footer.footer-owner{
+		position: absolute;
+		margin-left: 300px;
+		margin-top: 300px;
+	}
+
+.dash-heading{
+	font-family: Comic Sans MS;
+	color: #4286f4;
+}
+.return-success{
+	margin-top: 1000px;
+  margin-left: 250px;
+}
+.owner-dashboard{
+  margin-left: -10px;
+  margin-top: -100px;
+}
+.table-dashboard{
+  margin-left: -10px;
+  margin-top: -100px;
+}
+.glyphicon.list{
+  margin-left: 220px;
+  margin-top: -150px;
+  color: #4286f4;
+}
+.property-filter{
+  margin-left: 880px;
+  margin-top: 0px;
+  border-color: #4286f4;
+  font-size: 17px;
+  height: 30px;
+  color: #4286f4;
+  border-radius: 25px;
+  position: relative;
+  padding: 10px;
+}
+.btn-class.propertySearch{
+  width: 80px;
+  margin-left: 1100px;
+  margin-top: -30px;
+  height: 30px;
+}
+#page-numbers1 {
+  list-style: none;
+  display: flex;
+  position: relative;
+  color: #4286f4;
+  cursor: pointer;
+  font-size: 18px;
+  margin-top: 0px;
+
+}
+
+#page-numbers1 > li {
+  margin-right: 0.3em;
+  margin-top: 0px;
+  color: #4286f4;
+  user-select: none;
+  cursor: pointer;
+  font-size: 18px;
+  position: relative;
+  text-decoration: underline;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  margin-left: 30px;
+}
+.dashboard-txt{
+  display: inline-block;
+  position: relative;
+  width:200px;
+  height:50px;
+  font-size:17px;
+   margin-left: 40px;
+   margin-right: 0px;
+   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0);
+   padding:10px;
+   margin-top: 0px;
+   border: 1px solid #D3D3D3;
+    border-radius: 25px;
+    background-color: #F5F5F5;
+  color: grey;
+}
+.btn-class.searchdash{
+  margin-top: 0px;
+}
