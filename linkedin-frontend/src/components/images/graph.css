@@ -1,0 +1,171 @@
+
+
+.admin-dashboard-welcome{
+  font-size: 14pt;
+  padding-left: 10%;
+  padding-right: 10%;
+  font-style:  italic;
+  color: #c6c9ce;
+}
+
+.admin-dashboard-tiles-div{
+  padding-top: 10px;
+  margin-left: 10%;
+  margin-right: 10%;
+  height: 200px;
+}
+
+.admin-dashboard-tile-car{
+  border-radius: 25px;
+  width : 20%;
+  height: 180px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  text-align: center;
+  border : solid #FF7F50 1px;
+  color: #FF7F50;
+  font-family: Lucida Console;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.admin-dashboard-tile-hotel{
+  border-radius: 25px;
+  width : 20%;
+  height: 180px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border : solid #3CB371 1px;
+  text-align: center;
+  color: #3CB371;
+  font-family: Lucida Console;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.admin-dashboard-tile-flight{
+  border-radius: 25px;
+  width : 20%;
+  height: 180px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border : solid #87CEEB 1px;
+  text-align: center;
+  color: #87CEEB;
+  font-family: Lucida Console;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.admin-dashboard-tile-users{
+  border-radius: 25px;
+  width : 20%;
+  height: 180px;
+  display: inline-block;
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: white;
+  border : solid #3CB371 1px;
+  text-align: center;
+  color: #3CB371;
+  font-family: Lucida Console;
+  font-style: normal;
+  cursor: pointer;
+}
+
+.admin-dashboard-graph{
+  margin-top: 30px;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.hotel-graph-header{
+  text-align: center;
+  text-decoration-color: grey;
+}
+.car-graph-1{
+  padding-top: 30px;
+  margin-left: 25%;
+  margin-top : 20px;
+  margin-right: 25%;
+  height: 400px;
+  border : solid grey 1px;
+}
+.user-trace-graph{
+  padding-top: 30px;
+  margin-left: 20%;
+  margin-top : 20px;
+  margin-right: 20%;
+  height: 500px;
+}
+
+.car-graph-2{
+  padding-top: 10px;
+  margin-top : 20px;
+  margin-left: 25%;
+  margin-right: 25%;
+  height: 400px;
+  border : solid grey 1px; ;
+}
+
+
+.car-graph-3{
+  padding-top: 10px;
+  margin-left: 25%;
+  margin-top : 20px;
+  margin-right: 25%;
+  height: 400px;
+  border : solid grey 1px;
+}
+
+.add-car-admin-body{
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 0px;
+  padding-left: 400px;
+  padding-right: 350px;
+  height : 500px;
+
+}
+
+.add-hotel-admin-body{
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 0px;
+  padding-left: 400px;
+  padding-right: 350px;
+  height : 500px;
+
+}
+
+.add-flight-admin-body{
+  margin-left: 10%;
+  margin-right: 10%;
+  padding-top: 0px;
+  padding-left: 400px;
+  padding-right: 350px;
+  height : 500px;
+
+}.admin-login{
+width : 200px;
+height : 300 px;
+margin-top: 100px;
+margin-left: 30%;
+
+}
+.bar-graph{
+  width:50%;
+  position: relative;
+  margin-left: 10px;
+}
+.pie-chart{
+  width:50%;
+  position: relative;
+  margin-left: 650px;
+  margin-top: -320px;
+}

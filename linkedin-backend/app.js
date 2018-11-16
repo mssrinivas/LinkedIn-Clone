@@ -4,7 +4,7 @@ var session = require('express-session');
 var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
-
+var users = require('./routes/users');
 
 
 const url = "http://localhost:3000";
@@ -12,7 +12,7 @@ const url = "http://localhost:3000";
 app.use(cors({origin:url,credentials:true}));
 
 app.use(function(req, res, next) {
-    
+
     res.setHeader('Access-Control-Allow-Origin', url);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
-
+app.use('/users', users);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
@@ -38,5 +38,3 @@ app.get("/start",(request,response)=>{
 var server = app.listen(3001,()=>{
     console.log("Linkedin server has started to listen at http://localhost:3001" );
 });
-
-
