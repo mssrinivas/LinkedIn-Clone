@@ -5,6 +5,7 @@ var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var joblistings = require('./routes/joblistings.js');
 
 
 const url = "http://localhost:3000";
@@ -27,12 +28,14 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+app.use('/jobs',joblistings);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
 		msg : "Welcome to Linkedin"
 	});
 });
+
 
 
 var server = app.listen(3001,()=>{

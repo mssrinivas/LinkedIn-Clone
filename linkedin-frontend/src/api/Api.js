@@ -2,6 +2,7 @@ import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
 import * as UTIL from './../util/utils';
+import BASE_URL from './../components/constants/constants.js';
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
 const headers = {
