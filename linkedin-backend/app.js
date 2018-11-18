@@ -5,8 +5,8 @@ var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
-
-
+var applications = require('./routes/applications');
+const multer = require('multer');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
@@ -27,12 +27,36 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+app.use('/apply', applications);
+app.use('/jobs', applications);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
 		msg : "Welcome to Linkedin"
 	});
 });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './resumeFolder');
+    },
+    filename: (req, file, cb) => {
+    const newFilename = `${file.originalname}`;
+    console.log("filename : " + newFilename);
+    cb(null, newFilename);
+    },
+  });
+
+const uploadPhoto = multer({ storage });
+app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
+    console.log("Inside photo upload Handler");
+    res.writeHead(200,{
+         'Content-Type' : 'text/plain'
+         })
+});
+
+
+
 
 
 var server = app.listen(3001,()=>{
