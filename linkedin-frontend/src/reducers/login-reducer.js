@@ -12,14 +12,15 @@ console.log("in action")
             case 'USER_LOGGED_IN':
               console.log("User Logged  IN",action.data);
               return Object.assign({}, state, {
-              current_user: action.data
+              current_user: action.data.current_user,
+              currentUserDetails: action.data.user_Details
             })
             break;
             case 'USER_SIGNED_UP':
               console.log("User signed up");
               return Object.assign({}, state, {
               currentUserDetails: action.data,
-              current_user: action.data.createdUser
+              current_user: action.data.current_user
             })
     default:
     return state;

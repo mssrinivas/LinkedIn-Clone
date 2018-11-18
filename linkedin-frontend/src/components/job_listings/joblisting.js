@@ -69,4 +69,5 @@ class JobListing extends Component {
     }
 }
 
+
 export default JobListing;

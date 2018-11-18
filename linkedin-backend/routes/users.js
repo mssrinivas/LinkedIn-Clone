@@ -72,7 +72,8 @@ router.post('/login', function(req, res, next) {
                 res.status(200).json({
                     message : "User Logged in Successfully",
                     server_token: server_token,
-                    current_user: doc[0].email
+                    current_user: doc[0].email,
+                    user_Details : doc[0]
             });
           }
             else {
@@ -102,16 +103,14 @@ router.post('/login', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
   console.log("inside signup");
   console.log("req sent from signup page: ", req.body);
-  let firstName=req.body.first_name;
-  let lastName=req.body.last_name;
-  let email=req.body.email;
-  let password=req.body.password;
+  var recruiter_flag = req.body.recruiter_value == "Recruiter" ? 1 : 0;
   var passwordToSave = bcrypt.hashSync(req.body.password, salt);
   const userDetails=new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
-    password: passwordToSave
+    password: passwordToSave,
+    recruiter_flag : recruiter_flag
   });
   User.find({"email":req.body.email})
     .exec()
@@ -121,9 +120,19 @@ router.post('/signup', function(req, res, next) {
                 console.log("response obtained is : ", result);
                 const server_token = jwt.sign({uid:result.email},utils.server_secret_key);
                 console.log("UID from JWT: ", result.email);
+                User.updateOne({_id : result._id},{$set:{
+                    applicant_id : result._id
+                  }})
+                  .then( res => {
+                      console.log("Applicant ID: " , res);
+                  })
+                  .catch(errors => {
+                     console.log("error while updating applicant id", errors);
+                  })
                 res.status(200).json({
                 message : "Applicant Profile Created Successfully",
                 server_token: server_token,
+                applicant_id: result._id,
                 current_user: result.email
               });
             })

@@ -18,7 +18,7 @@ class Login extends Component {
 			last_name: "",
 			email: "",
 			password: "",
-			recruiter_flag: 0
+			recruiter_value: ""
 		};
 	}
 	render() {
@@ -59,9 +59,9 @@ class Login extends Component {
                           this.userDetails.password=userinput.target.value}}/>
                       </td></tr>
 											<tr><label className="login-label"> User Type</label><br></br></tr>
-											<select className="txt-field-lg"  defaultValue="Applicant"
-                            onChange={(event) => { this.userDetails.recruiter_flag = event.target.value}} name="Gender">
-                                  <option value="Applicant">Applicant</option><option value="Recruiter">Recruiter</option>
+											<select className="txt-field-lg"
+                            onChange={(event) => { this.userDetails.recruiter_value = event.target.value}} name="UserType">
+                                  <option value=""></option><option value="Applicant">Applicant</option><option value="Recruiter">Recruiter</option>
                             </select>
                       <p className="footer">By clicking Join now, you agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy.</p>
     						      <button type="button" onClick={() =>this.props.userSignUp(this.userDetails)} className="btn btn-primary join">Join now</button>

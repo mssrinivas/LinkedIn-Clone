@@ -30,8 +30,8 @@ export const userLogin = function(userDetail){
          console.log("result",result.loginUser," token :",result.servertoken)
          UTIL.saveServerToken(result);
          console.log("results")
-         console.log(result);
-         dispatch(userLoggedIn(result.current_user));
+         console.log(result.user_Details);
+         dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
          history.push('/listings');
   }).catch(err => {
