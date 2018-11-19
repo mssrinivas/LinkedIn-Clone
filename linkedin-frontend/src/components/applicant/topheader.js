@@ -5,7 +5,6 @@ import {userLogin} from './../../api/Api';
 import { connect } from 'react-redux';
 import { Button} from 'react-bootstrap';
 import {history} from "../../util/utils";
-import linkedinlogo from './LinkedInLogo2.png';
 import { Glyphicon } from 'react-bootstrap';
 // import * as UTIL from './../util/utils';
 // import DashBoard from './travalerdashboard';

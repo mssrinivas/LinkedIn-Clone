@@ -23,7 +23,7 @@ const storage=multer.diskStorage({
   },
   filename: function(req,file,cb){
     console.log("Profile image file name: ",req.body);
-    cb(null, req.body.email+".jpeg");
+    cb(null, req.body.applicant_id+".jpeg");
   }
 });
 
@@ -72,7 +72,8 @@ router.post('/login', function(req, res, next) {
                 res.status(200).json({
                     message : "User Logged in Successfully",
                     server_token: server_token,
-                    current_user: doc[0].email
+                    current_user: doc[0].email,
+                    user_Details : doc[0]
             });
           }
             else {
@@ -102,16 +103,14 @@ router.post('/login', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
   console.log("inside signup");
   console.log("req sent from signup page: ", req.body);
-  let firstName=req.body.first_name;
-  let lastName=req.body.last_name;
-  let email=req.body.email;
-  let password=req.body.password;
+  var recruiter_flag = req.body.recruiter_value == "Recruiter" ? 1 : 0;
   var passwordToSave = bcrypt.hashSync(req.body.password, salt);
   const userDetails=new User({
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     email: req.body.email,
-    password: passwordToSave
+    password: passwordToSave,
+    recruiter_flag : recruiter_flag
   });
   User.find({"email":req.body.email})
     .exec()
@@ -121,9 +120,19 @@ router.post('/signup', function(req, res, next) {
                 console.log("response obtained is : ", result);
                 const server_token = jwt.sign({uid:result.email},utils.server_secret_key);
                 console.log("UID from JWT: ", result.email);
+                User.updateOne({_id : result._id},{$set:{
+                    applicant_id : result._id
+                  }})
+                  .then( res => {
+                      console.log("Applicant ID: " , res);
+                  })
+                  .catch(errors => {
+                     console.log("error while updating applicant id", errors);
+                  })
                 res.status(200).json({
                 message : "Applicant Profile Created Successfully",
                 server_token: server_token,
+                applicant_id: result._id,
                 current_user: result.email
               });
             })
@@ -142,72 +151,73 @@ router.post('/signup', function(req, res, next) {
     })
 });
 //=======================================================================
-// router.post('/updateProfile', function (req,res,next) {
-// 	console.log("inside update profile");
-//   var travelerDetails = {
-//           firstName : req.body.firstName,
-//           lastName : req.body.lastName,
-//           aboutMe : req.body.aboutMe,
-//           city : req.body.city,
-//           company : req.body.company,
-//           school : req.body.school,
-//           hometown : req.body.hometown,
-//           language : req.body.language,
-//           gender : req.body.gender,
-//           contactNumber : req.body.contactNumber,
-//           profileImage : req.body.profileImage,
-//           email : req.body.email,
-//           country : "USA"
-//   };
-//   Traveler.updateOne({email : travelerDetails.email},{$set:{
-//     first_name : travelerDetails.firstName,
-//     last_name :travelerDetails.lastName,
-//     contact_number :travelerDetails.contactNumber,
-//     about_me :travelerDetails.aboutMe,
-//     city :travelerDetails.city,
-//     country :travelerDetails.country,
-//     company :travelerDetails.company,
-//     school :travelerDetails.school,
-//     hometown :travelerDetails.hometown,
-//     lang :travelerDetails.language,
-//     gender :travelerDetails.gender
-//   }})
-//     .exec()
-//     .then(doc=> {
-//       console.log("Data Obtained after updation is : ", doc);
-//       res.status(200).json({
-//           message : "User profile updated"
-//       });
-//     })
-//     .catch(err => {
-//       console.log("error while updating user", err);
-//       res.status(400).json({
-//           message : "User profile could not be updated"
-//       });
-//     })
-// });
-//
+router.post('/updateProfile', function (req,res,next) {
+	console.log("inside update profile");
+  var userDetails = {
+          firstName : req.body.firstName,
+          lastName : req.body.lastName,
+          address : req.body.address,
+          state : req.body.state,
+          city : req.body.city,
+          zipCode : req.body.zipCode,
+          experience : req.body.experience,
+          education : req.body.education,
+          school : req.body.school,
+          skills : req.body.skills,
+          profileSummary : req.body.profileSummary,
+          email : req.body.current_user,
+          applicant_id : req.body.applicant_id,
+          profile_img : req.body.profile_img
+  };
+  User.updateOne({applicant_id : userDetails.applicant_id},{$set:{
+    first_name : userDetails.firstName,
+    last_name :userDetails.lastName,
+    email : userDetails.email,
+    address :userDetails.address,
+    state :userDetails.state,
+    city :userDetails.city,
+    zip_code :userDetails.zipCode,
+    experience :userDetails.experience,
+    education :userDetails.education,
+    skills :userDetails.skills,
+    profile_summary :userDetails.profileSummary,
+    profile_img :userDetails.profile_img
+  }})
+    .exec()
+    .then(doc=> {
+      console.log("Data Obtained after updation is : ", doc);
+      res.status(200).json({
+          message : "User profile updated"
+      });
+    })
+    .catch(err => {
+      console.log("error while updating user", err);
+      res.status(400).json({
+          message : "User profile could not be updated"
+      });
+    })
+});
+
 // //==============================================================================================
-// router.post('/getProfile', function (req,res,next) {
-//   console.log("inside get profile post");
-//   let email=req.body.email;
-//   Traveler.find({"email": email})
-//     .exec()
-//     .then(doc => {
-//       console.log("response got : ", doc[0]);
-//         res.status(200).json({
-//               message : "User profile fetched successfully",
-//               userDetails: doc
-//             });
-//       })
-//     .catch(err => {
-//       console.log("Error : ", err);
-//       res.status(400).json({
-//               message : "User profile can not be fetched successfully"
-//             });
-//     })
-//
-// });
+router.post('/getProfile', function (req,res,next) {
+  console.log("inside get profile post",req.body.applicant_id);
+  User.find({"applicant_id": req.body.applicant_id})
+    .exec()
+    .then(doc => {
+      console.log("response got : ", doc[0]);
+        res.status(200).json({
+              message : "User profile fetched successfully",
+              userDetails: doc
+            });
+      })
+    .catch(err => {
+      console.log("Error : ", err);
+      res.status(400).json({
+              message : "User profile can not be fetched successfully"
+            });
+    })
+
+});
 // //==============================================================================================
 // router.post('/ownerlogin', function(req, res, next) {
 //   console.log("inside owner login");

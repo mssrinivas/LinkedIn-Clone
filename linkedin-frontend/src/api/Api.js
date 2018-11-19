@@ -1,8 +1,12 @@
+import BASE_URL from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
+import {userProfileUpdateAction} from './../actions/index';
 import * as UTIL from './../util/utils';
-import BASE_URL from './../components/constants/constants.js';
+import axios from "axios";
+export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
+
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
 const headers = {
@@ -31,10 +35,10 @@ export const userLogin = function(userDetail){
          console.log("result",result.loginUser," token :",result.servertoken)
          UTIL.saveServerToken(result);
          console.log("results")
-         console.log(result);
-         dispatch(userLoggedIn(result.current_user));
+         console.log(result.user_Details);
+         dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
-         history.push('/listings');
+         history.push('/profilefirst');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -61,10 +65,35 @@ export const userSignUp = function(userDetail){
          console.log("result",result," token :",result.servertoken)
          UTIL.saveServerToken(result);
          dispatch(userSignupAction(result));
-         history.push('/listings');
+         history.push('/profilefirst');
   }).catch(err => {
     alert(err);
           console.log("Error while Login!!!");
+          return err;
+        });
+    };
+};
+export const profileUpdate = function(userDetail){
+  return (dispatch) => {
+    fetch(`${server_url}/users/updateProfile`, {
+          method: 'POST',
+          credentials:'include',
+          headers: { ...headers,'Content-Type': 'application/json' },
+          mode: 'cors',
+          body: JSON.stringify(userDetail)
+      }).then(res => {
+          if(res.status === 200){
+            console.log("Profile Update:",res.status);
+            return res.json();
+          }
+
+     }).then(result=>{
+         console.log("result",result)
+         dispatch(userProfileUpdateAction(result));
+         // history.push('/');
+  }).catch(err => {
+    alert(err);
+          console.log("Error while updating!!!");
           return err;
         });
     };

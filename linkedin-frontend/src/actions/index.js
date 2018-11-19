@@ -12,3 +12,9 @@ export const userSignupAction = (userDetail) => {
         data: userDetail
     }
 };
+export const userProfileUpdateAction = (userDetail) => {
+    return {
+        type: 'USER_PROFILE_UPDATE',
+        data: userDetail
+    }
+};
