@@ -1,9 +1,11 @@
 import * as UTIL from './../util/utils';
+import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
         currentUserDetails:{},
         message:'',
         recruiter_flag:false,
+        applied : false
 };
 export default function (state = initialState, action) {
     switch (action.type) {
@@ -13,7 +15,7 @@ export default function (state = initialState, action) {
               current_user: action.data.current_user,
               currentUserDetails: action.data.user_Details
             })
-            break;
+            //break;
             case 'USER_SIGNED_UP':
               console.log("User signed up");
               return Object.assign({}, state, {
@@ -25,7 +27,13 @@ export default function (state = initialState, action) {
               return Object.assign({}, state, {
               currentUserDetails: action.data
             })
-    default:
+            case CUSTOM_APPLY_SUCCESS:
+              console.log("Custom apply job reducer");
+              return {
+                ...state,
+                applied : action.payload
+            }
+          default:
     return state;
   }
 }

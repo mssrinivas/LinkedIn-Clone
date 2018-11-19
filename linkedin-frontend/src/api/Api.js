@@ -1,9 +1,12 @@
+import BASE_URL from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
 import {userProfileUpdateAction} from './../actions/index';
 import * as UTIL from './../util/utils';
-import BASE_URL from './../components/constants/constants.js';
+import axios from "axios";
+export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
+
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
 const headers = {

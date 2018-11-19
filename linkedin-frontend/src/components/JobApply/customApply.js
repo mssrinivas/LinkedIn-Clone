@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { connect } from "react-redux";
+import { bindActionCreators } from 'redux';
+import {customApplyJob} from './../../api/Api';
 import './apply.css';
+
+var swal = require('sweetalert')
 class customApply extends Component {
     constructor(props){
         //Call the constrictor of Super class i.e The Component
@@ -28,13 +34,27 @@ this.addressChangeHandler = this.addressChangeHandler.bind(this);
 this.genderChangeHandler = this.genderChangeHandler.bind(this);
 this.raceChangeHandler = this.raceChangeHandler.bind(this);
 this.veteranChangeHandler = this.veteranChangeHandler.bind(this);
-// this.fileChangeHandler = this.fileChangeHandler.bind(this);
+this.fileChangeHandler = this.fileChangeHandler.bind(this);
 this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
-
+this.hearChangeHandler = this.hearChangeHandler.bind(this);
+}
+componentWillReceiveProps(nextProps) {
+    console.log("nextprop applied", nextProps.applied);
+    if(nextProps.applied == true)
+    {
+        console.log("nextprop applied", nextProps.applied);
+        swal("Job Applied successfully!", " ", "success");
+    }
+    
 }
 fnameChangeHandler = (e) => {
     this.setState({
         firstname : e.target.value
+    })
+}
+hearChangeHandler = (e) => {
+    this.setState({
+        hear : e.target.value
     })
 }
 lnameChangeHandler = (e) => {
@@ -77,12 +97,13 @@ disabilityChangeHandler = (e) => {
         disability : e.target.value
     })
 }
-// fileChangedHandler = (e) => {
-//     this.setState({
-//         selectedFile: e.target.files[0]
-//       })
-// }
+fileChangeHandler = (e) => {
+     this.setState({
+         selectedFile: e.target.files[0]
+       })
+ }
 submitApplication = (e) => {
+    const { selectedFile } = this.state;
     e.preventDefault();
     const values = {
         email : this.state.email,
@@ -94,7 +115,25 @@ submitApplication = (e) => {
         race : this.state.race,
         veteran : this.state.veteran,
         disability : this.state.disability,
+        hear : this.state.hear,
+        resume : selectedFile.name,
+        company : "Mozilla",
+        jobtitle : "Machine learning Intern(Summer 2019)",
+        joblocation : "San Fransisco, California"
+
     }
+    console.log("selected file: " + selectedFile.name);
+    let formData = new FormData();
+    formData.append('selectedFile', selectedFile);
+    axios.post('http://localhost:3001/uploadresume', formData)
+                     .then((response) => {
+                         if(response.status == 200){
+                          
+                           console.log("Status: " + response.status );
+                         }
+                
+    });
+    this.props.customApplyJob(values)
 }
     render() { 
         return (
@@ -135,11 +174,11 @@ submitApplication = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="resume">Resume/CV*</label>
-                        <input type="file" id="resume" name="selectedFile" onChange={this.fileChangedHandler}/>
+                        <input type="file" id="resume" name="selectedFile" onChange={this.fileChangeHandler}/>
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="cover">Cover Letter(optional)</label>
-                        <input type="file" id="cover" onChange={this.file1ChangedHandler}/>
+                        <input type="file" id="cover" onChange={this.fileChangeHandler}/>
                      </div>
                     <div class="form-group1">
                         <label className="field-label">How did you hear about us</label>
@@ -204,6 +243,7 @@ submitApplication = (e) => {
                         </select>          
                      
                     </div>
+                   
                     <button className="btn btn-primary1" type="submit">Submit Application</button>
                     </form>
                     
@@ -213,5 +253,23 @@ submitApplication = (e) => {
           );
     }
 }
- 
-export default customApply;
+
+
+
+
+
+const mapStateToProps = state => {
+    return {
+       
+        applied : state.LoginReducer.applied
+     };
+  };
+  
+function mapDispatchToProps(dispatch) {
+      return bindActionCreators({ customApplyJob }, dispatch);
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(customApply);
+

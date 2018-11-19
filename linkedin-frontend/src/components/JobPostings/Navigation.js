@@ -29,11 +29,11 @@ class Navigation extends Component {
                 <a class="btn bgwhite " href="/home" role="button">HOME</a> 
                 &nbsp; &nbsp; &nbsp; 
                 </li>
-                <li class="nav-item padtopnavbar">
+                <li class="nav-item padtopnavbar spacebetween">
                 <a class="btn bgwhite" href="/postjob" role="button">POST JOB</a> 
                 &nbsp; &nbsp; &nbsp;       
                 </li>
-                <li class="nav-item padtopnavbar">
+                <li class="nav-item padtopnavbar spacebetween">
                 <a class="btn bgwhite " href="/home" role="button">LINKEDIN.COM</a> 
                 &nbsp; &nbsp; &nbsp; 
                
