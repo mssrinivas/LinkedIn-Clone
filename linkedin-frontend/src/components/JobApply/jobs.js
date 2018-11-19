@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import './apply.css';
 import axios from 'axios';
+import {BASE_URL} from './../../components/constants/constants.js';
 class jobs extends Component {
     constructor(props){
         super(props);
@@ -13,7 +14,7 @@ class jobs extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of saved jobs")
-         axios.get('http://localhost:3001/applications/saved')
+         axios.get(`${BASE_URL}/applications/saved`)
              .then((response) => {
             console.log("response data : " + response.data);
         

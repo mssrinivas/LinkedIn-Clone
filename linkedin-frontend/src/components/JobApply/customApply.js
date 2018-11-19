@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import {customApplyJob} from './../../api/Api';
 import './apply.css';
-
+import {BASE_URL} from './../../components/constants/constants.js';
 var swal = require('sweetalert')
 class customApply extends Component {
     constructor(props){
@@ -22,7 +22,8 @@ this.state = {
     race : "",
     veteran : "",
     disability : "",
-    selectedFile : ""
+    selectedFile : "",
+    cover : ""
 }
         //Bind the handlers to this class
 this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
@@ -37,6 +38,7 @@ this.veteranChangeHandler = this.veteranChangeHandler.bind(this);
 this.fileChangeHandler = this.fileChangeHandler.bind(this);
 this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
 this.hearChangeHandler = this.hearChangeHandler.bind(this);
+this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
 }
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
@@ -46,6 +48,11 @@ componentWillReceiveProps(nextProps) {
         swal("Job Applied successfully!", " ", "success");
     }
     
+}
+coverLetterChangeHandler = (e) => {
+    this.setState({
+        cover : e.target.value
+    })
 }
 fnameChangeHandler = (e) => {
     this.setState({
@@ -117,6 +124,7 @@ submitApplication = (e) => {
         disability : this.state.disability,
         hear : this.state.hear,
         resume : selectedFile.name,
+        cover_letter : this.state.cover,
         company : "Mozilla",
         jobtitle : "Machine learning Intern(Summer 2019)",
         joblocation : "San Fransisco, California"
@@ -125,7 +133,7 @@ submitApplication = (e) => {
     console.log("selected file: " + selectedFile.name);
     let formData = new FormData();
     formData.append('selectedFile', selectedFile);
-    axios.post('http://localhost:3001/uploadresume', formData)
+    axios.post(`${BASE_URL}/uploadresume`, formData)
                      .then((response) => {
                          if(response.status == 200){
                           
@@ -177,9 +185,9 @@ submitApplication = (e) => {
                         <input type="file" id="resume" name="selectedFile" onChange={this.fileChangeHandler}/>
                     </div>
                     <div class="form-group1">
-                        <label className="field-label" for="cover">Cover Letter(optional)</label>
-                        <input type="file" id="cover" onChange={this.fileChangeHandler}/>
-                     </div>
+                        <label className="field-label" for="coverl">Cover Letter(optional)</label>
+                        <textarea onChange = {this.coverLetterChangeHandler} type="text" class="form-control1" name="cover" id="coverl"/>
+                    </div>
                     <div class="form-group1">
                         <label className="field-label">How did you hear about us</label>
                         <select class="form-control1"  onChange = {this.hearChangeHandler}>
