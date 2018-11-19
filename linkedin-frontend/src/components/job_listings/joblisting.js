@@ -83,8 +83,8 @@ class JobListing extends Component {
         var redirectVar = null;
         const {postings,error,selectedIndex,easyApply,customApply} = this.state;
         const isSelected = selectedIndex!=null;
-        const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-12 postings-parent"
-        const descriptionClassName = isSelected ?"col-md-8" : "col-md-0" ;
+        const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
+        const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         
@@ -98,7 +98,8 @@ class JobListing extends Component {
                 <Navbar />
                 <div className="row">
                     {error}
-                    <div className={joblistClassName} style={{ borderRight: '1px solid #E0E0E0' }}>
+                    <div className="col-md-1"></div>
+                    <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
                         {
                             postings.map((post, index) => {
                                 return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} />);
@@ -109,6 +110,7 @@ class JobListing extends Component {
                         {jobdescription}
                         {launcher}
                     </div>
+                    <div className="col-md-1"></div>
                 </div>
 
             </div>

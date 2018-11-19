@@ -18,8 +18,9 @@ class Navbar extends Component {
             <img
               style={{
                 height: 35,
-                marginLeft: 300,
-                marginRight: 20
+                marginLeft: 50,
+                marginRight: 20,
+                marginBottom:'20px'
               }}
               src={LinkedInLogo1}
               alt="linkedin"
@@ -29,7 +30,8 @@ class Navbar extends Component {
             <input
               style={{
                 height: 34,
-                width: 300
+                width: 300,
+                marginBottom:'20px'
               }}
               role="combobox"
               autocomplete="off"
@@ -45,7 +47,8 @@ class Navbar extends Component {
             <div
               style={{
                 display: "inline-block",
-                marginLeft: 20,
+                paddingTop:'10px',
+                marginLeft: 250,
                 textAlign: "center"
               }}
               className="nav-home"
