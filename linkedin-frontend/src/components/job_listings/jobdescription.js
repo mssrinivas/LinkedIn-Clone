@@ -1,32 +1,43 @@
 import React, { Component } from 'react';
+import {timeago} from './../timeago/timeago.js';
 
 class JobDescription extends Component {
     
     constructor(props){
         super(props);
+        this.saveHandler = this.saveHandler.bind(this);
+        this.applyHandler = this.applyHandler.bind(this);
+    }
+
+    saveHandler=(e)=>{
+        this.props.onSave(this.props.position);
+    }
+
+    applyHandler =(e)=>{
+        this.props.onApply(this.props.position);
     }
 
     render() { 
+        const {data} = this.props;
         return (
             <div className="row" style={{padding:'4px'}} >
                 <div className="col-md-2">
-                    <img className="w-100 contain" src="https://img.icons8.com/color/200/5e6d77/linkedin.png" alt="LinkedIn" />
+                    <img className="w-100 contain" src={data.companyLogo} alt={data.companyName} />
                 </div>
                 <div className="col-md-9">
-                    <p style={{fontSize:'18px'}}> Software Engineer Data Analytics </p>
-                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >LinkedIn, Palo Alto, California </p>
-                    <p style={{fontSize:'13px',color:'grey'}}>Posted 2 weeks ago</p>
+                    <p style={{fontSize:'18px'}}> {data.jobTitle} {data.jobFunction} </p>
+                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >{data.LinkedIn} {data.location} </p>
+                    <p style={{fontSize:'13px',color:'grey'}}>Posted on {data.postingDate}</p>
                     <div className="btn-group mt-2 pb-2">
-                        <button type="button" className="btn btn-md" id="job-save-btn">Save</button>
-                        <button type="button" className="btn btn-md" id="easy-apply-btn">Easy Apply</button>
+                        <button type="button" onClick={this.saveHandler} className="btn btn-md" id="job-save-btn">Save</button>
+                        <button type="button" onClick={this.applyHandler} className="btn btn-md" id="easy-apply-btn">{data.easyApply ? "Easy Apply" : "Apply"}</button>
                     </div>
 
                     <div className="row mt-2 pb-2" id="job-detail-row">
                         <div className="col-md-3" style={{padding:'8px'}}>
                             <p>Job</p>
                             <ul style={{fontSize:'13px',color:'#9E9E9E'}}>
-                                <li>6/10 skills match</li>
-                                <li>428 applicants</li>
+                                <li>{data.numberofApplicants} applicants applied</li>
                             </ul>
                         </div>
 
@@ -34,14 +45,14 @@ class JobDescription extends Component {
                             <p>Company</p>
                             <ul style={{fontSize:'13px',color:'#9E9E9E'}}>
                                 <li>51-200 Employees</li>
-                                <li>Computer Software</li>
+                                <li>{data.industryType}</li>
                             </ul>
                         </div>
 
                         <div className="col-md-3" style={{padding:'8px'}}>
-                            <p>Connections</p>
+                            <p>Employment Type</p>
                             <ul style={{fontSize:'13px',color:'#9E9E9E'}}>
-                                <li>SJSU: 2 alumni</li>
+                                <li>{data.employmentType}</li>
                             </ul>
                         </div>
 
@@ -49,22 +60,16 @@ class JobDescription extends Component {
 
                     <div className="row mt-2 pt-2">
                         <div className="col-md-9" style={{padding:'8px'}}>
-                            <h5>Job Description</h5>
-                            <p>Python Software Engineer : Predictive Controls Platform </p>
+                            <h5>Job Seniority Level</h5>
+                            <p>{data.seniorityLevel} </p>
                             <p className="mt-1">About the job</p>
-                            <ul style={{fontSize:'14px',color:'#424242'}}>
-                                <li>Design and build high performance tolerant and scalable applications using azure services</li>
-                                <li>Design and build high performance tolerant and scalable applications using azure services</li>
-                                <li>Design and build high performance tolerant and scalable applications using azure services</li>
-                                <li>Design and build high performance tolerant and scalable applications using azure services</li>
-                                <li>Design and build high performance tolerant and scalable applications using azure services</li>
-                            </ul>
+                            <p style={{fontSize:'14px',color:'#424242',textAlign:'justify'}} >{data.description}</p>
                         </div>
-                        <div className="col-md-3" style={{padding:'4px'}}>
+                        <div className="col-md-3" style={{padding:'6px'}}>
                             <h5>How you match</h5>
                             <p style={{fontSize:'12px',color:'#9E9E9E'}}><i>Criteria provided by the job poster</i></p>
                             <p style={{fontSize:'14px'}}><b>Skills</b></p>
-                            <ul style={{fontSize:'13px',padding:'4px',margin:'0px'}}>
+                            <ul style={{fontSize:'13px',padding:'4px',margin:'2px'}}>
                                 <li>Scrum</li>
                                 <li>Cloud Computing</li>
                                 <li>Mongodb</li>

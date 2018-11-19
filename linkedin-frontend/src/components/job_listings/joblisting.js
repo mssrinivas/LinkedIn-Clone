@@ -2,22 +2,46 @@ import React, { Component } from 'react';
 import JobListCard from './joblistcard.js';
 import JobDescription from './jobdescription.js';
 import {Launcher} from 'react-chat-window'
+import axios from 'axios';
+import Navbar from './../navbar/Navbar.jsx';
+import {BASE_URL} from './../constants/constants.js';
+
 class JobListing extends Component {
     constructor(props){
         super(props)
         this.state = {
-            postings :[1,2,3,4,5,6],
-            messageList: []
+            postings :[],
+            messageList: [],
+            selectedIndex : null,
+            error : null
         };
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
     }
 
     componentDidMount(){
+        
+        const url = BASE_URL+"/jobs/search";
+        axios.get(url).then((response)=>{
+            const {status} = response;
+            if(status===200){
+                console.log(response.data);
+                this.setState({ postings : response.data.joblistings });
+            }else{
+                this.setState({error : response.data.msg});
+            }
+        });
+    }
 
+    saveJob(position){
+        
+    }
+
+    applyJob(position){
+        
     }
 
     jobPostCardClicked(position){
-        console.log("card clicked at this :"+position);
+        this.setState({selectedIndex : position});
     }
 
     _onMessageWasSent(message) {
@@ -39,30 +63,31 @@ class JobListing extends Component {
       }
 
     render() {
-        const {postings} = this.state;
+        
+        const {postings,error,selectedIndex} = this.state;
+        const isSelected = selectedIndex!=null;
+        const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-12 postings-parent"
+        const descriptionClassName = isSelected ?"col-md-8" : "col-md-0" ;
+        const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
+        const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         return (
             <div>
+                <Navbar />
                 <div className="row">
-                    <div className="col-md-4 postings-parent" style={{ borderRight: '1px solid #E0E0E0' }}>
+                    {error}
+                    <div className={joblistClassName} style={{ borderRight: '1px solid #E0E0E0' }}>
                         {
                             postings.map((post, index) => {
-                                return (<JobListCard onCardClicked={this.jobPostCardClicked} key={index} position={index} />);
+                                return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} />);
                             })
                         }
                     </div>
-                    <div className="col-md-8">
-                        <JobDescription />
+                    <div className={descriptionClassName}>
+                        {jobdescription}
+                        {launcher}
                     </div>
                 </div>
-                <Launcher
-        agentProfile={{
-          teamName: '<Recruiter Name>',
-          imageUrl: "https://img.icons8.com/color/50/000000/linkedin.png"
-        }}
-        onMessageWasSent={this._onMessageWasSent.bind(this)}
-        messageList={this.state.messageList}
-        showEmoji
-      />
+
             </div>
 
          );

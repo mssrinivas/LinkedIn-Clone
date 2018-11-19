@@ -10,6 +10,7 @@ import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
 import Login from './applicant/login'
 import {history} from './../util/utils';
+import Navbar from "./navbar/Navbar";
 class Main extends Component {
     render(){
         return(
@@ -23,11 +24,13 @@ class Main extends Component {
                 <Route exact path="/easyapply" component={EasyJobApply} />
                 <Route exact path="/jobs" component={Jobs} />
                 <Route exact path="/jobs/applied" component={JobsApplied} />
+                <Route exact path="/navbar" component={Navbar} />
             </Switch>
             </Router>
             </Provider>
 
-        )
-    }
+
+    );
+  }
 }
 export default Main;

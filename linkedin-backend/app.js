@@ -7,6 +7,9 @@ var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var applications = require('./routes/applications');
 const multer = require('multer');
+var joblistings = require('./routes/joblistings.js');
+
+
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
@@ -28,7 +31,8 @@ app.use(cookieParser());
 
 app.use('/users', users);
 app.use('/apply', applications);
-app.use('/jobs', applications);
+app.use('/applications', applications);
+app.use('/jobs',joblistings);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
@@ -54,6 +58,7 @@ app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
          'Content-Type' : 'text/plain'
          })
 });
+
 
 
 

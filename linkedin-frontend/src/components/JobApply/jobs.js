@@ -13,7 +13,7 @@ class jobs extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of saved jobs")
-         axios.get('http://localhost:3001/jobs/saved')
+         axios.get('http://localhost:3001/applications/saved')
              .then((response) => {
             console.log("response data : " + response.data);
         

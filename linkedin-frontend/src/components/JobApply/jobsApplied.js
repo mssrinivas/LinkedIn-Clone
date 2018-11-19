@@ -14,7 +14,7 @@ class jobsApplied extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of applied jobs")
-         axios.get('http://localhost:3001/jobs/applied')
+         axios.get('http://localhost:3001/applications/applied')
              .then((response) => {
             console.log("response data : " + response.data);
         
