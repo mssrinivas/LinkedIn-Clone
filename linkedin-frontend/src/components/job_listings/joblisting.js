@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import JobListCard from './joblistcard.js';
 import JobDescription from './jobdescription.js';
 import {Launcher} from 'react-chat-window'
 import axios from 'axios';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
+import {SELECTED_CUSTOM_JOB_POST} from './../constants/reduxActionConstants.js';
 
 class JobListing extends Component {
     constructor(props){
         super(props)
+        
         this.state = {
             postings :[],
             messageList: [],
             selectedIndex : null,
+            customApply : false,
+            easyApply : false,
             error : null
         };
+
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
+        this.saveJob = this.saveJob.bind(this);
+        this.applyJob = this.applyJob.bind(this);
     }
 
     componentDidMount(){
@@ -37,7 +46,14 @@ class JobListing extends Component {
     }
 
     applyJob(position){
-        
+       const {postings} = this.state
+       const easyApply =  postings[position].easyApply;
+       if(easyApply){
+           this.setState({easyApply : true});
+       }else{
+           this.props.jobPost(postings[position]);
+            this.setState({customApply : true});
+       } 
     }
 
     jobPostCardClicked(position){
@@ -64,14 +80,21 @@ class JobListing extends Component {
 
     render() {
         
-        const {postings,error,selectedIndex} = this.state;
+        var redirectVar = null;
+        const {postings,error,selectedIndex,easyApply,customApply} = this.state;
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-12 postings-parent"
         const descriptionClassName = isSelected ?"col-md-8" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
+        
+        
+        if(customApply){ redirectVar = <Redirect to="/customapply" /> }
+        //else if(easyApply){  redirectVar = <Redirect to="/easyapply" /> }
+
         return (
             <div>
+                {redirectVar}
                 <Navbar />
                 <div className="row">
                     {error}
@@ -94,5 +117,19 @@ class JobListing extends Component {
     }
 }
 
+const mapStateToProps = (state) =>{
+    return {}
+}
 
-export default JobListing;
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        jobPost: (jobpost)=>{
+            dispatch({
+                type:SELECTED_CUSTOM_JOB_POST,
+                payload : jobpost
+            });
+        }
+    }
+}
+//export default JobListing;
+export default connect(mapStateToProps,mapDispatchToProps)(JobListing);
