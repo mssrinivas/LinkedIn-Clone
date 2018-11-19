@@ -23,6 +23,7 @@ var searchJobs = async function(params) {
             return Promise.resolve(joblistings);
         }
     }catch(error){
+        console.log(error);
         return Promise.reject("Could not make a mongodb connection")
     }
 }
