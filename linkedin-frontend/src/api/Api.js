@@ -125,3 +125,20 @@ export const profileUpdate = function(userDetail){
 //         });
 //     };
 // };
+
+export const customApplyJob =  (values) =>  dispatch =>  {
+  console.log("applicant name inside custom apply action: " + values.firstname);
+  
+    axios.defaults.withCredentials = true;
+    axios.post(`${server_url}/apply/job/12345`, values)
+        .then(res => {
+          console.log("response status : " + res.status);
+          if(res.status == 200 && res.data == "Applied successfully"){
+            // console.log("booking failure : " + res.data);
+              dispatch({
+                type :  CUSTOM_APPLY_SUCCESS,
+                payload: true
+              })
+            }
+        })
+      };
