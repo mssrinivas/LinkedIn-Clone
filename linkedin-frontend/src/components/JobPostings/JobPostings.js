@@ -29,6 +29,7 @@ class JobPostings extends Component {
         Experience : 0,
         Degree : [],
         Budget : 15,
+        EmploymentType : "",
         RedirecttoDescription: true,
         RedirecttoQualification: false,
         RedirecttoBudget : false,
@@ -167,6 +168,7 @@ SliderChangeBudget = (value) => {
         Location = {this.state.Location}
         JobFunction  = {this.state.JobFunction}
         Industry = {this.state.Industry}
+        EmploymentType = {this.state.EmploymentType}
         JobDescription = {this.state.JobDescription}
         RecommendedMail = {this.state.RecommendedMail}
         Info = {this.state.Info}

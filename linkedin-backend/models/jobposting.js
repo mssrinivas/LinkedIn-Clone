@@ -13,6 +13,22 @@ var jobpostings = mongoose.model('jobpostings',{
     employmentType : {type : String, required: true}, 
     industryType : {type : String, required: true}, 
     experience : {type : Number, required: true}, 
+    degree: {type : Number, required: true}, 
     budget : {type : Number, required: true}, 
 });
 module.exports = {jobpostings};
+
+/*
+        Company :"",
+        JobTitle : "",
+        Location : "",
+        JobFunction : "",
+        Industry : [],
+        JobDescription : "",
+        RecommendedMail : "",
+        Info : "",
+        Skills : [],
+        Experience : 0,
+        Degree : [],
+        Budget : 15,
+*/

@@ -6,6 +6,7 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var joblistings = require('./routes/joblistings.js');
+var jobpostings = require('./routes/jobpostings.js');
 
 
 const url = "http://localhost:3000";
@@ -29,6 +30,8 @@ app.use(cookieParser());
 
 app.use('/users', users);
 app.use('/jobs',joblistings);
+app.use('/postjob',jobpostings);
+
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
