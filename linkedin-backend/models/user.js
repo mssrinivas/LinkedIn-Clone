@@ -41,6 +41,9 @@ var userschema = mongoose.Schema({
     education : {
         type : String
     },
+    school : {
+      type : String
+    },
     skills : {
         type : String
     },

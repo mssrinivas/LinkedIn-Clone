@@ -6,8 +6,6 @@ const initialState = {
         recruiter_flag:false,
 };
 export default function (state = initialState, action) {
-console.log("in action")
-    console.log(action);
     switch (action.type) {
             case 'USER_LOGGED_IN':
               console.log("User Logged  IN",action.data);
@@ -21,6 +19,11 @@ console.log("in action")
               return Object.assign({}, state, {
               currentUserDetails: action.data,
               current_user: action.data.current_user
+            })
+            case 'USER_PROFILE_UPDATE':
+              console.log("User profile update", action.data);
+              return Object.assign({}, state, {
+              currentUserDetails: action.data
             })
     default:
     return state;

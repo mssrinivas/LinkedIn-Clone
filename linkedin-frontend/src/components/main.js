@@ -6,6 +6,8 @@ import JobListing from './job_listings/joblisting.js';
 import JobPostings from './JobPostings/JobPostings'
 import CustomJobApply from './JobApply/customApply.js';
 import Login from './applicant/login'
+import UserProfile from './applicant/userprofile'
+import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 class Main extends Component {
     render(){
@@ -17,6 +19,8 @@ class Main extends Component {
                 <Route exact path="/postjob" component={JobPostings} />
                 <Route exact path="/customapply" component={CustomJobApply} />
                 <Route exact path="/" component={Login} />
+                <Route exact path="/profilefirst" component={UserProfileFirst} />
+                <Route exact path="/profile" component={UserProfile} />
             </Switch>
             </Router>
             </Provider>
