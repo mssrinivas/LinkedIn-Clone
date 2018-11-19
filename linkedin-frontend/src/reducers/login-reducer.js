@@ -1,12 +1,16 @@
 import * as UTIL from './../util/utils';
+import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
+
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
         currentUserDetails:{},
         message:'',
         recruiter_flag:false,
-        applied : false
+        applied : false,
+        customJobPost : {}
 };
+
 export default function (state = initialState, action) {
     switch (action.type) {
             case 'USER_LOGGED_IN':
@@ -33,6 +37,12 @@ export default function (state = initialState, action) {
                 ...state,
                 applied : action.payload
             }
+
+            case SELECTED_CUSTOM_JOB_POST :
+                 console.log("in selected job post redux");
+                 console.log(action.payload);
+                 return Object.assign({},state,{customJobPost:action.payload});
+
           default:
     return state;
   }
