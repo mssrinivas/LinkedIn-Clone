@@ -5,6 +5,8 @@ var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var applications = require('./routes/applications');
+const multer = require('multer');
 var joblistings = require('./routes/joblistings.js');
 var jobpostings = require('./routes/jobpostings.js');
 
@@ -29,6 +31,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+app.use('/apply', applications);
+app.use('/applications', applications);
 app.use('/jobs',joblistings);
 app.use('/postjob',jobpostings);
 
@@ -38,6 +42,28 @@ app.get("/start",(request,response)=>{
 		msg : "Welcome to Linkedin"
 	});
 });
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './resumeFolder');
+    },
+    filename: (req, file, cb) => {
+    const newFilename = `${file.originalname}`;
+    console.log("filename : " + newFilename);
+    cb(null, newFilename);
+    },
+  });
+
+const uploadPhoto = multer({ storage });
+app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
+    console.log("Inside photo upload Handler");
+    res.writeHead(200,{
+         'Content-Type' : 'text/plain'
+         })
+});
+
+
+
 
 
 

@@ -1,6 +1,9 @@
 var mongoose = require('mongoose');
 var Applications = mongoose.model('Applications',{
     Job_id :{type : String, required : false},
+    CompanyName :{type : String, required : true},
+    JobTitle : {type : String, required : true},
+    JobLocation : {type : String, required : true},
     Applicant_id :{type : String, required : false},
     Email :{type : String, required: true},
     HowDidYouHear : {type : String, required: true},
@@ -14,5 +17,8 @@ var Applications = mongoose.model('Applications',{
     Race :{type : String, required : false},
     Veteran :{type : String, required : false},
     Disability :{type : String, required : false},
+    Applied :{type : Boolean, default : false, required : true},
+    Saved :{type : Boolean, default : false, required : true}
+   
 });
 module.exports = {Applications};

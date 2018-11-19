@@ -3,6 +3,7 @@ import JobListCard from './joblistcard.js';
 import JobDescription from './jobdescription.js';
 import {Launcher} from 'react-chat-window'
 import axios from 'axios';
+import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
 
 class JobListing extends Component {
@@ -31,12 +32,12 @@ class JobListing extends Component {
         });
     }
 
-    onSave(position){
-        console.log("Save Job clicked at :"+position);
+    saveJob(position){
+        
     }
 
     applyJob(position){
-        console.log("Apply Job clicked at :"+position);
+        
     }
 
     jobPostCardClicked(position){
@@ -71,6 +72,7 @@ class JobListing extends Component {
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         return (
             <div>
+                <Navbar />
                 <div className="row">
                     {error}
                     <div className={joblistClassName} style={{ borderRight: '1px solid #E0E0E0' }}>

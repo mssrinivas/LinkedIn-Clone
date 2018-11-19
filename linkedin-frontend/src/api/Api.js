@@ -2,6 +2,8 @@ import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
 import * as UTIL from './../util/utils';
+import axios from "axios";
+export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
 import BASE_URL from './../components/constants/constants.js';
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
@@ -69,6 +71,42 @@ export const userSignUp = function(userDetail){
         });
     };
 };
+
+// export const customApplyJob =  (values) =>  async dispatch =>  {
+//   console.log("applicant name inside custom apply action: " + values.firstname);
+  
+//     axios.defaults.withCredentials = true;
+//     const res = await axios.post(`${server_url}/apply/job/12345`, values)
+        
+//         console.log("response status : " + res.status);
+//         if(res.status == 200){
+//           // console.log("booking failure : " + res.data);
+//             dispatch({
+//               type :  'CUSTOM_APPLY_SUCCESS',
+//               payload: true
+//             })
+//           }
+       
+// }
+export const customApplyJob =  (values) =>  dispatch =>  {
+  console.log("applicant name inside custom apply action: " + values.firstname);
+  
+    axios.defaults.withCredentials = true;
+    axios.post(`${server_url}/apply/job/12345`, values)
+        .then(res => {
+          console.log("response status : " + res.status);
+          if(res.status == 200 && res.data == "Applied successfully"){
+            // console.log("booking failure : " + res.data);
+              dispatch({
+                type :  CUSTOM_APPLY_SUCCESS,
+                payload: true
+              })
+            }
+        })
+        
+        
+       
+}
 // export const ownerlogin = function(userDetail){
 //   return (dispatch) => {
 //     fetch(`${server_url}/users/ownerlogin`, {
