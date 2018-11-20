@@ -19,7 +19,8 @@ class JobListing extends Component {
             selectedIndex : null,
             customApply : false,
             easyApply : false,
-            error : null
+            error : null,
+            saveApplyJobMessage : null
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -38,11 +39,36 @@ class JobListing extends Component {
             }else{
                 this.setState({error : response.data.msg});
             }
-        });
+        }).catch((error)=>{
+            this.setState({error : "Connection timed out"});
+        })
     }
 
-    saveJob(position){
+    async saveJob(position){
         
+        const posting = this.state.postings[position];
+        const url = BASE_URL+"/jobs/save/"+posting._id;
+        const data = {
+            "companyName" :posting.companyName,
+            "jobTitle" : posting.jobTitle,
+            "jobLocation" : posting.location,
+            "applicant_id" :"5bf26ceacb627fb4927fbd99",
+            "email" :posting.Email,
+            "companyLogo" : posting.companyLogo,
+            "easyApply" : posting.easyApply
+        };
+
+        try {
+            const response = await axios.post(url,data);
+            switch(response.status){
+                case 200 : this.setState({saveApplyJobMessage:"Job saved successfully"});break;//alert(" Job saved successfully");
+                case 201 : this.setState({saveApplyJobMessage:"We could not save the job"});break;//alert("We could not save the job");break;
+                default : this.setState({saveApplyJobMessage:"There was a connection error"});break;//alert("There was a connection error");break;
+            }
+        } catch (error) {
+            alert("Could not connect to db");
+        }
+
     }
 
     applyJob(position){
@@ -81,13 +107,16 @@ class JobListing extends Component {
     render() {
         
         var redirectVar = null;
-        const {postings,error,selectedIndex,easyApply,customApply} = this.state;
+        var saveApplyMessageDiv = null;
+        var errorMessageDiv = null;
+        const {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage} = this.state;
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
-        
+        errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
+        saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
         
         if(customApply){ redirectVar = <Redirect to="/customapply" /> }
         //else if(easyApply){  redirectVar = <Redirect to="/easyapply" /> }
@@ -96,8 +125,9 @@ class JobListing extends Component {
             <div>
                 {redirectVar}
                 <Navbar />
+                {errorMessageDiv}
+                {saveApplyMessageDiv}
                 <div className="row">
-                    {error}
                     <div className="col-md-1"></div>
                     <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
                         {
