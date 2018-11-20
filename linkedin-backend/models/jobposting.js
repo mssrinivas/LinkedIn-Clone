@@ -14,5 +14,7 @@ var jobpostings = mongoose.model('jobpostings',{
     industryType : {type : String, required: true}, 
     experience : {type : Number, required: true}, 
     budget : {type : Number, required: true}, 
+    easyApply : {type : Boolean, default : false, required : true}
 });
+
 module.exports = {jobpostings};

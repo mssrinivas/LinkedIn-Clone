@@ -4,7 +4,7 @@ var {Applications} = require('./../models/application');
 
 //apply custom job
 
-router.post('/job/12345', function(req, res, next) {
+router.post('/job', function(req, res, next) {
     console.log("inside custom apply");
     console.log("req sent from custom apply", req.body);
     const customApplyDetail = new Applications({
@@ -23,7 +23,10 @@ router.post('/job/12345', function(req, res, next) {
         JobTitle : req.body.jobtitle,
         JobLocation : req.body.joblocation,
         Applied : true,
-        Saved : false
+        Saved : false,
+        companyLogo : req.body.companyLogo,
+        Job_id : req.body.id,
+        easyApply : req.body.easyApply
     });
     customApplyDetail.save().then((result)=> {
         console.log("apply successful : ",result);

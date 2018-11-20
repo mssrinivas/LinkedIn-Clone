@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import './apply.css';
 import axios from 'axios';
 import {BASE_URL} from './../../components/constants/constants.js';
+import Navbar from './../navbar/Navbar.jsx';
 class jobs extends Component {
     constructor(props){
         super(props);
@@ -35,7 +36,7 @@ class jobs extends Component {
                     <h4 className="companyname">{item.CompanyName}</h4>
                     <h5 className="joblocation">{item.Address}</h5></div>
                     <div className="col-md-2">
-                    <button className="applybut">Apply</button></div>
+                    <button className="applybut">{item.easyApply ? "Easy Apply" : "Apply"}</button></div>
                     <hr/>
                 
                    
@@ -43,7 +44,9 @@ class jobs extends Component {
             )
         })
         return ( 
+            
             <div className="back">
+            <Navbar />
                 <div className="headBar">
                 <ul className="navDash">
                 <li className="jobTypes">Saved Jobs</li>

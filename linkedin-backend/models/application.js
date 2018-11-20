@@ -18,7 +18,9 @@ var Applications = mongoose.model('Applications',{
     Veteran :{type : String, required : false},
     Disability :{type : String, required : false},
     Applied :{type : Boolean, default : false, required : true},
-    Saved :{type : Boolean, default : false, required : true}
+    Saved :{type : Boolean, default : false, required : true},
+    companyLogo : {type : String, required: false},
+    easyApply : {type : Boolean, default : false, required : true}
    
 });
 module.exports = {Applications};

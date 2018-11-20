@@ -109,9 +109,11 @@ fileChangeHandler = (e) => {
          selectedFile: e.target.files[0]
        })
  }
+
 submitApplication = (e) => {
     const { selectedFile } = this.state;
     e.preventDefault();
+    if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
         email : this.state.email,
         firstname : this.state.firstname,
@@ -125,9 +127,12 @@ submitApplication = (e) => {
         hear : this.state.hear,
         resume : selectedFile.name,
         cover_letter : this.state.cover,
-        company : "Mozilla",
-        jobtitle : "Machine learning Intern(Summer 2019)",
-        joblocation : "San Fransisco, California"
+        company : this.props.customJobPost.companyName,
+        jobtitle : this.props.customJobPost.jobTitle,
+        joblocation :this.props.customJobPost.location,
+        companyLogo : this.props.customJobPost.companyLogo,
+        id : this.props.customJobPost._id,
+        easyApply : this.props.customJobPost.easyApply,
 
     }
     console.log("selected file: " + selectedFile.name);
@@ -142,18 +147,22 @@ submitApplication = (e) => {
                 
     });
     this.props.customApplyJob(values)
+    }else {
+        alert("Resume should be in pdf format")
+    }
 }
     render() { 
         return (
             <div>
             <div className="headerback">
             <div className="applytitle">
-                <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/>
+                {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
+                <img className="image1" src={this.props.customJobPost.companyLogo}/>
             </div>
             <div> 
-            <h2 className="cent">Machine learning Intern(Summer 2019)</h2>
-            <h3 className="cent1">Mozilla</h3><br/>
-            <p className="cent2">San Fransisco, California</p></div>
+            <h2 className="cent">{this.props.customJobPost.jobTitle}</h2>
+            <h3 className="cent1">{this.props.customJobPost.companyName}</h3><br/>
+            <p className="cent2">{this.props.customJobPost.location}</p></div>
            
             </div>
             <div className="login-form">
@@ -269,7 +278,8 @@ submitApplication = (e) => {
 const mapStateToProps = state => {
     return {
        
-        applied : state.LoginReducer.applied
+        applied : state.LoginReducer.applied,
+        customJobPost : state.LoginReducer.customJobPost
      };
   };
   
