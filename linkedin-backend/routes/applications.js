@@ -24,7 +24,7 @@ router.post('/job', function(req, res, next) {
         JobLocation : req.body.joblocation,
         Applied : true,
         Saved : false,
-        companyLogo : req.body.companyLogo,
+        CompanyLogo : req.body.companyLogo,
         Job_id : req.body.id,
         easyApply : req.body.easyApply
     });
