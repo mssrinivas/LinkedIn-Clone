@@ -22,11 +22,11 @@ class JobDescription extends Component {
         return (
             <div className="row" style={{padding:'4px'}} >
                 <div className="col-md-2">
-                    <img className="w-100 contain" src={data.companyLogo} alt={data.companyName} />
+                    <img className="w-100 contain" src={data.CompanyLogo} alt={data.CompanyName} />
                 </div>
                 <div className="col-md-9">
-                    <p style={{fontSize:'18px'}}> {data.jobTitle} {data.jobFunction} </p>
-                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >{data.LinkedIn} {data.location} </p>
+                    <p style={{fontSize:'18px'}}> {data.JobTitle} {data.jobFunction} </p>
+                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >{data.LinkedIn} {data.JobLocation} </p>
                     <p style={{fontSize:'13px',color:'grey'}}>Posted on {data.postingDate}</p>
                     <div className="btn-group mt-2 pb-2">
                         <button type="button" onClick={this.saveHandler} className="btn btn-md" id="job-save-btn">Save</button>

@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var jobpostings = mongoose.model('jobpostings',{
-    companyName :{type : String, required: true},
+    CompanyName :{type : String, required: true},
     Email :{type : String, required: true},
-    companyLogo :{type : String, required: false},
-    jobTitle :{type : String, required: true},
+    CompanyLogo :{type : String, required: false},
+    JobTitle :{type : String, required: true},
     jobFunction :{type : String, required: true},
-    location :{type : String, required: true},
+    JobLocation :{type : String, required: true},
     numberofApplicants :{type : Number, required: false}, //number of applicants applied for this job
     seniorityLevel : {type : String, required: true},
     description :{type : String, required: true}, 

@@ -115,6 +115,7 @@ submitApplication = (e) => {
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
+        Applicant_id : "5bf26ceacb627fb4927fbd99",
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -127,10 +128,10 @@ submitApplication = (e) => {
         hear : this.state.hear,
         resume : selectedFile.name,
         cover_letter : this.state.cover,
-        company : this.props.customJobPost.companyName,
-        jobtitle : this.props.customJobPost.jobTitle,
-        joblocation :this.props.customJobPost.location,
-        companyLogo : this.props.customJobPost.companyLogo,
+        company : this.props.customJobPost.CompanyName,
+        jobtitle : this.props.customJobPost.JobTitle,
+        joblocation :this.props.customJobPost.JobLocation,
+        companyLogo : this.props.customJobPost.CompanyLogo,
         id : this.props.customJobPost._id,
         easyApply : this.props.customJobPost.easyApply,
 
@@ -157,12 +158,12 @@ submitApplication = (e) => {
             <div className="headerback">
             <div className="applytitle">
                 {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
-                <img className="image1" src={this.props.customJobPost.companyLogo}/>
+                <img className="image1" src={this.props.customJobPost.CompanyLogo}/>
             </div>
             <div> 
-            <h2 className="cent">{this.props.customJobPost.jobTitle}</h2>
-            <h3 className="cent1">{this.props.customJobPost.companyName}</h3><br/>
-            <p className="cent2">{this.props.customJobPost.location}</p></div>
+            <h2 className="cent">{this.props.customJobPost.JobTitle} {this.props.customJobPost.jobFunction}</h2>
+            <h3 className="cent1">{this.props.customJobPost.CompanyName}</h3><br/>
+            <p className="cent2">{this.props.customJobPost.JobLocation}</p></div>
            
             </div>
             <div className="login-form">

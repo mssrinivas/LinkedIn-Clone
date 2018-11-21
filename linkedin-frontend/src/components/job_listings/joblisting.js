@@ -49,12 +49,12 @@ class JobListing extends Component {
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
         const data = {
-            "companyName" :posting.companyName,
-            "jobTitle" : posting.jobTitle,
-            "jobLocation" : posting.location,
+            "companyName" :posting.CompanyName,
+            "jobTitle" : posting.JobTitle,
+            "jobLocation" : posting.JobLocation,
             "applicant_id" :"5bf26ceacb627fb4927fbd99",
             "email" :posting.Email,
-            "companyLogo" : posting.companyLogo,
+            "companyLogo" : posting.CompanyLogo,
             "easyApply" : posting.easyApply
         };
 
@@ -114,7 +114,7 @@ class JobListing extends Component {
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
-        const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].companyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
+        const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
         

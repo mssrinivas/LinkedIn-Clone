@@ -30,7 +30,7 @@ class jobsApplied extends Component {
             return(
                 <div className="row appliedjobs">
                     <div className="col-md-1">
-                    <img className="clogo" src={item.companyLogo}/>&nbsp;
+                    <img className="clogo" src={item.CompanyLogo}/>&nbsp;
                      </div>
                      <div className="col-md-11" >
                      <h3 className="jobtitle">{item.JobTitle}</h3>
