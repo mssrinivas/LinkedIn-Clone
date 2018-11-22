@@ -17,7 +17,7 @@ class Main extends Component {
             <Switch>
                 <Route exact path="/listings" component={JobListing} />
                 <Route exact path="/postjob" component={JobPostings} />
-                <Route exact path="/listallconnections" component={ListAllConnections} />
+                <Route exact path="/mynetworks" component={ListAllConnections} />
                 <Route exact path="/" component={Login} />
             </Switch>
             </Router>

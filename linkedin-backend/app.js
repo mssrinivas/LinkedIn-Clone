@@ -5,9 +5,10 @@ var cors = require('cors');
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var listusernetwork = require('./routes/listusernetworks');
+// var {User} = require('./models/user');
 
-
-const url = "http://localhost:3000";
+const url = "http://localhost:3002";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
 
@@ -27,6 +28,10 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 
 app.use('/users', users);
+
+app.use('/user', listusernetwork);
+
+
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
