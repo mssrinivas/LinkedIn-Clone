@@ -8,6 +8,10 @@ import EasyModal from './easyApplyModal.js';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import {CUSTOM_APPLY_SAVED_JOB} from './../constants/reduxActionConstants.js';
+import { ReactPDF} from 'react-pdf';
+import PDF from 'react-pdf-js';
+import sample from '../image/EBT_BO.pdf';
+import { Document, Page } from 'react-pdf';
 class jobs extends Component {
     constructor(props){
         super(props);
@@ -15,22 +19,51 @@ class jobs extends Component {
         this.state = {
             results:[],
             easyButton : false,
-            customButton : false
+            customButton : false,
+            dashboard : "",
+            numPages: null,
+    pageNumber: 1,
+    fileName : ""
 
         }
         this.applySavedJob = this.applySavedJob.bind(this);
+        this.onDocumentLoad = this.onDocumentLoad.bind(this);
+        this.fileChangeHandler = this.fileChangeHandler.bind(this);
+    }
+    onDocumentLoad = ({ numPages }) => {
+        this.setState({ numPages });
+      }
+      fileChangeHandler = (e) => {
+        this.setState({
+            selectedFile: e.target.files[0]
+          })
     }
     componentWillMount(){
         
         console.log("inside componentdidmount of saved jobs")
          axios.get(`${BASE_URL}/applications/saved`)
              .then((response) => {
-            console.log("response data : " + response.data);
+            console.log("response data : " + JSON.stringify(response.data));
         
             this.setState({
                 results : this.state.results.concat(response.data),
             });
         });
+    //     axios.post(`${BASE_URL}/download/` + "EBT_BO.pdf")
+    //                  .then(response => {
+    //                      console.log("---\ninside response of download--- "+ response.data);
+    //                      this.setState( {fileName :response.data})
+                            
+                        
+    //                      var imagePreview1 = 'data:application/pdf;base64, ' + response.data;
+                        
+    //                     //  var propertyArr = nextProps.dashboard.slice();
+    //                     //  propertyArr[i].photos = imagePreview1;
+    //                     this.setState({
+    //                       dashboard: imagePreview1
+    //                      });
+    //                  });
+    // }
     }
     applySavedJob = (Item, e) => {
         const {results} = this.state
@@ -46,10 +79,19 @@ class jobs extends Component {
 
     }
     render() { 
+        const { pageNumber, numPages } = this.state;
         var redirectVar = null;
         if(this.state.customButton){ redirectVar = <Redirect to="/customapply" /> }
-       
+        
+
         let jobItem = this.state.results.map(item =>{
+            var applyButton = null;
+            if(item.easyApply){
+                applyButton = <button type="submit" onClick={this.applySavedJob.bind(this, item)} className="applybut" data-toggle="modal" data-target="#easyApplyModal">Easy Apply</button>
+
+            }else{
+                applyButton = <button type="submit" onClick={this.applySavedJob.bind(this, item)} className= "applybut">Apply</button>
+            }
             return(
                 <div className="row appliedjobs">
                     <div className="col-md-1">
@@ -60,8 +102,9 @@ class jobs extends Component {
                     <h4 className="companyname">{item.CompanyName}</h4>
                     <h5 className="joblocation">{item.JobLocation}</h5></div>
                     <div className="col-md-2">
-                    <button type="submit" onClick={this.applySavedJob.bind(this, item)} className="applybut">{item.easyApply ? "Easy Apply" : "Apply"}</button></div>
-                    
+                    {/* //</div></div>/<button type="submit" onClick={this.applySavedJob.bind(this, item)} className="applybut" className= {item.easyApply} ? "applybut" data-toggle="modal" data-target="#easyApplyModal" : className="applybut">{item.easyApply ? "Easy Apply" : "Apply"} </button></div> */}
+                    {applyButton}
+                    </div>
                     <hr/>
                 
                    
@@ -70,6 +113,7 @@ class jobs extends Component {
         })
         return ( 
             
+
             <div className="back">
             {redirectVar}
             <Navbar />
@@ -83,11 +127,59 @@ class jobs extends Component {
                 <br/>
                 <h4 style={{'margin-top':'30px','margin-left':'100px'}}>Saved Jobs({this.state.results.length})</h4>
                 <hr/>
+                
                 {jobItem}
                     
-                {/* <EasyModal/> */}
-                </div>
                 
+                </div>
+                <div class="modal fade" id="easyApplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"> 
+      <div class="modal-header">
+        <h4 className="modalhead">Apply to Mozilla</h4>
+    </div>
+        <div class="modal-body mx-3">
+        <div className="spacing">
+            <label for="fname">FirstName</label>
+            <input type="text" id="fname" defaultValue="Sayali" className="textemail"/>
+        </div>
+        <div className="spacing">
+            <label for="fname">LastName</label>
+            <input type="text" id="fname" value="Sayali" className="textemail"/>
+        </div>
+        <div className="spacing">
+            <label for="emailid">Email</label>
+            <input type="email" id="emailid" value="saypatil12345@yahoo.com" className="textemail1"/>
+        </div>
+        <div className="spacing">
+            <label for="emailid">Resume</label>
+            
+             {/* <Link to="/test.pdf" target = "_blank">Download Pdf</Link> */}
+             <Link to="/resumes/EBT_BO.pdf" target = "_blank">EBT_BO.pdf</Link>
+            {/* <Document
+          file="http://localhost:3001/resumeFolder/EBT_BO.pdf"
+          onLoadSuccess={this.onDocumentLoad}
+        >
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <p>Page {pageNumber} of {numPages}</p>  */}
+            {/* <ReactPDF
+            file={{
+                url: 'http://localhost:3001/public/uploads/EBT_BO.pdf'
+            }}
+            /> */}
+
+            <input type="file" id="emailid" name="selectedFile" onChange={this.fileChangeHandler} className="textemail2"/>
+        </div>
+        </div>
+      <div class="modal-footer d-flex justify-content-center">
+      {/* <button className="but" >Cancel</button> */}
+      <button type="button" className="but" data-dismiss="modal">Cancel</button>
+      <button className="but" type="submit">Submit Application</button>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
          );
     }

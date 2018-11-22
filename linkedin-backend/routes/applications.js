@@ -103,7 +103,8 @@ router.post('/job', function(req, res, next) {
                     Saved : false,
                     CompanyLogo : req.body.companyLogo,
                     Job_id : req.body.id,
-                    easyApply : req.body.easyApply
+                    easyApply : req.body.easyApply,
+                    appliedDate : req.body.appliedDate
                 });
                 customApplyDetail.save().then((result)=> {
                     console.log("apply successful : ",result);
