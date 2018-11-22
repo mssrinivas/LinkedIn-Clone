@@ -30,7 +30,8 @@ class UserProfileFirst extends Component {
       skills : '',
       experience : '',
       email : '',
-      photo : ''
+      photo : '',
+      profile_img : ''
     }
     this.onClickStudent =  this.onClickStudent.bind(this);
     this.onClickProfessional = this.onClickProfessional.bind(this);
@@ -64,7 +65,10 @@ class UserProfileFirst extends Component {
     })
   }
   componentWillMount(){
-    this.userDetails.email = this.props.current_user;
+    this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
+    this.userDetails.first_name = this.props.currentUserDetails.user_Details.first_name;
+    this.userDetails.last_name = this.props.currentUserDetails.user_Details.last_name;
+    this.userDetails.email = this.props.currentUser;
   }
   handleUpload=(event)=> {
         event.preventDefault();
@@ -98,6 +102,7 @@ onClickContinue = () => {
 }
 onSubmitClick(e) {
   e.preventDefault();
+  this.userDetails.profile_img = 'http://localhost:3001/uploads/'+this.props.currentUserDetails.applicant_id+".jpeg";
   this.props.profileUpdate(this.userDetails);
 }
   render ()
@@ -203,7 +208,6 @@ function mapStateToProps(state) {
   console.log("State",state);
     return {
        currentUser: state.LoginReducer.current_user,
-
        currentUserDetails: state.LoginReducer.currentUserDetails,
        userProfileDetails: state.LoginReducer.userProfileDetails
     };

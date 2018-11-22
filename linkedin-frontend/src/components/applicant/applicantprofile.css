@@ -1,3 +1,4 @@
+
 .image-class{
   width:100%;
   height: 200px;
@@ -8,7 +9,8 @@
   width: 200px;
   border: 5px solid white;
   display: float;
-  margin-top: -200px;
+  height: 140px;
+  margin-top: -80px;
   margin-left: 100px;
 }
 .user-first{
@@ -161,4 +163,189 @@
 }
 .upload{
   margin-top: -600px;
+}
+.card-display{
+  width: 80%;
+  margin-left: 100px;
+}
+.profile{
+  width: 150px;
+  margin-left: 50px;
+}
+.profile-headline{
+  font-size: 20px;
+  font-family: Times New Roman;
+  font-weight: 900px;
+  margin-left: 50px;
+
+}
+.profile-area{
+  font-size: 20px;
+  font-family: Times New Roman;
+  font-weight: 900px;
+  margin-left: 50px;
+}
+.profile-name{
+  font-size: 26px;
+  font-family: Times New Roman;
+  font-weight: bold;
+  margin-left: 50px;
+}
+.card-profilestrength{
+  position: relative;
+  margin-top: 30px;
+  margin-left: 100px;
+  width: 80%;
+}
+.profile-resume{
+      border-radius: 1px;
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+      padding: 5px;
+      width: 640px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-color: #f3f6f8;
+      position: relative;
+      margin-left: 50px;
+}
+.resume-image{
+  font-size: 20px;
+  vertical-align: baseline;
+  background: 0 0;
+  width: 106px;
+
+}
+.resume-pdf{
+  margin-left: 250px;
+  margin-top: 100px;
+  float: right;
+  position: absolute;
+}
+.connection-gly{
+  margin-left: 850px;
+  margin-top: 20px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.connection-link{
+  margin-left: 900px;
+  margin-top: 20px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.contact-gly{
+  margin-left: 850px;
+  margin-top: -30px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.contact-link{
+  margin-left: 900px;
+  margin-top: -30px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.edit-gly{
+  margin-left: 1040px;
+  margin-top: -50px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.edit-link{
+  margin-left: 900px;
+  margin-top: -20px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.name-class{
+  margin-left: 0px;
+  width:450px;
+  height: 40px;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+  text-align: left;
+  padding:10px;
+}
+.image-model{
+  position: relative;
+  width:100%;
+  height: 200px;
+  display: float;
+  margin-top: 50px;
+  margin-left: -500px;
+  margin-right: 750px;
+}
+.applicant-model{
+  position: relative;
+  border-radius: 50%;
+  width: 200px;
+  border: 5px solid white;
+  display: float;
+  height: 140px;
+  margin-top: 100px;
+  margin-left: -1900px;
+  margin-right: 750px;
+}
+.custommodel{
+  width: 1000px;
+  margin-left: -200px;
+  float: left;
+}
+.about-class{
+  text-align: left;
+  margin-left: 0px;
+  margin-top: 0px;
+  width:918px;
+  font-weight: 500;
+  font-size: 16px;
+  padding:10px;
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+}
+.lastname-class{
+  margin-left: -450px;
+  width:450px;
+  height: 40px;
+  margin-top: 20px;
+  font-weight: 500;
+  font-size: 16px;
+  border: 1px solid black;
+  border-radius: 2px;
+  background-color: white;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+  text-align: left;
+  padding:10px;
+  position: relative;
+}
+.label-class{
+  margin-left: 0px;
+  margin-top: 2px;
+  width:305px;
+  font-weight: 200;
+  font-size: 16px;
+  text-align: left;
+  position: relative;
+}
+.labellast-class{
+  position: relative;
+  margin-left: -450px;
+  margin-top: 2px;
+  width:305px;
+  font-weight: 200;
+  font-size: 16px;
+  text-align: left;
 }

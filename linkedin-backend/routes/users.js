@@ -28,6 +28,10 @@ const storage=multer.diskStorage({
 });
 
 const fileFilter =(req,file, cb) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
+        return cb(new Error('Only image files are allowed!'),false);
+    }
+
   if(file.mimetype==='image/jpeg' || file.mimetype==='image/png' || file.mimetype==='image/jpg') {
     cb(null,true);
   }
@@ -133,7 +137,8 @@ router.post('/signup', function(req, res, next) {
                 message : "Applicant Profile Created Successfully",
                 server_token: server_token,
                 applicant_id: result._id,
-                current_user: result.email
+                current_user: result.email,
+                user_Details: result
               });
             })
             .catch(err => {
@@ -152,10 +157,10 @@ router.post('/signup', function(req, res, next) {
 });
 //=======================================================================
 router.post('/updateProfile', function (req,res,next) {
-	console.log("inside update profile");
+	console.log("inside update profile",req.body);
   var userDetails = {
-          firstName : req.body.firstName,
-          lastName : req.body.lastName,
+          firstName :req.body.first_name,
+          lastName : req.body.last_name,
           address : req.body.address,
           state : req.body.state,
           city : req.body.city,
@@ -165,17 +170,18 @@ router.post('/updateProfile', function (req,res,next) {
           school : req.body.school,
           skills : req.body.skills,
           profileSummary : req.body.profileSummary,
-          email : req.body.current_user,
+          email : req.body.email,
           applicant_id : req.body.applicant_id,
           profile_img : req.body.profile_img
   };
-  User.updateOne({applicant_id : userDetails.applicant_id},{$set:{
+  User.updateOne({applicant_id : req.body.applicant_id},{$set:{
     first_name : userDetails.firstName,
     last_name :userDetails.lastName,
     email : userDetails.email,
     address :userDetails.address,
     state :userDetails.state,
     city :userDetails.city,
+    school :userDetails.school,
     zip_code :userDetails.zipCode,
     experience :userDetails.experience,
     education :userDetails.education,
@@ -186,8 +192,14 @@ router.post('/updateProfile', function (req,res,next) {
     .exec()
     .then(doc=> {
       console.log("Data Obtained after updation is : ", doc);
-      res.status(200).json({
-          message : "User profile updated"
+      User.find({"applicant_id":req.body.applicant_id})
+      .exec()
+      .then(result => {
+        console.log("Response sent after updation is : ", result);
+        res.status(200).json({
+            message : "User profile updated",
+            userProfileDetails : result[0]
+        });
       });
     })
     .catch(err => {

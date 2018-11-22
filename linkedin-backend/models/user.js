@@ -24,13 +24,17 @@ var userschema = mongoose.Schema({
         type : Number
     },
     address : {
-        type : String
+        type : String,
     },
     state : {
-        type : String
+        type : String,
+
     },
     city : {
         type : String
+    },
+    country : {
+      type : String
     },
     zip_code : {
         type : Number
@@ -50,9 +54,24 @@ var userschema = mongoose.Schema({
     profile_summary : {
         type : String
     },
+    headline : {
+      type : String
+    },
+    job_title : {
+      type : String
+    },
     profile_img : {
         type : String
-    }
+    },
+    resume_path: [
+
+    ],
+    saved_job : [
+
+    ],
+    applied_job:[
+
+    ]
 });
 
 const User = mongoose.model('User',userschema);

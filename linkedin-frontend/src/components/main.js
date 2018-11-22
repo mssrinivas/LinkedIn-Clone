@@ -27,6 +27,8 @@ class Main extends Component {
                 <Route exact path="/jobs" component={Jobs} />
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
+                <Route exact path="/profilefirst" component={UserProfileFirst} />
+                <Route exact path="/userprofile" component={UserProfile} />
             </Switch>
             </Router>
             </Provider>

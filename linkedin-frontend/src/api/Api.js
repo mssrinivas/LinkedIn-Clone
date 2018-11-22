@@ -38,7 +38,7 @@ export const userLogin = function(userDetail){
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
-         history.push('/profilefirst');
+         history.push('/userprofile');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -90,7 +90,7 @@ export const profileUpdate = function(userDetail){
      }).then(result=>{
          console.log("result",result)
          dispatch(userProfileUpdateAction(result));
-         // history.push('/');
+         history.push('/userprofile');
   }).catch(err => {
     alert(err);
           console.log("Error while updating!!!");
@@ -128,7 +128,7 @@ export const profileUpdate = function(userDetail){
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-  
+
     axios.defaults.withCredentials = true;
     axios.post(`${server_url}/apply/job/12345`, values)
         .then(res => {
