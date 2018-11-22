@@ -52,7 +52,10 @@ var userschema = mongoose.Schema({
     },
     profile_img : {
         type : String
-    }
+    },
+    resume_path: {type : Array, required : false},
+    saved_job : {type : Array, required : false},
+    applied_job:{type : Array, required : false}
 });
 
 const User = mongoose.model('User',userschema);

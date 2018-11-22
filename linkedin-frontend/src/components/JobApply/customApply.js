@@ -116,7 +116,7 @@ submitApplication = (e) => {
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
-        Applicant_id : "90f26ceacb627fb4927fbd99",
+        Applicant_id : "94f26ceacb627fb4927fbd99",
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -137,11 +137,12 @@ submitApplication = (e) => {
         easyApply : this.props.customJobPost.easyApply,
         appliedDate : new Date()
     }
+    let Applicant_id = "94f26ceacb627fb4927fbd99";
     console.log("selected file: " + selectedFile);
     console.log("selected file name: " + selectedFile.name);
-    let formData = new FormData();
+    const formData = new FormData();
+    formData.append('applicant_id', Applicant_id);
     formData.append('selectedFile', selectedFile);
-    formData.append('Applicant_id', "82f26ceacb627fb4927fbd99");
     axios.post(`${BASE_URL}/uploadresume`, formData)
                      .then((response) => {
                          if(response.status == 200){

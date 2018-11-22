@@ -1,12 +1,9 @@
-var mongoose = require('mongoose');
+    var mongoose = require('mongoose');
 
-var Messages = mongoose.model('Messages',{
-    fromEmail : {type : String, required : true},
-    toEmail : {type : String, required : true},
-    MsgIn : {type : Array, required : false},
-    
-  
-    
-});
+    var Messages = mongoose.model('Messages',{
+        Applicant_id : {type : String, required : true},
+        Recruiter_id : {type : String, required : true},
+        Chat : {type : Array, required : false},
+    });
 
-module.exports = {Messages};
+    module.exports = {Messages};

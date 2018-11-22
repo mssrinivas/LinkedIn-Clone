@@ -6,11 +6,13 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var applications = require('./routes/applications');
+var messages = require('./routes/messages');
 const multer = require('multer');
 var jobs = require('./routes/jobs.js');
 //var fs = require('fs');
 const path = require('path');
- var fs1 =require('file-system');
+ 
+ var fs=require('file-system');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
@@ -36,7 +38,7 @@ app.use('/users', users);
 app.use('/apply', applications);
 app.use('/applications', applications);
 app.use('/jobs',jobs);
-
+app.use('/messages', messages);
 app.get("/start",(request,response)=>{
 	response.status(200).json({
 		msg : "Welcome to Linkedin"
@@ -56,12 +58,12 @@ app.get("/start",(request,response)=>{
 //     },
 // });
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: function(req, file, cb){
     console.log("req body " + JSON.stringify(req.body))
-    console.log("applicant id passed in destination : " + req.body.Applicant_id);
+    console.log("applicant id passed in destination : " + req.body.applicant_id);
     console.log("selected file  : " + req.body.selectedFile);
-    var currentFolder = 'public/resumeFolder/'+req.body.Applicant_id+'/';
-    fs1.mkdir(currentFolder, function(err){
+    var currentFolder = 'public/resumeFolder/'+req.body.applicant_id+'/';
+    fs.mkdir(currentFolder, function(err){
       if(!err) {
         console.log("no error : " + err);
         cb(null , currentFolder);
@@ -70,22 +72,26 @@ const storage = multer.diskStorage({
         cb(null , currentFolder);
       }
     });
-    // cb(null, './resumeFolder');
-
+   
   },
-  filename: (req, file, cb) => {
+  filename: function(req, file, cb){
   const newFilename = `${file.originalname}`;
-  console.log("applicant id passed in filename: " + req.body.Applicant_id);
+  console.log("applicant id passed in filename: " + req.body.applicant_id);
   // console.log("request applicant id :" + req.body.applicant_id);
   console.log("filename : " + newFilename);
-  cb(null, newFilename);
+  cb(null, Date.now()+'-'+newFilename);
   
   }
 });
 
-const uploadPhoto = multer({ storage });
-app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res, next) => {
-  console.log("applicant id in uploadPhoto " + req.body.Applicant_id)
+const upload = multer({ 
+  storage:storage,
+  limits: {
+    fileSize :1024*1024*5
+  }
+ });
+app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next){
+  console.log("applicant id in uploadPhoto " + req.body.applicant_id)
     console.log("Inside photo upload Handler");
     res.writeHead(200,{
          'Content-Type' : 'text/plain'

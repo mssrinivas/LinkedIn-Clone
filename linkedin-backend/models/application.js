@@ -21,6 +21,6 @@ var Applications = mongoose.model('Applications',{
     Race :{type : String, required : false},
     Veteran :{type : String, required : false},
     Disability :{type : String, required : false},
-    appliedDate : {type : Date, required: true}
+    appliedDate : {type : Date, required: false}
 });
 module.exports = {Applications};

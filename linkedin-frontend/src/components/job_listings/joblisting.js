@@ -53,7 +53,7 @@ class JobListing extends Component {
             "companyName" :posting.CompanyName,
             "jobTitle" : posting.JobTitle,
             "jobLocation" : posting.JobLocation,
-            "applicant_id" :"5bf26ceacb627fb4927fbd99",
+            "applicant_id" :this.props.user._id,
             "email" :posting.Email,
             "companyLogo" : posting.CompanyLogo,
             "easyApply" : posting.easyApply

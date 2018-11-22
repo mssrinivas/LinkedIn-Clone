@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import {CUSTOM_APPLY_SAVED_JOB} from './../constants/reduxActionConstants.js';
 import { ReactPDF} from 'react-pdf';
 import PDF from 'react-pdf-js';
-import sample from '../image/EBT_BO.pdf';
+
 import { Document, Page } from 'react-pdf';
 class jobs extends Component {
     constructor(props){
@@ -41,7 +41,8 @@ class jobs extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of saved jobs")
-         axios.get(`${BASE_URL}/applications/saved`)
+        let ID = this.props.user._id;
+         axios.get(`${BASE_URL}/applications/saved/`+ID)
              .then((response) => {
             console.log("response data : " + JSON.stringify(response.data));
         
@@ -185,7 +186,9 @@ class jobs extends Component {
     }
 }
 const mapStateToProps = (state) =>{
-    return {}
+    return {
+        user : state.LoginReducer.currentUserDetails
+    }
 }
 
 const mapDispatchToProps = (dispatch) =>{
