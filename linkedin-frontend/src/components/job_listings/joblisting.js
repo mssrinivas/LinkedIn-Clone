@@ -52,13 +52,8 @@ class JobListing extends Component {
         const data = {
             "companyName" :posting.CompanyName,
             "jobTitle" : posting.JobTitle,
-<<<<<<< HEAD
-            "jobLocation" : posting.Location,
-            "applicant_id" : this.props.user._id,
-=======
             "jobLocation" : posting.JobLocation,
             "applicant_id" :"5bf26ceacb627fb4927fbd99",
->>>>>>> developer
             "email" :posting.Email,
             "companyLogo" : posting.CompanyLogo,
             "easyApply" : posting.easyApply

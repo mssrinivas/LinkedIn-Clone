@@ -7,6 +7,7 @@ class EasyApplyModal extends Component {
     
     constructor(props){
         super(props);
+        this.submitApplicationHandler = this.submitApplicationHandler.bind(this);
     }
 
     /*
@@ -16,8 +17,11 @@ class EasyApplyModal extends Component {
     */
 
    submitApplicationHandler = (e)=>{
+        e.preventDefault();
+        console.log(e.target);
         var form = serialize(e.target, { hash: true });
-        this.props.onSubmitApplication(form);
+        console.log(form);
+        //this.props.onSubmitApplication(form);
    }
 
     render() { 
@@ -35,19 +39,19 @@ class EasyApplyModal extends Component {
         <div class="modal-body mx-3">
         <div className="spacing">
             <label for="firstname">FirstName</label>
-            <input type="text" id="firstname" defaultValue={user.first_name} className="textemail"/>
+            <input type="text" name="firstname" id="firstname" defaultValue={user.first_name} className="textemail"/>
         </div>
         <div className="spacing">
             <label for="lastname">LastName</label>
-            <input type="text" id="lastname" defaultValue={user.last_name}  className="textemail"/>
+            <input type="text" name="lastname" id="lastname" defaultValue={user.last_name}  className="textemail"/>
         </div>
         <div className="spacing">
             <label for="email">Email</label>
-            <input type="email" id="email" defaultValue={user.email} className="textemail1"/>
+            <input type="email" name="email" id="email" defaultValue={user.email} className="textemail1"/>
         </div>
         <div className="spacing">
             <label for="resume">Resume</label>
-            <input type="file" id="resume"  className="textemail2"/>
+            <input type="file" name="resume" id="resume" className="textemail2"/>
         </div>
         </div>
       <div class="modal-footer d-flex justify-content-center">
