@@ -20,7 +20,7 @@ class JobListCard extends Component {
                     <img className="w-100 contain" id="logo-company-img" src={data.CompanyLogo} alt={data.CompanyName} />
                 </div>
                 <div className="col-md-8">
-                    <p className="position-name" style={{color:'#0073b1',fontSize:'16px'}}> {data.JobTitle} {data.jobFunction} </p>
+                    <p className="position-name" style={{color:'#0073b1',fontSize:'16px'}}> {data.JobTitle} {data.JobFunction} </p>
                     <p className="company-name" style={{fontSize:'14px',color:'black'}} > {data.CompanyName} </p>
                     <p className="location" style={{fontSize:'13px',color:'grey',fontStyle:'bold'}} > {data.JobLocation} </p>
                     <p className="description" style={{fontSize:'14px'}} > {data.description.substring(0, data.description.length>100?100:data.description.length)}... </p>

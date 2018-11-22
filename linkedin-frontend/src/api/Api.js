@@ -38,7 +38,8 @@ export const userLogin = function(userDetail){
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
-         history.push('/profilefirst');
+         //history.push('/profilefirst');
+         history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");

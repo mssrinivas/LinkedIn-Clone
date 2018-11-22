@@ -7,7 +7,7 @@ var jobpostings = require('../db/jobpostings.js');
 router.get("/search",(request,response,next)=>{
     console.log("Inside Jobs search");
     jobpostings.searchJobs(null).then((joblistings)=>{
-        
+        console.log(joblistings);
         response.status(200).json({ joblistings });
 
     }).catch((msg)=>{

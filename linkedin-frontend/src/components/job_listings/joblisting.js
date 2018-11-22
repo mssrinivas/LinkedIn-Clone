@@ -8,11 +8,11 @@ import axios from 'axios';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
 import {SELECTED_CUSTOM_JOB_POST} from './../constants/reduxActionConstants.js';
+import EasyApplyModal from './EasyApplyModal/easyApplyModal.js';
 
 class JobListing extends Component {
     constructor(props){
         super(props)
-        
         this.state = {
             postings :[],
             messageList: [],
@@ -26,6 +26,7 @@ class JobListing extends Component {
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
         this.saveJob = this.saveJob.bind(this);
         this.applyJob = this.applyJob.bind(this);
+        this.easyApply = this.easyApply.bind(this);
     }
 
     componentDidMount(){
@@ -61,12 +62,13 @@ class JobListing extends Component {
         try {
             const response = await axios.post(url,data);
             switch(response.status){
-                case 200 : this.setState({saveApplyJobMessage:"Job saved successfully"});break;//alert(" Job saved successfully");
-                case 201 : this.setState({saveApplyJobMessage:"We could not save the job"});break;//alert("We could not save the job");break;
-                default : this.setState({saveApplyJobMessage:"There was a connection error"});break;//alert("There was a connection error");break;
+                case 200 : this.setState({saveApplyJobMessage:"Job saved successfully",error:null});break;//alert(" Job saved successfully");
+                case 201 : this.setState({saveApplyJobMessage:null,error:"We could not save the job"});break;//alert("We could not save the job");break;
+                default : this.setState({saveApplyJobMessage:null,error:"There was a connection error"});break;//alert("There was a connection error");break;
             }
         } catch (error) {
-            alert("Could not connect to db");
+            //alert("Could not connect to db");
+            this.setState({saveApplyJobMessage:null,error : "Could not connect to db"});
         }
 
     }
@@ -80,6 +82,12 @@ class JobListing extends Component {
            this.props.jobPost(postings[position]);
             this.setState({customApply : true});
        } 
+    }
+
+    easyApply=(data,position)=>{
+        console.log("in easy apply of joblistings");
+        console.log(data);
+        console.log(position);
     }
 
     jobPostCardClicked(position){
@@ -113,7 +121,7 @@ class JobListing extends Component {
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
-        const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
+        const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} onEasyApply={this.easyApply} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
@@ -127,6 +135,7 @@ class JobListing extends Component {
                 <Navbar />
                 {errorMessageDiv}
                 {saveApplyMessageDiv}
+                
                 <div className="row">
                     <div className="col-md-1"></div>
                     <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
@@ -150,7 +159,9 @@ class JobListing extends Component {
 }
 
 const mapStateToProps = (state) =>{
-    return {}
+    return {
+        user : state.LoginReducer.currentUserDetails
+    }
 }
 
 const mapDispatchToProps = (dispatch) =>{
