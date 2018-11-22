@@ -1,61 +1,44 @@
 var express = require('express');
 var router = express.Router();
-var utils = require('./../util/utils');
-var {mongoose} = require('./../db/mongoose');
-const multer = require('multer');
-var app = express();
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-var session = require('express-session');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-// var kafka = require('./../kafka/client');
-var {JOBPOSTING} = require('./../models/jobpostings');
+var {JobPostings} = require('./../models/jobpostings');
 
-router.post('/postjob', function(req, res, next) {
-
-    const JpbDetails=new JOBPOSTING({
+router.post('/postjob', function(req, res) {
+    console.log("Received Body ", req.body)
+     const JobDetails = new JobPostings({
         companyName : req.body.Company,
         Email : req.body.RecommendedMail,
-        companyLogo : "",
+        companyLogo : "https://img.icons8.com/color/200/5e6d77/yahoo.png",
         jobTitle : req.body.JobTitle,
         jobFunction : req.body.JobFunction,
         location : req.body.Location,
         numberofApplicants : 0,
+        easyApply : req.body.EasyApply,
         seniorityLevel : req.body.SeniorityLevel,
-        description : req.body.JobDescription, 
-        postingDate : "", 
+        description : req.body.JobDescription,
+        postingDate : new Date(),
         employmentType : req.body.EmploymentType, 
-        industryType : req.body.Industry, 
-        experience : req.body.Experience, 
+        industryType : req.body.Industry,
+        experience : req.body.Experience,
         degree: req.body.Degree,
-        budget : req.body.Budget, 
+        budget : 120,
+        recruiterName : "Srinivas"
     });
-    User.find({"email":req.body.email})
-      .exec()
-      .then(doc=>{
-          if(doc==undefined || doc.length==0) {
-              userDetails.save().then(result=> {
-                  console.log("response obtained is : ", result);
-                  const server_token = jwt.sign({uid:result.email},utils.server_secret_key);
-                  console.log("UID from JWT: ", result.email);
-                  res.status(200).json({
-                  message : "Applicant Profile Created Successfully",
-                  server_token: server_token,
-                  current_user: result.email
-                });
-              })
-              .catch(err => {
-                console.log("error obtained is : ", err);
-              })
-          }
-          else {
-              res.status(400).json({
-              message : "Applicant is already registered, please login"
-              });
-          }
-      })
-      .catch(err=> {
-        console.log("error while checking if user is already signed in or not: ", err);
-      })
+    console.log("----------")
+    console.log("NEW JSON: ", JobDetails)
+    JobDetails.save().then((result)=> {
+        console.log("apply successful : ",result);
+                         res.writeHead(200,{
+                             'Content-Type' : 'application/json'
+                         });
+                         res.end(JSON.stringify("Applied successfully"));
+    },(err)=>{
+        console.log(err)
+        console.log("Error While applying custom job");
+        res.writeHead(400,{
+            'Content-Type' : 'application/json'
+        });
+        res.end(JSON.stringify("Failure"));
+    })
   });
+
+  module.exports = router;

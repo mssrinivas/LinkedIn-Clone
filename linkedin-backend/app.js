@@ -8,7 +8,7 @@ var users = require('./routes/users');
 var applications = require('./routes/applications');
 const multer = require('multer');
 var joblistings = require('./routes/joblistings.js');
-var jobpostings = require('./routes/jobpostings.js');
+var jobpostings = require('./routes/postjob.js');
 
 
 const url = "http://localhost:3000";
@@ -34,7 +34,7 @@ app.use('/users', users);
 app.use('/apply', applications);
 app.use('/applications', applications);
 app.use('/jobs',joblistings);
-app.use('/postjob',jobpostings);
+app.use('/',jobpostings)
 
 
 app.get("/start",(request,response)=>{
@@ -61,11 +61,6 @@ app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
          'Content-Type' : 'text/plain'
          })
 });
-
-
-
-
-
 
 var server = app.listen(3001,()=>{
     console.log("Linkedin server has started to listen at http://localhost:3001" );

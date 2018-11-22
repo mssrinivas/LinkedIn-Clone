@@ -10,9 +10,8 @@ import { withStyles } from '@material-ui/core/styles';
 import Stepper from 'react-stepper-horizontal';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
-
-
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
+var swal = require('sweetalert')
 class JobPostings extends Component {
    constructor(props) {
       super(props);
@@ -24,12 +23,16 @@ class JobPostings extends Component {
         Industry : [],
         JobDescription : "",
         RecommendedMail : "",
+        SeniorityLevel : "",
         Info : "",
         Skills : [],
         Experience : 0,
         Degree : [],
         Budget : 15,
         EmploymentType : "",
+        RecruiterName : "Srinivas",
+        PostingDate : "",
+        EasyApply : 0,
         RedirecttoDescription: true,
         RedirecttoQualification: false,
         RedirecttoBudget : false,
@@ -97,12 +100,11 @@ class JobPostings extends Component {
           this.setState({RedirecttoBudget : true })
     }
     console.log(this.state.currentStep)
-
   }
 
   onClickBack() {
     const { steps, currentStep } = this.state;
-    if(this.state.currentStep <=3)
+    if(this.state.currentStep <= 3)
     this.setState({
         currentStep: currentStep - 1,
     });
@@ -131,7 +133,10 @@ class JobPostings extends Component {
   }
 
 inputHandler = (event) => {
+  console.log("Here")
+    console.log(event.target.value)
     this.setState({[event.target.name] : event.target.value})
+    console.log("State is ", this.state.RecommendedMail)
   }
 
 SliderChangeExperience = (value) => {
@@ -146,15 +151,47 @@ SliderChangeBudget = (value) => {
         })
     };
 
-
-  
-
   onSubmitClicked = () => {
-
   }
 
   componentDidMount() {
+  }
 
+  onSubmitClicked = () => {
+    var url = 'http://localhost:3001/postjob'
+    fetch(url, {
+      method: 'post',
+      credentials : 'include',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        Company: this.state.Company,
+        JobTitle: this.state.JobTitle,
+        Location: this.state.Location,
+        JobFunction : this.state.JobFunction,
+        JobDescription : this.state.JobDescription,
+        RecommendedMail : this.state.RecommendedMail,
+        SeniorityLevel: this.state.SeniorityLevel,
+        Experience : this.state.Experience,
+        Degree :  this.state.Degree,
+        Budget : this.state.Budget,
+        EmploymentType : this.state.EmploymentType,
+        RecruiterName: "Srinivas",
+        EasyApply: 0,
+        Industry : this.state.Industry
+       })
+    })
+    .then(response => response.json())
+    .then(poststatus => {
+      console.log(poststatus)
+      if(poststatus === "Applied successfully")
+      {
+        swal("Job Posted successfully!", " ", "success");  
+      }
+      else
+      {
+        swal("Job couldn't be posted due to errors!"," ", "failure");
+      }
+  })
   }
 
   render ()
@@ -171,10 +208,12 @@ SliderChangeBudget = (value) => {
         EmploymentType = {this.state.EmploymentType}
         JobDescription = {this.state.JobDescription}
         RecommendedMail = {this.state.RecommendedMail}
+        SeniorityLevel = {this.state.SeniorityLevel}
         Info = {this.state.Info}
         Change = {this.inputHandler}
         />)
     }
+
     if(this.state.RedirecttoQualification === true)
     {
       Redirecty = (<JobQualifications 
@@ -185,14 +224,16 @@ SliderChangeBudget = (value) => {
         SliderChangeExperience = {this.SliderChangeExperience}
         />)
     } 
+
      if(this.state.RedirecttoBudget === true)
     {
         Redirecty = (<JobBudget 
-        Budget = {this.state.budget}
+        Budget = {this.state.Budget}
         Change = {this.inputHandler}
         SliderChangeBudget = {this.SliderChangeBudget}
         />)
     }
+
     const { steps, currentStep } = this.state;
     const buttonStyle = { width: 200, padding: 16, textAlign: 'center', margin: '0 auto', marginTop: 32 };
     return (    
@@ -209,6 +250,5 @@ SliderChangeBudget = (value) => {
             </div>
          );
     }
-
 }
 export default JobPostings;
