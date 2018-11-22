@@ -8,9 +8,10 @@ var users = require('./routes/users');
 var applications = require('./routes/applications');
 const multer = require('multer');
 var jobs = require('./routes/jobs.js');
+var listusernetwork = require('./routes/listusernetworks');
+// var {User} = require('./models/user');
 
-
-const url = "http://localhost:3000";
+const url = "http://localhost:3002";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
 
@@ -33,6 +34,10 @@ app.use('/users', users);
 app.use('/apply', applications);
 app.use('/applications', applications);
 app.use('/jobs',jobs);
+
+app.use('/user', listusernetwork);
+
+
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({

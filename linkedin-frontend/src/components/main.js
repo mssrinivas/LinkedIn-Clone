@@ -8,12 +8,15 @@ import CustomJobApply from './JobApply/customApply.js';
 import EasyJobApply from './JobApply/easyApplyModal.js';
 import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
+import ListAllConnections from './connections/listallconnections';
 import Login from './applicant/login'
 import UserProfile from './applicant/userprofile'
 import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
 import ApplicantHome from "./feed/applicantHome.js";
+
+
 class Main extends Component {
     render(){
         return(
@@ -23,6 +26,7 @@ class Main extends Component {
                 <Route exact path="/listings" component={JobListing} />
                 <Route exact path="/postjob" component={JobPostings} />
                 <Route exact path="/customapply" component={CustomJobApply} />
+                <Route exact path="/mynetworks" component={ListAllConnections} />
                 <Route exact path="/" component={Login} />
                 <Route exact path="/easyapply" component={EasyJobApply} />
                 <Route exact path="/jobs" component={Jobs} />

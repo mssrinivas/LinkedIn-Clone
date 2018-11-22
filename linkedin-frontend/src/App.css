@@ -59,3 +59,9 @@ p,h1,h2,h3,h4,h5,h6{
 	border-right:1px solid #E0E0E0;
 }
 
+/* connections css */
+#all-connections-list{
+	columns: 3;
+	padding: 5px;
+	border: 0.5px solid grey;
+}
