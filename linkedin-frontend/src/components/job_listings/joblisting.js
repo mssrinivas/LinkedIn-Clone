@@ -84,7 +84,7 @@ class JobListing extends Component {
        } 
     }
 
-    easyApply(data,position){
+    easyApply=(data,position)=>{
         console.log("in easy apply of joblistings");
         console.log(data);
         console.log(position);
@@ -121,7 +121,7 @@ class JobListing extends Component {
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
-        const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} /> : null;
+        const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} onEasyApply={this.easyApply} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
