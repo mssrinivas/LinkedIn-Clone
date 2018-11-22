@@ -35,7 +35,8 @@
     "redux-thunk": "^2.3.0",
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
-    "vue-analytics": "^5.16.0"
+    "vue-analytics": "^5.16.0",
+    "tachyons": "^4.11.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,5 +52,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.5"
+  }
 }

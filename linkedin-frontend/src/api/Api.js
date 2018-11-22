@@ -1,6 +1,8 @@
+import BASE_URL from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
+import {userProfileUpdateAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import BASE_URL from './../components/constants/constants.js';
 import axios from "axios";
@@ -33,9 +35,10 @@ export const userLogin = function(userDetail){
          console.log("result",result.loginUser," token :",result.servertoken)
          UTIL.saveServerToken(result);
          console.log("results")
-         console.log(result);
-         dispatch(userLoggedIn(result.current_user));
+         console.log(result.user_Details);
+         dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
+         //history.push('/profilefirst');
          history.push('/listings');
   }).catch(err => {
     alert(err);
@@ -63,7 +66,7 @@ export const userSignUp = function(userDetail){
          console.log("result",result," token :",result.servertoken)
          UTIL.saveServerToken(result);
          dispatch(userSignupAction(result));
-         history.push('/listings');
+         history.push('/profilefirst');
   }).catch(err => {
     alert(err);
           console.log("Error while Login!!!");
@@ -71,42 +74,31 @@ export const userSignUp = function(userDetail){
         });
     };
 };
+export const profileUpdate = function(userDetail){
+  return (dispatch) => {
+    fetch(`${server_url}/users/updateProfile`, {
+          method: 'POST',
+          credentials:'include',
+          headers: { ...headers,'Content-Type': 'application/json' },
+          mode: 'cors',
+          body: JSON.stringify(userDetail)
+      }).then(res => {
+          if(res.status === 200){
+            console.log("Profile Update:",res.status);
+            return res.json();
+          }
 
-// export const customApplyJob =  (values) =>  async dispatch =>  {
-//   console.log("applicant name inside custom apply action: " + values.firstname);
-  
-//     axios.defaults.withCredentials = true;
-//     const res = await axios.post(`${server_url}/apply/job/12345`, values)
-        
-//         console.log("response status : " + res.status);
-//         if(res.status == 200){
-//           // console.log("booking failure : " + res.data);
-//             dispatch({
-//               type :  'CUSTOM_APPLY_SUCCESS',
-//               payload: true
-//             })
-//           }
-       
-// }
-export const customApplyJob =  (values) =>  dispatch =>  {
-  console.log("applicant name inside custom apply action: " + values.firstname);
-  
-    axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job/12345`, values)
-        .then(res => {
-          console.log("response status : " + res.status);
-          if(res.status == 200 && res.data == "Applied successfully"){
-            // console.log("booking failure : " + res.data);
-              dispatch({
-                type :  CUSTOM_APPLY_SUCCESS,
-                payload: true
-              })
-            }
-        })
-        
-        
-       
-}
+     }).then(result=>{
+         console.log("result",result)
+         dispatch(userProfileUpdateAction(result));
+         // history.push('/');
+  }).catch(err => {
+    alert(err);
+          console.log("Error while updating!!!");
+          return err;
+        });
+    };
+};
 // export const ownerlogin = function(userDetail){
 //   return (dispatch) => {
 //     fetch(`${server_url}/users/ownerlogin`, {
@@ -134,3 +126,20 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //         });
 //     };
 // };
+
+export const customApplyJob =  (values) =>  dispatch =>  {
+  console.log("applicant name inside custom apply action: " + values.firstname);
+  
+    axios.defaults.withCredentials = true;
+    axios.post(`${server_url}/apply/job`, values)
+        .then(res => {
+          console.log("response status : " + res.status);
+          if(res.status == 200 && res.data == "Applied successfully"){
+            // console.log("booking failure : " + res.data);
+              dispatch({
+                type :  CUSTOM_APPLY_SUCCESS,
+                payload: true
+              })
+            }
+        })
+ };

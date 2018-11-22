@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var applications = require('./routes/applications');
 const multer = require('multer');
-var joblistings = require('./routes/joblistings.js');
 var jobpostings = require('./routes/postjob.js');
+var jobs = require('./routes/jobs.js');
 
 
 const url = "http://localhost:3000";
@@ -33,9 +33,9 @@ app.use(cookieParser());
 app.use('/users', users);
 app.use('/apply', applications);
 app.use('/applications', applications);
-app.use('/jobs',joblistings);
 app.use('/',jobpostings)
 
+app.use('/jobs',jobs);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({

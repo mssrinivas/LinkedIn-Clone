@@ -9,10 +9,13 @@ import EasyJobApply from './JobApply/easyApplyModal.js';
 import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
 import Login from './applicant/login'
+import UserProfile from './applicant/userprofile'
+import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
-import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard'
 
+
+import ApplicantHome from "./feed/applicantHome.js";
 class Main extends Component {
     render(){
         return(
@@ -27,7 +30,12 @@ class Main extends Component {
                 <Route exact path="/jobs" component={Jobs} />
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
+<<<<<<< HEAD
                 <Route exact path="/dashboard" component={RecruiterDashboard} />
+=======
+                <Route exact path="/feed" component={ApplicantHome} />
+
+>>>>>>> 8e51e1b41582d7a5b24beee8725e733a3f97b522
             </Switch>
             </Router>
             </Provider>

@@ -1,14 +1,12 @@
 var mongoose = require('mongoose');
-
-var JobPostings = mongoose.model('JobPostings',{
-    companyName :{type : String, required: true},
+var jobpostings = mongoose.model('jobpostings',{
+    CompanyName :{type : String, required: true},
     Email :{type : String, required: true},
-    companyLogo :{type : String, required: false},
-    recruiterName : {type : String, required: false},
-    jobTitle :{type : String, required: true},
+    CompanyLogo :{type : String, required: false},
+    JobTitle :{type : String, required: true},
     jobFunction :{type : String, required: true},
-    location :{type : String, required: true},
-    numberofApplicants :{type : Number, required: false},
+    JobLocation :{type : String, required: true},
+    numberofApplicants :{type : Number, required: false}, //number of applicants applied for this job
     seniorityLevel : {type : String, required: true},
     description :{type : String, required: true}, 
     postingDate : {type : Date, required: true}, 
@@ -17,7 +15,7 @@ var JobPostings = mongoose.model('JobPostings',{
     experience : {type : Number, required: true}, 
     degree: {type : String, required: true}, 
     budget : {type : Number, required: true}, 
-    easyApply : {type:Boolean, required: true}
+    easyApply : {type : Boolean, default : false, required : true}
 });
 
-module.exports = {JobPostings};
+module.exports = {jobpostings};

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import './apply.css';
 import axios from 'axios';
+import {BASE_URL} from './../../components/constants/constants.js';
+import Navbar from './../navbar/Navbar.jsx';
 class jobsApplied extends Component {
     constructor(props){
         super(props);
@@ -14,7 +16,7 @@ class jobsApplied extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of applied jobs")
-         axios.get('http://localhost:3001/applications/applied')
+         axios.get(`${BASE_URL}/applications/applied`)
              .then((response) => {
             console.log("response data : " + response.data);
         
@@ -28,12 +30,12 @@ class jobsApplied extends Component {
             return(
                 <div className="row appliedjobs">
                     <div className="col-md-1">
-                    <img className="clogo" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_100_100/0?e=1550707200&v=beta&t=tTf0srlNoO8GUDYGmPa1J6WKvgqbifvtPYKEOmdcfFc"/>&nbsp;
+                    <img className="clogo" src={item.CompanyLogo}/>&nbsp;
                      </div>
                      <div className="col-md-11" >
                      <h3 className="jobtitle">{item.JobTitle}</h3>
                     <h4 className="companyname">{item.CompanyName}</h4>
-                    <h5 className="joblocation">{item.Address}</h5>
+                    <h5 className="joblocation">{item.JobLocation}</h5>
                     <hr/>
                     </div>
                     
@@ -42,6 +44,7 @@ class jobsApplied extends Component {
         })
         return ( 
             <div className="back">
+            <Navbar />
                 <div className="headBar">
                 <ul className="navDash">
                 <li ><Link to= "/jobs" className="jobTypes" >Saved Jobs</Link></li>

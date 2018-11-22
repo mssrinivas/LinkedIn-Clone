@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {timeago} from './../timeago/timeago.js';
+import EasyApplyModal from './EasyApplyModal/easyApplyModal.js';
 
 class JobDescription extends Component {
     
@@ -7,6 +8,7 @@ class JobDescription extends Component {
         super(props);
         this.saveHandler = this.saveHandler.bind(this);
         this.applyHandler = this.applyHandler.bind(this);
+        this.easyApplyHandler = this.easyApplyHandler.bind(this);
     }
 
     saveHandler=(e)=>{
@@ -17,20 +19,35 @@ class JobDescription extends Component {
         this.props.onApply(this.props.position);
     }
 
+    easyApplyHandler= (data)=>{
+        this.props.onEasyApply(data,this.props.position);
+    }
+
     render() { 
         const {data} = this.props;
+        var applyButton = null;
+        var easyApplyModal = null;
+
+        if(data.easyApply){
+            applyButton = <button type="button" className="btn btn-md" id="easy-apply-btn" data-toggle="modal" data-target="#easyApplyModal">Easy Apply</button>
+            easyApplyModal = <EasyApplyModal company={data} onSubmitApplication={this.easyApplyHandler} />
+        }else{
+            applyButton = <button type="button" onClick={this.applyHandler} className="btn btn-md" id="easy-apply-btn">Apply</button>
+        }
+
         return (
             <div className="row" style={{padding:'4px'}} >
+                {easyApplyModal}
                 <div className="col-md-2">
-                    <img className="w-100 contain" src={data.companyLogo} alt={data.companyName} />
+                    <img className="w-100 contain" src={data.CompanyLogo} alt={data.CompanyName} />
                 </div>
                 <div className="col-md-9">
-                    <p style={{fontSize:'18px'}}> {data.jobTitle} {data.jobFunction} </p>
-                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >{data.LinkedIn} {data.location} </p>
-                    <p style={{fontSize:'13px',color:'grey'}}>Posted on {data.postingDate}</p>
+                    <p style={{fontSize:'18px'}}> {data.JobTitle} {data.JobFunction} </p>
+                    <p style={{color:'grey',fontStyle:'bold',fontSize:'16px',fontStyle:'bold'}} >{data.LinkedIn} {data.JobLocation} </p>
+                    <p style={{fontSize:'13px',color:'grey'}}>Posted on {new Date(data.postingDate).toDateString()}</p>
                     <div className="btn-group mt-2 pb-2">
                         <button type="button" onClick={this.saveHandler} className="btn btn-md" id="job-save-btn">Save</button>
-                        <button type="button" onClick={this.applyHandler} className="btn btn-md" id="easy-apply-btn">{data.easyApply ? "Easy Apply" : "Apply"}</button>
+                        {applyButton}
                     </div>
 
                     <div className="row mt-2 pb-2" id="job-detail-row">
@@ -80,7 +97,7 @@ class JobDescription extends Component {
                     </div>
 
                 </div>
-
+                    
             </div>
 
         );
