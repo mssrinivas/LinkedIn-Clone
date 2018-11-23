@@ -45,6 +45,7 @@ class JobQualifications extends Component {
                             <p class="font-weight-bold smally">What level of education are you looking for?</p>
                             <p class="font-weight-bold smally">Degree</p>
                             <select class="form-control widthdropdown smally leftpadd" id="exampleFormControlSelect1" name="Degree" value={this.props.Degree} onChange={this.props.Change}>
+                                      <option>Select a Degree</option>
                                       <option>Masters</option>
                                       <option>Ph.D</option>
                                       <option>High School Diploma</option>

@@ -1,16 +1,16 @@
 var express = require('express');
 var router = express.Router();
-var {JobPostings} = require('./../models/jobpostings');
+var {JobPostings} = require('../models/JobPostings');
 
 router.post('/postjob', function(req, res) {
     console.log("Received Body ", req.body)
-     const JobDetails = new JobPostings({
-        companyName : req.body.Company,
+     var JobDetails = new JobPostings({
+        CompanyName : req.body.Company,
         Email : req.body.RecommendedMail,
-        companyLogo : "https://img.icons8.com/color/200/5e6d77/yahoo.png",
-        jobTitle : req.body.JobTitle,
+        CompanyLogo : "https://img.icons8.com/color/200/5e6d77/yahoo.png",
+        JobTitle : req.body.JobTitle,
         jobFunction : req.body.JobFunction,
-        location : req.body.Location,
+        JobLocation : req.body.Location,
         numberofApplicants : 0,
         easyApply : req.body.EasyApply,
         seniorityLevel : req.body.SeniorityLevel,
@@ -22,6 +22,23 @@ router.post('/postjob', function(req, res) {
         degree: req.body.Degree,
         budget : 120,
         recruiterName : "Srinivas"
+        // CompanyName : "Yahoo",
+        // Email : "srinivas@yahoo.com",
+        // CompanyLogo : "https://img.icons8.com/color/200/5e6d77/yahoo.png",
+        // JobTitle : "Analyst",
+        // jobFunction : "Analyst",
+        // JobLocation : "San Jose",
+        // numberofApplicants : 0,
+        // easyApply : 1,
+        // seniorityLevel : "Manager",
+        // description : "No Description",
+        // postingDate : new Date(),
+        // employmentType : "Internship", 
+        // industryType : "Electronics",
+        // experience : 4,
+        // degree: "Ph.D",
+        // budget : 120,
+        // recruiterName : "Srinivas"
     });
     console.log("----------")
     console.log("NEW JSON: ", JobDetails)

@@ -14,7 +14,6 @@ import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
 
-
 import ApplicantHome from "./feed/applicantHome.js";
 class Main extends Component {
     render(){
@@ -30,12 +29,7 @@ class Main extends Component {
                 <Route exact path="/jobs" component={Jobs} />
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
-<<<<<<< HEAD
-                <Route exact path="/dashboard" component={RecruiterDashboard} />
-=======
                 <Route exact path="/feed" component={ApplicantHome} />
-
->>>>>>> 8e51e1b41582d7a5b24beee8725e733a3f97b522
             </Switch>
             </Router>
             </Provider>

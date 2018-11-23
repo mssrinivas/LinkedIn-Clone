@@ -31,7 +31,8 @@ class JobDescription extends Component {
                     <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Job Title</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="JobTitle" value={this.props.JobTitle} onChange={this.props.Change}>
-				      <option>Software Designer</option>
+              <option>Select a Job Title</option>
+              <option>Software Designer</option>
 				      <option>Software Programmer</option>
 				      <option>Team Lead</option>
 				      <option>Cheif Executive Officer</option>
@@ -40,7 +41,8 @@ class JobDescription extends Component {
                     <div class="col-md-3 mb-3">
                     <p class="font-weight-bold smally">Location</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="Location" value={this.props.Location} onChange={this.props.Change}>
-				      <option>San Francisco</option>
+              <option>Select a City</option>
+              <option>San Francisco</option>
 				      <option>New York</option>
 				      <option>Boston</option>
 				      <option>Texas</option>
@@ -52,7 +54,8 @@ class JobDescription extends Component {
                       <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Seniority Level</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="SeniorityLevel" value={this.props.SeniorityLevel} onChange={this.props.Change}>
-				      <option>Internship</option>
+              <option>Select SeniorityLevel</option>
+              <option>Internship</option>
 				      <option>Mid-Level</option>
 				      <option>Senior Level</option>
 				      <option>Director</option>
@@ -63,7 +66,8 @@ class JobDescription extends Component {
                     <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Job Function</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="JobFunction" value={this.props.JobFunction} onChange={this.props.Change}>
-				      <option>Quality Assurance</option>
+              <option>Select Jpb Function</option>
+              <option>Quality Assurance</option>
 				      <option>Analyst</option>
 				      <option>Full Stack Developer</option>
 				      <option>Strategy/Planning</option>
@@ -72,7 +76,8 @@ class JobDescription extends Component {
                     <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Employment Type</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="EmploymentType" value={this.props.EmploymentType} onChange={this.props.Change}>
-				      <option>Full Time</option>
+              <option>Select EmploymentType</option>
+              <option>Full Time</option>
 				      <option>Part Time</option>
 				      <option>Internship</option>
 				      <option>Contractor</option>
@@ -83,14 +88,15 @@ class JobDescription extends Component {
                     <div class="col-md-3 mb-3">
                     <p class="font-weight-bold smally">Industry Type</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="Industry" value={this.props.Industry} onChange={this.props.Change}>
-				      <option>Information Technology</option>
+              <option>Select Industry Type</option>
+              <option>Information Technology</option>
 				      <option>Accounting</option>
 				      <option>Electronics</option>
 				      <option>Mechanical Industry</option>
 				      <option>Aviation</option>
-                      <option>Automotive</option>
-                      <option>Arts & Business</option>
-                      <option>Banking</option>
+              <option>Automotive</option>
+              <option>Arts & Business</option>
+              <option>Banking</option>
 				    </select>
                     </div>
                     </div>
