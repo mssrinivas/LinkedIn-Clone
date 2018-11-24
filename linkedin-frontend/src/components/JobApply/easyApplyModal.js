@@ -16,24 +16,24 @@ class easyApplyModal extends Component {
     </div>
         <div class="modal-body mx-3">
         <div className="spacing">
-            <label for="fname">FirstName</label>
-            <input type="text" id="fname" value="Sayali" className="textemail"/>
+            <label for="firstname">FirstName</label>
+            <input type="text" id="firstname" value="Sayali" className="textemail"/>
         </div>
         <div className="spacing">
-            <label for="fname">LastName</label>
-            <input type="text" id="fname" value="Sayali" className="textemail"/>
+            <label for="lastname">LastName</label>
+            <input type="text" id="lastname" value="Sayali" className="textemail"/>
         </div>
         <div className="spacing">
-            <label for="emailid">Email</label>
-            <input type="email" id="emailid" value="saypatil12345@yahoo.com" className="textemail1"/>
+            <label for="email">Email</label>
+            <input type="email" id="email" value="saypatil12345@yahoo.com" className="textemail1"/>
         </div>
         <div className="spacing">
-            <label for="emailid">Resume</label>
-            <input type="file" id="emailid" className="textemail2"/>
+            <label for="resume">Resume</label>
+            <input type="file" id="resume" className="textemail2"/>
         </div>
         </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button className="but" >Cancel</button>
+      <button className="but" data-dismiss="modal" >Cancel</button>
       <button className="but" type="submit">Submit Application</button>
       </div>
     </div>

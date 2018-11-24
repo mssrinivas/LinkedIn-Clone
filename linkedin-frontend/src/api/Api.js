@@ -38,7 +38,8 @@ export const userLogin = function(userDetail){
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
          alert("Applicant logged in successfully");
-         history.push('/profilefirst');
+         //history.push('/profilefirst');
+         history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -130,7 +131,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
   
     axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job/12345`, values)
+    axios.post(`${server_url}/apply/job`, values)
         .then(res => {
           console.log("response status : " + res.status);
           if(res.status == 200 && res.data == "Applied successfully"){
@@ -141,4 +142,4 @@ export const customApplyJob =  (values) =>  dispatch =>  {
               })
             }
         })
-      };
+ };

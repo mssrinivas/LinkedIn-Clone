@@ -21,6 +21,8 @@
     "react-facebook-login": "^4.1.0",
     "react-google-button": "^0.5.3",
     "react-images-upload": "^1.2.3",
+    "react-pdf": "^3.0.5",
+    "react-pdf-js": "^4.0.1",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

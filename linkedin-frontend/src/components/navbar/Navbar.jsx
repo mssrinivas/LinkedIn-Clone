@@ -138,7 +138,7 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          <Link to="">
+          <Link to="/jobs">
             <div
               style={{
                 display: "inline-block",

@@ -1,6 +1,6 @@
 import * as UTIL from './../util/utils';
 import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
-
+import {CUSTOM_APPLY_SAVED_JOB} from './../components/constants/reduxActionConstants';
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
@@ -42,6 +42,11 @@ export default function (state = initialState, action) {
                  console.log("in selected job post redux");
                  console.log(action.payload);
                  return Object.assign({},state,{customJobPost:action.payload});
+            
+            case CUSTOM_APPLY_SAVED_JOB :
+                  console.log("inside custom apply for saved job in dashboard");
+                  console.log("payload : " + action.payload)
+                  return Object.assign({},state,{customJobPost:action.payload});
 
           default:
     return state;

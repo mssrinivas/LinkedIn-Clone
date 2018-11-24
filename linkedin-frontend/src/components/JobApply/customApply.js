@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import {customApplyJob} from './../../api/Api';
 import './apply.css';
-
+import {BASE_URL} from './../../components/constants/constants.js';
+import Navbar from './../navbar/Navbar.jsx';
 var swal = require('sweetalert')
 class customApply extends Component {
     constructor(props){
@@ -22,7 +23,8 @@ this.state = {
     race : "",
     veteran : "",
     disability : "",
-    selectedFile : ""
+    selectedFile : "",
+    cover : ""
 }
         //Bind the handlers to this class
 this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
@@ -37,6 +39,7 @@ this.veteranChangeHandler = this.veteranChangeHandler.bind(this);
 this.fileChangeHandler = this.fileChangeHandler.bind(this);
 this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
 this.hearChangeHandler = this.hearChangeHandler.bind(this);
+this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
 }
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
@@ -46,6 +49,11 @@ componentWillReceiveProps(nextProps) {
         swal("Job Applied successfully!", " ", "success");
     }
     
+}
+coverLetterChangeHandler = (e) => {
+    this.setState({
+        cover : e.target.value
+    })
 }
 fnameChangeHandler = (e) => {
     this.setState({
@@ -102,10 +110,13 @@ fileChangeHandler = (e) => {
          selectedFile: e.target.files[0]
        })
  }
+
 submitApplication = (e) => {
     const { selectedFile } = this.state;
     e.preventDefault();
+    if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
+        Applicant_id : "94f26ceacb627fb4927fbd99",
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -117,15 +128,22 @@ submitApplication = (e) => {
         disability : this.state.disability,
         hear : this.state.hear,
         resume : selectedFile.name,
-        company : "Mozilla",
-        jobtitle : "Machine learning Intern(Summer 2019)",
-        joblocation : "San Fransisco, California"
-
+        cover_letter : this.state.cover,
+        company : this.props.customJobPost.CompanyName,
+        jobtitle : this.props.customJobPost.JobTitle,
+        joblocation :this.props.customJobPost.JobLocation,
+        companyLogo : this.props.customJobPost.CompanyLogo,
+        id : this.props.customJobPost._id,
+        easyApply : this.props.customJobPost.easyApply,
+        appliedDate : new Date()
     }
-    console.log("selected file: " + selectedFile.name);
-    let formData = new FormData();
+    let Applicant_id = "94f26ceacb627fb4927fbd99";
+    console.log("selected file: " + selectedFile);
+    console.log("selected file name: " + selectedFile.name);
+    const formData = new FormData();
+    formData.append('applicant_id', Applicant_id);
     formData.append('selectedFile', selectedFile);
-    axios.post('http://localhost:3001/uploadresume', formData)
+    axios.post(`${BASE_URL}/uploadresume`, formData)
                      .then((response) => {
                          if(response.status == 200){
                           
@@ -134,18 +152,23 @@ submitApplication = (e) => {
                 
     });
     this.props.customApplyJob(values)
+    }else {
+        alert("Resume should be in pdf format")
+    }
 }
     render() { 
         return (
             <div>
+            <Navbar />
             <div className="headerback">
             <div className="applytitle">
-                <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/>
+                {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
+                <img className="image1" src={this.props.customJobPost.CompanyLogo}/>
             </div>
             <div> 
-            <h2 className="cent">Machine learning Intern(Summer 2019)</h2>
-            <h3 className="cent1">Mozilla</h3><br/>
-            <p className="cent2">San Fransisco, California</p></div>
+            <h2 className="cent">{this.props.customJobPost.JobTitle} {this.props.customJobPost.jobFunction}</h2>
+            <h3 className="cent1">{this.props.customJobPost.CompanyName}</h3><br/>
+            <p className="cent2">{this.props.customJobPost.JobLocation}</p></div>
            
             </div>
             <div className="login-form">
@@ -177,9 +200,9 @@ submitApplication = (e) => {
                         <input type="file" id="resume" name="selectedFile" onChange={this.fileChangeHandler}/>
                     </div>
                     <div class="form-group1">
-                        <label className="field-label" for="cover">Cover Letter(optional)</label>
-                        <input type="file" id="cover" onChange={this.fileChangeHandler}/>
-                     </div>
+                        <label className="field-label" for="coverl">Cover Letter(optional)</label>
+                        <textarea onChange = {this.coverLetterChangeHandler} type="text" class="form-control1" name="cover" id="coverl"/>
+                    </div>
                     <div class="form-group1">
                         <label className="field-label">How did you hear about us</label>
                         <select class="form-control1"  onChange = {this.hearChangeHandler}>
@@ -261,7 +284,8 @@ submitApplication = (e) => {
 const mapStateToProps = state => {
     return {
        
-        applied : state.LoginReducer.applied
+        applied : state.LoginReducer.applied,
+        customJobPost : state.LoginReducer.customJobPost
      };
   };
   
