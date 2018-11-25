@@ -91,7 +91,7 @@ export const profileUpdate = function(userDetail){
      }).then(result=>{
          console.log("result",result)
          dispatch(userProfileUpdateAction(result));
-         // history.push('/');
+         history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while updating!!!");

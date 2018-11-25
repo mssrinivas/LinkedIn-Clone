@@ -189,7 +189,7 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
-          <Link to="">
+          <Link to="/messages">
             <div
               style={{
                 display: "inline-block",

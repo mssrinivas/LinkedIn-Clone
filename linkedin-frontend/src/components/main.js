@@ -15,6 +15,8 @@ import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
+import Messages from './messages/messages.js';
+
 class Main extends Component {
     render(){
         return(
@@ -30,6 +32,7 @@ class Main extends Component {
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/messages" component={Messages} />
                 <Route exact path="/resumes/:filename" component={Resumes} />
             </Switch>
             </Router>
