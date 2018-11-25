@@ -26,6 +26,7 @@
     "react-google-button": "^0.5.3",
     "react-images-upload": "^1.2.3",
     "react-pdf": "^4.0.0",
+    "react-pdf-js": "^4.0.1",
     "react-pencil": "^1.1.1",
     "react-rangeslider": "^2.2.0",
     "react-redux": "^5.0.7",

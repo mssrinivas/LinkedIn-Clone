@@ -17,6 +17,9 @@ import ApplicantDashBoard from './applicant/applicantDashBoard';
 import DeleteAccount from './applicant/deleteapplicantaccount';
 import UserSearch from './applicant/usersearch';
 import ResumeView from './applicant/resumeview';
+import ApplicantHome from "./feed/applicantHome.js";
+import Resumes from "./JobApply/resumes.js";
+import Messages from './messages/messages.js';
 class Main extends Component {
     render(){
         return(
@@ -37,6 +40,9 @@ class Main extends Component {
                 <Route exact path="/applicantDashBoard" component={ApplicantDashBoard}/>
                 <Route exact path="/usersearch" component={UserSearch}/>
                 <Route exact path="/resumeview" component={ResumeView}/>
+                <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/messages" component={Messages} />
+                <Route exact path="/resumes/:filename" component={Resumes} />
             </Switch>
             </Router>
             </Provider>

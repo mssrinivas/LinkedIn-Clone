@@ -40,7 +40,8 @@ export const userLogin = function(userDetail){
          console.log("results")
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
-         history.push('/userprofile');
+         // history.push('/userprofile');
+          history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");

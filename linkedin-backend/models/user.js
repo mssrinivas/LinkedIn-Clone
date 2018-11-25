@@ -69,18 +69,10 @@ var userschema = mongoose.Schema({
     profile_img : {
         type : String
     },
-    status : {
-      type : String
-    },
-    resume_path: {
+    resume_path: {type : Array, required : false},
+    saved_job : {type : Array, required : false},
+    applied_job:{type : Array, required : false}
 
-    },
-    saved_job : [
-
-    ],
-    applied_job:[
-
-    ]
 });
 
 const User = mongoose.model('User',userschema);
