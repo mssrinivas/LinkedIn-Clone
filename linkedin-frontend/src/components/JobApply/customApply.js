@@ -116,7 +116,7 @@ submitApplication = (e) => {
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
-        Applicant_id : "94f26ceacb627fb4927fbd99",
+        Applicant_id : this.props.user._id,
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -137,7 +137,7 @@ submitApplication = (e) => {
         easyApply : this.props.customJobPost.easyApply,
         appliedDate : new Date()
     }
-    let Applicant_id = "94f26ceacb627fb4927fbd99";
+    let Applicant_id = this.props.user._id;
     console.log("selected file: " + selectedFile);
     console.log("selected file name: " + selectedFile.name);
     const formData = new FormData();
@@ -283,7 +283,7 @@ submitApplication = (e) => {
 
 const mapStateToProps = state => {
     return {
-       
+       user: state.LoginReducer.currentUserDetails,
         applied : state.LoginReducer.applied,
         customJobPost : state.LoginReducer.customJobPost
      };
