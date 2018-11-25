@@ -31,7 +31,9 @@ class UserProfileFirst extends Component {
       experience : '',
       email : '',
       photo : '',
-      profile_img : ''
+      profile_img : '',
+      status : 'Active',
+      studentFlag : true
     }
     this.onClickStudent =  this.onClickStudent.bind(this);
     this.onClickProfessional = this.onClickProfessional.bind(this);
@@ -44,6 +46,7 @@ class UserProfileFirst extends Component {
       studentFlag: true,
       headerMessage: 'Your profile helps you discover the right people and opportunities'
     });
+    this.userDetails.studentFlag = this.state.studentFlag;
   }
   onClickProfessional = () => {
     this.setState({
@@ -102,7 +105,12 @@ onClickContinue = () => {
 }
 onSubmitClick(e) {
   e.preventDefault();
+  this.userDetails.first_name = this.props.currentUserDetails.user_Details.first_name;
+  this.userDetails.last_name = this.props.currentUserDetails.user_Details.last_name;
+  this.userDetails.email = this.props.currentUserDetails.user_Details.email;
+  this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
   this.userDetails.profile_img = 'http://localhost:3001/uploads/'+this.props.currentUserDetails.applicant_id+".jpeg";
+  this.userDetails.studentFlag = this.state.studentFlag;
   this.props.profileUpdate(this.userDetails);
 }
   render ()
@@ -197,7 +205,7 @@ onSubmitClick(e) {
                 {this.state.communityFlag!=false? Communitycheck:''}
                 {this.state.photoFlag!=false? Photocheck:''}
               </div>
-              &nbsp;<button type="button" class="btn btn-primary submitbutton" onClick={this.onSubmitClick}>Submit</button>
+              &nbsp;<button type="button" className="btn btn-primary submitbutton" onClick={this.onSubmitClick}>Submit</button>
 
             </div>
             </div>

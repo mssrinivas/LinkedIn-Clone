@@ -19,7 +19,7 @@ class JobListing extends Component {
     }
 
     componentDidMount(){
-        
+
         const url = BASE_URL+"/jobs/search";
         axios.get(url).then((response)=>{
             const {status} = response;
@@ -33,11 +33,11 @@ class JobListing extends Component {
     }
 
     saveJob(position){
-        
+
     }
 
     applyJob(position){
-        
+
     }
 
     jobPostCardClicked(position){
@@ -63,7 +63,7 @@ class JobListing extends Component {
       }
 
     render() {
-        
+
         const {postings,error,selectedIndex} = this.state;
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-12 postings-parent"

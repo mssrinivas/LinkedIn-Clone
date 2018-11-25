@@ -23,6 +23,9 @@ var userschema = mongoose.Schema({
     recruiter_flag : {
         type : Number
     },
+    student_flag : {
+        type : Number
+    },
     address : {
         type : String,
     },
@@ -38,6 +41,9 @@ var userschema = mongoose.Schema({
     },
     zip_code : {
         type : Number
+    },
+    company : {
+      type : String
     },
     experience : {
         type : String
@@ -63,9 +69,12 @@ var userschema = mongoose.Schema({
     profile_img : {
         type : String
     },
-    resume_path: [
+    status : {
+      type : String
+    },
+    resume_path: {
 
-    ],
+    },
     saved_job : [
 
     ],

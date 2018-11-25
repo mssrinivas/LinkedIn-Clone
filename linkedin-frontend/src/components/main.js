@@ -13,6 +13,10 @@ import UserProfile from './applicant/userprofile'
 import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
+import ApplicantDashBoard from './applicant/applicantDashBoard';
+import DeleteAccount from './applicant/deleteapplicantaccount';
+import UserSearch from './applicant/usersearch';
+import ResumeView from './applicant/resumeview';
 class Main extends Component {
     render(){
         return(
@@ -29,6 +33,10 @@ class Main extends Component {
                 <Route exact path="/navbar" component={Navbar} />
                 <Route exact path="/profilefirst" component={UserProfileFirst} />
                 <Route exact path="/userprofile" component={UserProfile} />
+                <Route exact path="/deleteapplicantaccount" component={DeleteAccount}/>
+                <Route exact path="/applicantDashBoard" component={ApplicantDashBoard}/>
+                <Route exact path="/usersearch" component={UserSearch}/>
+                <Route exact path="/resumeview" component={ResumeView}/>
             </Switch>
             </Router>
             </Provider>

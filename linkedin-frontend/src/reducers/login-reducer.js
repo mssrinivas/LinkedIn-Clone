@@ -3,8 +3,11 @@ import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
         currentUserDetails:{},
+        userTraceActivity:[],
+        userDetails:{},
         applicant_id:'',
         message:'',
+        userSearch:[],
         recruiter_flag:false,
         applied : false
 };
@@ -22,6 +25,7 @@ export default function (state = initialState, action) {
               console.log("User signed up");
               return Object.assign({}, state, {
               currentUserDetails: action.data,
+              userDetails: action.data.user_Details,
               applicant_id: action.data.applicant_id,
               current_user: action.data.current_user
             })
@@ -31,12 +35,31 @@ export default function (state = initialState, action) {
               message: action.data.message,
               currentUserDetails : action.data.userProfileDetails
             })
+            case 'USER_PROFILE_DELETE':
+              console.log("User profile update", action.data);
+              return Object.assign({}, state, {
+              message: action.data.message,
+              currentUserDetails : action.data.userProfileDetails
+            })
+            case 'USER_VISIT_ACTIVITY':
+              console.log("User visit activity", action.data);
+              return Object.assign({}, state, {
+              message: action.data.message,
+              userTraceActivity : action.data.userTraceDetails
+            })
+            case 'USER_SEARCH_ACTIVITY':
+              console.log("User search activity", action.data.result);
+              return Object.assign({}, state, {
+              message: action.data.message,
+              userSearch : action.data.result
+            })
             case CUSTOM_APPLY_SUCCESS:
               console.log("Custom apply job reducer");
               return {
                 ...state,
                 applied : action.payload
             }
+
           default:
     return state;
   }

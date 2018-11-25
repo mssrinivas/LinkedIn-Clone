@@ -10,7 +10,7 @@ var applications = require('./routes/applications');
 const multer = require('multer');
 var joblistings = require('./routes/joblistings.js');
 var uploadresume = require('./routes/uploadResume');
-
+const redis = require('redis');
 
 const url = "http://localhost:3000";
 //const url = "hosting url";
@@ -30,6 +30,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//redis client
+// let client = redis.createClient(6379,'127.0.0.1');
+// client.on('connect', function(){
+//   console.log('connected to redis');
+// })
 
 app.use('/users', users);
 app.use('/apply', applications);

@@ -196,6 +196,9 @@
   margin-top: 30px;
   margin-left: 100px;
   width: 80%;
+  background-color: grey;
+  opacity: .9;
+  background: url("https://uploads.strikinglycdn.com/static/backgrounds/blurred-bg/53.jpg")
 }
 .profile-resume{
       border-radius: 1px;
@@ -348,4 +351,74 @@
   font-weight: 200;
   font-size: 16px;
   text-align: left;
+}
+.dashboard-name{
+  color:white;
+  margin-left: 50px;
+}
+.table{
+  background-color: white;
+  margin-left: 50px;
+  width: 1000px;
+}
+.static-card{
+  margin-left: 50px;
+  width: 1000px;
+}
+.table1{
+  background-color: white;
+  margin-left: 50px;
+  width: 1000px;
+}
+.career-image{
+  height: 30px;
+  width: 30px;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.details{
+  margin-left: 10px;
+  font-size: 18px;
+}
+.card-experience{
+  position: relative;
+  margin-top: 30px;
+  margin-left: 100px;
+  width: 80%;
+  background-color: rgba(0,0,0,0.05);
+
+}
+.dashboard-name1{
+  margin-left: 30px;
+  color: black;
+  opacity: 0.6;
+}
+.dashboard-name2{
+  margin-left: 60px;
+  color: black;
+}
+.graph-display{
+  margin-top: 40px;
+  width :500px;
+  height: 500px;
+}
+.profile-visitors{
+  color: #0073b1;
+}
+.header-graph{
+  margin-left: 200px;
+  margin-top: 100px;
+}
+.car-graph-3{
+  width :1000px;
+  height: 500px;
+}
+.chart{
+  margin-top: 10px;
+  width :100%;
+  height: 100%;
+}
+.user-search{
+  margin-left: 200px;
+  margin-top: 50px;
 }

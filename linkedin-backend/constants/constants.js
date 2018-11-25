@@ -13,9 +13,9 @@
 module.exports = {
     'secret': "secretlinkedinstringforshim273courselab1kafkaawsrestapi",
 
-     // 'MONGO_URI' : "mongodb://linkedin:linkedin123@ds163683.mlab.com:63683/linkedin",
+     'MONGO_URI' : "mongodb://linkedin:linkedin123@ds163683.mlab.com:63683/linkedin",
      'MONGO_DB_NAME' : "linkedin",
      'MONGO_COLLECTION_JOB_POSTINGS' : "jobpostings",
-    'MONGO_URI' : "mongodb://localhost:27017/LinkedIN"
+    // 'MONGO_URI' : "mongodb://localhost:27017/LinkedIN"
 
 };
