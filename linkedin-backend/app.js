@@ -17,7 +17,7 @@ var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
 
-const url = "http://localhost:3000";
+const url = "http://localhost:3002";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
 

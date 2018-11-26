@@ -16,6 +16,9 @@ var userschema = mongoose.Schema({
         type : String,
         required : true
     },
+    status : {
+        type:String
+    },
     email : {
         type : String,
         required : true

@@ -7,19 +7,11 @@ var { mongoose } = require("./../db/mongoose");
 // var LocalStrategy = require('passport-local').Strategy;
 const multer = require("multer");
 var app = express();
-<<<<<<< HEAD
-var bcrypt = require('bcrypt-nodejs');
+var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-=======
-var bcrypt = require("bcrypt-nodejs");
-var jwt = require("jsonwebtoken");
-var session = require("express-session");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
->>>>>>> 497d0ed308f47eaae5adde7485005f435cb44310
 var salt = bcrypt.genSaltSync(10);
 // var kafka = require('./../kafka/client');
 var {User} = require('./../models/user');
@@ -307,7 +299,6 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
-<<<<<<< HEAD
 
 // router.post('/provideusers', function (req,res,next) {
 //   console.log("inside provideusers neha",req.body.pendingList);
@@ -330,7 +321,6 @@ router.post('/getTraceData', function (req,res,next) {
 
 // });
 
-=======
 router.get("/users", function(req, res, next) {
   console.time("Query_Time");
   var result = [];
@@ -369,6 +359,5 @@ router.get("/users", function(req, res, next) {
     }
   });
 });
->>>>>>> 497d0ed308f47eaae5adde7485005f435cb44310
 
 module.exports = router;
