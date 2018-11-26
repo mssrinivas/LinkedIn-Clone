@@ -14,11 +14,6 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 var salt = bcrypt.genSaltSync(10);
 // var kafka = require('./../kafka/client');
-var { User } = require("./../models/user");
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./public/uploads/");
 var {User} = require('./../models/user');
 var {UserTrace} = require('./../models/usertrace');
 
@@ -29,6 +24,7 @@ client.on('connect', function(){
 })
 
 const userresult = "";
+
 console.time("Query_Time");
 const storage=multer.diskStorage({
   destination :function(req,file, cb) {
