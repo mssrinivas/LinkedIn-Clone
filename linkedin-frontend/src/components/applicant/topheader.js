@@ -6,9 +6,6 @@ import { connect } from 'react-redux';
 import { Button} from 'react-bootstrap';
 import {history} from "../../util/utils";
 import { Glyphicon } from 'react-bootstrap';
-// import * as UTIL from './../util/utils';
-// import DashBoard from './travalerdashboard';
-// import OwnerDashBoard from './ownerdashboard';
 import {bindActionCreators} from 'redux';
 import { Route, Redirect,withRouter } from 'react-router-dom';
 import  { NavbarBrand, Navbar, NavbarNav, NavItem, Dropdown,DropdownMenu,DropdownItem,DropdownToggle,NavbarToggler,Collapse } from 'mdbreact';
@@ -50,22 +47,8 @@ class LoginHeader extends Component {
         );
     }
 }
-//   function mapStateToProps(state) {
-//     console.log("State",state);
-//       return {
-//          currentUser: state.LoginReducer.currentUser,
-//          ownerFlag : state.LoginReducer.ownerFlag,
-//          currentUserDetails: state.LoginReducer.currentUserDetails,
-//          propertyResults: state.PropertyReducer.propertyResults,
-//          userResults: state.PropertyReducer.userResults,
-//          clickedProperty: state.PropertyReducer.clickedProperty,
-//          clickedPropertyImageURLs: state.PropertyReducer.clickedPropertyImageURLs,
-//          bookingInfo: state.PropertyReducer.bookingInfo
-//       };
-//   }
   function matchDispatchToProps(dispatch){
     console.log("Dispatch",dispatch);
     return bindActionCreators({userLogin: userLogin}, dispatch);
 }
-// export default (LoginHeader);
 export default connect(null,matchDispatchToProps)(LoginHeader);

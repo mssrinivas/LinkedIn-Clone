@@ -103,7 +103,8 @@ router.post('/job', function(req, res, next) {
                     Saved : false,
                     CompanyLogo : req.body.companyLogo,
                     Job_id : req.body.id,
-                    easyApply : req.body.easyApply
+                    easyApply : req.body.easyApply,
+                    appliedDate : req.body.appliedDate
                 });
                 customApplyDetail.save().then((result)=> {
                     console.log("apply successful : ",result);
@@ -123,11 +124,11 @@ router.post('/job', function(req, res, next) {
   });
   //applied jobs in dashboard
 
-  router.get('/applied', function(req, res, next) {
+  router.get('/applied/:ID', function(req, res, next) {
     console.log("inside appled jobs");
     console.log("req sent from applied job dashboard", req.body);
-    
-    Applications.find({Email:"saypatil12345@gmail.com", Applied:true, Saved:false}).then((app)=> { 
+    console.log("applicant id : " + req.params.ID)
+    Applications.find({Applicant_id:req.params.ID, Applied:true, Saved:false}).then((app)=> { 
         console.log("\nNumber of applied jobs: " + app.length + "\n");
         console.log("Applied jobs : "+ app );
         res.writeHead(200,{
@@ -148,11 +149,11 @@ router.post('/job', function(req, res, next) {
 
 //Saved jobs in dashboard
 
-router.get('/saved', function(req, res, next) {
+router.get('/saved/:ID', function(req, res, next) {
     console.log("inside saved jobs");
     console.log("req sent from saved job dashboard", req.body);
-    
-    Applications.find({Email:"recruiter@yahoo.com", Saved:true, Applied:false}).then((app)=> { 
+    console.log("applicant id : " + req.params.ID)
+    Applications.find({Applicant_id:req.params.ID, Saved:true, Applied:false}).then((app)=> { 
         console.log("\nNumber of saved jobs: " + app.length + "\n");
         console.log("Saved jobs : "+ app );
         res.writeHead(200,{

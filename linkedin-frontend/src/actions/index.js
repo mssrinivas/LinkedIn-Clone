@@ -18,3 +18,22 @@ export const userProfileUpdateAction = (userDetail) => {
         data: userDetail
     }
 };
+export const userDeleteAction = (userDetail) => {
+    return {
+        type: 'USER_PROFILE_DELETE',
+        data: userDetail
+    }
+};
+
+export const userTraceAction = (userDetail) => {
+    return {
+        type: 'USER_VISIT_ACTIVITY',
+        data: userDetail
+    }
+};
+export const userSearchAction = (userDetail) => {
+    return {
+        type: 'USER_SEARCH_ACTIVITY',
+        data: userDetail
+    }
+};

@@ -3,6 +3,9 @@ import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
 import {userProfileUpdateAction} from './../actions/index';
+import {userDeleteAction} from './../actions/index';
+import {userTraceAction} from './../actions/index';
+import {userSearchAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
@@ -37,9 +40,8 @@ export const userLogin = function(userDetail){
          console.log("results")
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
-         alert("Applicant logged in successfully");
-         //history.push('/profilefirst');
-         history.push('/listings');
+         // history.push('/userprofile');
+          history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -91,7 +93,7 @@ export const profileUpdate = function(userDetail){
      }).then(result=>{
          console.log("result",result)
          dispatch(userProfileUpdateAction(result));
-         // history.push('/');
+         history.push('/userprofile');
   }).catch(err => {
     alert(err);
           console.log("Error while updating!!!");
@@ -99,39 +101,13 @@ export const profileUpdate = function(userDetail){
         });
     };
 };
-// export const ownerlogin = function(userDetail){
-//   return (dispatch) => {
-//     fetch(`${server_url}/users/ownerlogin`, {
-//           method: 'POST',
-//           mode: 'cors',
-//           headers: { ...headers,'Content-Type': 'application/json' },
-//           body: JSON.stringify(userDetail)
-//       }).then(res => {
-//           if(res.status === 200){
-//             console.log("ownerlogin status:",res.status);
-//             return res.json();
-//           }else{
-//             alert((res.message)?res.message:"Owner Does not exists please sign up  !!!");
-//             throw "ownerlogin Failed !!!"
-//           }
-//      }).then(result=>{
-//          console.log("result",result.loginUser," token :",result.servertoken)
-//          UTIL.saveServerToken(result);
-//          dispatch(ownerLoggedIn(result.loginUser));
-//          history.push('/userhome');
-//   }).catch(err => {
-//     alert(err);
-//           console.log("Error while Sign up!!!");
-//           return err;
-//         });
-//     };
-// };
+
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-  
+
     axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job`, values)
+    axios.post(`${server_url}/apply/job/12345`, values)
         .then(res => {
           console.log("response status : " + res.status);
           if(res.status == 200 && res.data == "Applied successfully"){
@@ -142,4 +118,87 @@ export const customApplyJob =  (values) =>  dispatch =>  {
               })
             }
         })
- };
+      };
+
+  export const userDelete = function(userDetail){
+        return (dispatch) => {
+          fetch(`${server_url}/users/updateProfile`, {
+                method: 'POST',
+                credentials:'include',
+                headers: { ...headers,'Content-Type': 'application/json' },
+                mode: 'cors',
+                body: JSON.stringify(userDetail)
+            }).then(res => {
+                if(res.status === 200){
+                  console.log("user delete status:",res.status);
+                  return res.json();
+                }else{
+                  throw "Applicant account can not be deleted"
+                }
+           }).then(result=>{
+               console.log("result",result," token :",result.servertoken)
+               UTIL.deleteServerToken(result);
+               dispatch(userDeleteAction(result));
+               history.push('/');
+        }).catch(err => {
+          alert(err);
+                console.log("Error while Login!!!");
+                return err;
+              });
+          };
+      };
+
+
+      export const graphUpdate = function(userDetail){
+        console.log("Data sent to API:", userDetail);
+            return (dispatch) => {
+              fetch(`${server_url}/users/getTraceData`, {
+                    method: 'POST',
+                    credentials:'include',
+                    headers: { ...headers,'Content-Type': 'application/json' },
+                    mode: 'cors',
+                    body: JSON.stringify(userDetail)
+                }).then(res => {
+                    if(res.status === 200){
+                      console.log("user trace fetch data status:",res.status);
+                      return res.json();
+                    }else{
+                      throw "User trace data can not be fetched"
+                    }
+               }).then(result=>{
+                   console.log("result",result," token :",result)
+                   dispatch(userTraceAction(result));
+                   history.push('/applicantDashBoard');
+            }).catch(err => {
+              alert(err);
+                    console.log("Error while Login!!!");
+                    return err;
+                  });
+              };
+          };
+export const userSearch = function(userDetail){
+    console.log("Data sent to API:", userDetail);
+    return (dispatch) => {
+    fetch(`${server_url}/users/users`, {
+          method: 'GET',
+          credentials:'include',
+          headers: { ...headers,'Content-Type': 'application/json' },
+                    mode: 'cors'
+                    }).then(res => {
+                        if(res.status === 200){
+                          console.log("user search data status:",res.status);
+                          return res.json();
+                        }else{
+                          throw "User data can not be fetched"
+                        }
+                   }).then(result=>{
+                       console.log("result",result," token :",result)
+                       dispatch(userSearchAction(result));
+                       history.push('/usersearch');
+                }).catch(err => {
+                  alert(err);
+                        console.log("Error while Login!!!");
+                        return err;
+                      });
+                  };
+};

@@ -18,10 +18,8 @@ class EasyApplyModal extends Component {
 
    submitApplicationHandler = (e)=>{
         e.preventDefault();
-        console.log(e.target);
         var form = serialize(e.target, { hash: true });
-        console.log(form);
-        //this.props.onSubmitApplication(form);
+        this.props.onSubmitApplication(form);
    }
 
     render() { 

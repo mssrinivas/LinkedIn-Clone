@@ -239,3 +239,21 @@
 .navbar{
 	color:white;
 }
+.delete-container{
+	margin-left: 100px;
+}
+.radiodelete{
+	padding: 10px;
+}
+.btn-primary.homesuccess{
+	margin-left: 0px;
+	padding-left: 30px;
+	width: 200px;
+	margin-top: -30px;
+}
+.btn-primary.deletesuccess{
+	margin-left: 30px;
+	padding-left: 30px;
+	width: 200px;
+	margin-top: -30px;
+}

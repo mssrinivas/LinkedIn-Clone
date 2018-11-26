@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {customApplyJob} from './../../api/Api';
 import './apply.css';
 import {BASE_URL} from './../../components/constants/constants.js';
+import Navbar from './../navbar/Navbar.jsx';
 var swal = require('sweetalert')
 class customApply extends Component {
     constructor(props){
@@ -115,7 +116,7 @@ submitApplication = (e) => {
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
     const values = {
-        Applicant_id : "5bf26ceacb627fb4927fbd99",
+        Applicant_id : this.props.user._id,
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -134,10 +135,13 @@ submitApplication = (e) => {
         companyLogo : this.props.customJobPost.CompanyLogo,
         id : this.props.customJobPost._id,
         easyApply : this.props.customJobPost.easyApply,
-
+        appliedDate : new Date()
     }
-    console.log("selected file: " + selectedFile.name);
-    let formData = new FormData();
+    let Applicant_id = this.props.user._id;
+    console.log("selected file: " + selectedFile);
+    console.log("selected file name: " + selectedFile.name);
+    const formData = new FormData();
+    formData.append('applicant_id', Applicant_id);
     formData.append('selectedFile', selectedFile);
     axios.post(`${BASE_URL}/uploadresume`, formData)
                      .then((response) => {
@@ -155,6 +159,7 @@ submitApplication = (e) => {
     render() { 
         return (
             <div>
+            <Navbar />
             <div className="headerback">
             <div className="applytitle">
                 {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
@@ -278,7 +283,7 @@ submitApplication = (e) => {
 
 const mapStateToProps = state => {
     return {
-       
+       user: state.LoginReducer.currentUserDetails,
         applied : state.LoginReducer.applied,
         customJobPost : state.LoginReducer.customJobPost
      };
