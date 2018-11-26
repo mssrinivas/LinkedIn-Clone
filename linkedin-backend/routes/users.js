@@ -298,4 +298,27 @@ router.post('/getProfile', function (req,res,next) {
 //     })
 // });
 //==============================================================================================
+
+// router.post('/provideusers', function (req,res,next) {
+//   console.log("inside provideusers neha",req.body.pendingList);
+
+//   //find({email:{$in :['neha@gmail.com','varsha@gmail.com']}})
+//   User.find({email:{$in :req.body.pendingList}})
+//     .exec()
+//     .then(user => {
+//         res.status(200).json({
+//               message : "User Details fetched.",
+//               userData: user
+//             });
+//       })
+//     .catch(err => {
+//       console.log("Error : ", err);
+//       res.status(400).json({
+//               message : " User details can not be fetched successfully"
+//             });
+//     })
+
+// });
+
+
 module.exports = router;

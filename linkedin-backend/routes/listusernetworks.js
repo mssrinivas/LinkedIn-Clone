@@ -51,29 +51,40 @@ User.find({
 });
 });
 
+
+
+
 //sending connection request
 router.post('/requestconnection', function(req, res, next) {
 console.log("sending friend request to connection...",req.body)
 console.log("from",req.body.from);
 console.log("to",req.body.to)
+console.log("to",req.body.fromDetails)
 var from = req.body.from;
 			var to = req.body.to;
+		
 			//var username = req.body.from;
 			// first add 'to' to 'from's waiting list
-			var query = {email: from};
-			var wtn = [];
+			User.findOne({email:from},function(err,data){
+				console.log("from user data->",data)
+			var wtn = data.waiting;
+			
             wtn.push(to);
             console.log("waiting req",wtn)
 			var dataChange = {waiting:wtn};
-			User.update(query, dataChange, function (err, user) {
+			User.update({email: from}, dataChange, function (err, user) {
 				// now add 'from' to 'to's pending list
 				User.findOne({email:to},function(err,data){
-                    console.log(" pending requests",data)
-					var pnd = data.pending;
-                    pnd.push(from);
-                    console.log("pending request before query sending pnd",pnd)
-					dataChange = {pending:pnd};
-					User.update({email:to},dataChange,function(err,user){
+					var pnddata={
+						email: from,
+						first_name:req.body.fromDetails.first_name,
+						last_name:req.body.fromDetails.last_name,
+						job_title:"Software Engineer"
+					}
+                   // pnd.push(from);
+                    console.log("pending request before query sending pnd",pnddata)
+					//dataChange = {pending:pnd};
+					User.update({email:to}, { $push: {pending: pnddata }},function(err,user){
 						// if all successful, send notification message
 						var notification = new Notification( { 
 							body: from+" has sent you a friend request!",
@@ -92,31 +103,47 @@ var from = req.body.from;
 					});
 				});
 			});
+		});
 })
-
-//acceptconnection
 
 // respond to friend request
 router.post('/respondtorequest', function (req, res) {
+	console.log("user response",req.body)
 	var ans = req.body.ans;
 	if(ans === "Accept")
 		console.log("Request Accepted...");
-	else
+	else if(ans==="Reject")
 		console.log("Request Rejected...");
 			var from = req.body.from;
 			var to = req.body.to;
-			//var username = req.session.user.username;
+			var toUserDetails=req.body.toUserDetails;
 			// first remove 'from' from 'to's pending list
-			var pnd = req.body.pending;
+			User.findOne({email:to},function(err,data){
+			var pnd = data.pending;
+			console.log("pending data of user***********",data.pending)
 			for(var i=0;i<pnd.length;i++)
-				if(pnd[i]===from)
+				if(pnd[i].email===from)
 					break;
 			pnd.splice(i,1);
-			var friend = req.body.connections;
-			if(ans === "Accept")
-			friend.push(from);
-			var dataChange = {pending:pnd,connections:friend};
-			User.update({email:to}, dataChange, function (err, user) {
+			//var friend = data.connections;
+			//if(ans === "Accept") //here cud be problem *1
+			//friend.push(from);
+			User.findOne({email:from},function(err,data){
+				console.log("after acceptiong...data..is..",data)
+			 var friend={
+				email:from,
+				first_name:data.first_name,
+				last_name:data.last_name,
+				job_title:data.job_title,
+				experience:data.experience,
+			 }
+			 console.log("friendlist 1->",friend)
+			console.log("Data changed  after accept", pnd)
+			if(ans === "Accept") 
+			var dataChange={$push: { connections: friend},$set:{pending:pnd}}
+			if(ans=="Reject")
+			var dataChange={$set:{pending:pnd}}
+			User.update({email:to},dataChange, function (err, user) {
 
 				// now remove 'to' from 'from's waiting list
 				User.findOne({email:from},function(err,data){
@@ -125,11 +152,23 @@ router.post('/respondtorequest', function (req, res) {
 						if(existingWaitingList[i]===to)
 							break;
 							existingWaitingList.splice(i,1); //removed that particular element from list
+
 					var friendList = data.connections;
+					//if(ans === "Accept")
+					//friendList.push(to);
+					var friend={
+						email:to,
+						first_name:toUserDetails.first_name,
+						last_name:toUserDetails.last_name,
+						job_title:toUserDetails.job_title,
+						experience:toUserDetails.experience, //here data might come from different frontend store,confirm wd team
+					}
+					console.log("friendlist 2->",friend)
 					if(ans === "Accept")
-					friendList.push(to);
-						dataChange = {waiting:existingWaitingList,connections:friendList};
-					User.update({email:from},dataChange,function(err,data_){
+					var dataChange={ $push: { connections: friend} ,$set:{waiting: existingWaitingList }}
+					if(ans === "Reject")
+					var dataChange={$set:{waiting: existingWaitingList }}
+					User.update({email:from},dataChange,function(err,data){
 						// send notification of acceptance
 						if(ans === "Accept"){
 							var notification = { 
@@ -139,14 +178,17 @@ router.post('/respondtorequest', function (req, res) {
 								from: from,
 								to: to,
                                 type : "res",
-                                connections:friendList
+								connections:friendList,
+								pending:pnd
 							};
 							var newNotify = new Notification(notification).save(function (err) {
-                                io.sockets.emit('notification', {notificationData: notification});
-                                res.status(200).json({notification})
+								io.sockets.emit('notification', {notificationData: notification});
+								res.status(200).json({ disabled:true, success: true, notifData: notification });
+                                //res.status(200).json({notification})
 								//res.redirect('/users/'+from);
 							});
 						}
+					
 						// send notification of rejection
 						else{
 							var notification = { 
@@ -155,17 +197,22 @@ router.post('/respondtorequest', function (req, res) {
 								status: "not_read",
 								from: from,
 								to: to,
-								type : "res"
+								type : "res",
+								pending:pnd
 							};
 							var newNotify = new Notification(notification).save(function (err) {
-                                io.sockets.emit('notification', {notifData: notifData});
-                                res.status(200).json({notifData})
+								//io.sockets.emit('notification', {notifData: notifData});
+								res.status(200).json({ disabled:true, success: true, notifData: notification });
+                                //res.status(200).json({notifData})
 								//res.redirect('/users/'+username);
 							});
 						}
 					});
+				
 				});
 			});
+		});
+		});
 });
 
 

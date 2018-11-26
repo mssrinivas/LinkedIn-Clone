@@ -9,9 +9,11 @@ var applications = require('./routes/applications');
 const multer = require('multer');
 var jobs = require('./routes/jobs.js');
 var listusernetwork = require('./routes/listusernetworks');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./graphqlschema/schema');
 // var {User} = require('./models/user');
 
-const url = "http://localhost:3002";
+const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({origin:url,credentials:true}));
 
@@ -34,7 +36,6 @@ app.use('/users', users);
 app.use('/apply', applications);
 app.use('/applications', applications);
 app.use('/jobs',jobs);
-
 app.use('/user', listusernetwork);
 
 
@@ -66,7 +67,10 @@ app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
 
 
 
-
+app.use("/graphql",graphqlHTTP({
+  schema,
+  graphiql: true
+}));
 
 
 var server = app.listen(3001,()=>{

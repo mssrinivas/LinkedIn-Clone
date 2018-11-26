@@ -68,15 +68,23 @@ var userschema = mongoose.Schema({
     // ],
     
     connections:[
-       { 
-        email : String,
-        first_name:String,
-        last_name:String,
-        experience:String
-       }
+        {
+            email:String,
+            first_name:String,
+            last_name:String,
+            job_title:String,
+            experience:Number,
+          
+        }
     ],
 
-    pending:[
+    pending:[{
+        email:String,
+        first_name:String,
+        last_name:String,
+        job_title:String,
+       
+    }
     ],
     waiting:[
     ]

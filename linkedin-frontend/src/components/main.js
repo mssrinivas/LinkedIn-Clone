@@ -8,7 +8,8 @@ import CustomJobApply from './JobApply/customApply.js';
 import EasyJobApply from './JobApply/easyApplyModal.js';
 import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
-import ListAllConnections from './connections/listallconnections';
+import ListAllConnections from './networks/listallconnections';
+import ShowConnectedUsers from './networks/showconnectedusers';
 import Login from './applicant/login'
 import UserProfile from './applicant/userprofile'
 import UserProfileFirst from './applicant/profilefirst'
@@ -33,6 +34,8 @@ class Main extends Component {
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
+                
 
             </Switch>
             </Router>
