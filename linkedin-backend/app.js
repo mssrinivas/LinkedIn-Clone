@@ -12,6 +12,7 @@ var jobs = require("./routes/jobs.js");
 var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
+var fs = require('file-system');
 
 const url = "http://localhost:3000";
 //const url = "hosting url";
@@ -52,22 +53,44 @@ app.get("/start", (request, response) => {
 });
 
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./resumeFolder");
+  destination: function(req, file, cb){
+    console.log("req body " + JSON.stringify(req.body))
+    console.log("applicant id passed in destination : " + req.body.applicant_id);
+    console.log("selected file  : " + req.body.selectedFile);
+    var currentFolder = 'public/resumeFolder/'+req.body.applicant_id+'/';
+    fs.mkdir(currentFolder, function(err){
+      if(!err) {
+        console.log("no error : " + err);
+        cb(null , currentFolder);
+      } else {
+         console.log("error : " + err);
+        cb(null , currentFolder);
+      }
+    });
+   
   },
-  filename: (req, file, cb) => {
-    const newFilename = `${file.originalname}`;
-    console.log("filename : " + newFilename);
-    cb(null, newFilename);
+  filename: function(req, file, cb){
+  const newFilename = `${file.originalname}`;
+  console.log("applicant id passed in filename: " + req.body.applicant_id);
+  // console.log("request applicant id :" + req.body.applicant_id);
+  console.log("filename : " + newFilename);
+  cb(null, Date.now()+'-'+newFilename);
+  
   }
 });
 
-const uploadPhoto = multer({ storage });
-app.post("/uploadresume", uploadPhoto.single("selectedFile"), (req, res) => {
-  console.log("Inside photo upload Handler");
-  res.writeHead(200, {
-    "Content-Type": "text/plain"
-  });
+const upload = multer({ 
+  storage:storage,
+  limits: {
+    fileSize :1024*1024*5
+  }
+ });
+app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next){
+  console.log("applicant id in uploadPhoto " + req.body.applicant_id)
+    console.log("Inside photo upload Handler");
+    res.writeHead(200,{
+         'Content-Type' : 'text/plain'
+         })
 });
 
 var server = app.listen(3001, () => {
