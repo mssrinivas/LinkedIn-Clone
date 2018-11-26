@@ -152,9 +152,6 @@ SliderChangeBudget = (value) => {
         })
     };
 
-  onSubmitClicked = () => {
-  }
-
   componentDidMount() {
   }
 

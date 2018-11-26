@@ -7,11 +7,11 @@ var { mongoose } = require("./../db/mongoose");
 // var LocalStrategy = require('passport-local').Strategy;
 const multer = require("multer");
 var app = express();
-var bcrypt = require("bcrypt-nodejs");
-var jwt = require("jsonwebtoken");
-var session = require("express-session");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
+var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+var session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 var salt = bcrypt.genSaltSync(10);
 // var kafka = require('./../kafka/client');
 var {User} = require('./../models/user');
@@ -299,6 +299,28 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
+
+// router.post('/provideusers', function (req,res,next) {
+//   console.log("inside provideusers neha",req.body.pendingList);
+
+//   //find({email:{$in :['neha@gmail.com','varsha@gmail.com']}})
+//   User.find({email:{$in :req.body.pendingList}})
+//     .exec()
+//     .then(user => {
+//         res.status(200).json({
+//               message : "User Details fetched.",
+//               userData: user
+//             });
+//       })
+//     .catch(err => {
+//       console.log("Error : ", err);
+//       res.status(400).json({
+//               message : " User details can not be fetched successfully"
+//             });
+//     })
+
+// });
+
 router.get("/users", function(req, res, next) {
   console.time("Query_Time");
   var result = [];

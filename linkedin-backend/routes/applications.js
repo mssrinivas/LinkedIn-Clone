@@ -43,13 +43,13 @@ var {Applications} = require('./../models/application');
 router.post('/job', function(req, res, next) {
     console.log("inside custom apply");
     console.log("req sent from custom apply", req.body);
-    Applications.findOne({Applicant_id:"5bf26ceacb627fb4927fbd99", Job_id:"5bf2356f7adf109c6dbcb244", Saved:true, Applied:false},function(err, doc) {
+    Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.id, Saved:true, Applied:false},function(err, doc) {
         if(err){res.status(400).send("error occured")}
         else{
             if(doc){
                 console.log("\n..found saved application....\n");
                 Applications.update(
-                    {Applicant_id:"5bf26ceacb627fb4927fbd99", Job_id:"5bf2356f7adf109c6dbcb244", Saved:true, Applied:false}, 
+                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.id, Saved:true, Applied:false}, 
                     {$set : 
                          {
                             HowDidYouHear: req.body.hear,

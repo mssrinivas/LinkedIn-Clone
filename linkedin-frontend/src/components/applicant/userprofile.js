@@ -105,9 +105,14 @@ class UserProfile extends Component {
    history.push('/resumeview');
  }
   render() {
-    let resume = this.props.currentUserDetails.resume_path.split(this.props.currentUserDetails.applicant_id)[1];
-    resume = resume.replace("/", "");
-    resume = resume.split('-')[1];
+    let resume=""
+    if(this.props.currentUserDetails.resume_path!=null) {
+      if(this.props.currentUserDetails.resume_path.length!=0){
+        resume = this.props.currentUserDetails.resume_path[0].split(this.props.currentUserDetails.applicant_id)[1];
+        resume = resume.replace("/", "");
+        resume = resume.split('-')[1];
+      }
+    } 
     return (
     		 <div>
           <Navbar />

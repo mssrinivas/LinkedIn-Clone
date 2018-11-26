@@ -34,11 +34,8 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-stepper-horizontal": "^1.0.11",
-<<<<<<< HEAD
-    "react-time-tracker": "^1.0.0",
-=======
     "react-svg": "^7.1.0",
->>>>>>> fa9ea5046f466a285da8f0538b6ba58143a3d77a
+    "react-time-tracker": "^1.0.0",
     "react-tracker": "0.0.8",
     "redux": "^4.0.1",
     "redux-devtools": "^3.4.1",
@@ -47,6 +44,7 @@
     "redux-thunk": "^2.3.0",
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^7.29.1",
     "tachyons": "^4.11.1",
     "timetracking": "^1.2.2",
     "vue-analytics": "^5.16.0"

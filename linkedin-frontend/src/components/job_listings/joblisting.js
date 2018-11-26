@@ -101,7 +101,8 @@ class JobListing extends Component {
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
             Company: obj.CompanyName,
-            JobTitle: obj.JobTitle
+            JobTitle: obj.JobTitle,
+            recruiterName: obj.recruiterName
            })
         })
         .then(response => response.json())
