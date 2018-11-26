@@ -1,7 +1,8 @@
 var express = require('express');
+const path = require('path');
 var app = express();
-var session = require('express-session');
-var cors = require('cors');
+var session = require("express-session");
+var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
@@ -12,10 +13,13 @@ var jobs = require('./routes/jobs.js');
 var activitytracker = require('./routes/activitytracker.js')
 var activitytrackerincomplete = require('./routes/activitytrackerincomplete.js')
 var dashboard = require('./routes/dashboard.js');
+var search = require("./routes/search");
+var uploadresume = require('./routes/uploadResume');
+const redis = require('redis');
 
 const url = "http://localhost:3000";
 
-app.use(cors({origin:url,credentials:true}));
+app.use(cors({ origin: url, credentials: true }));
 
 app.use(function(req, res, next) {
 
@@ -27,15 +31,23 @@ app.use(function(req, res, next) {
     next();
   });
 
-
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+//redis client
+// let client = redis.createClient(6379,'127.0.0.1');
+// client.on('connect', function(){
+//   console.log('connected to redis');
+// })
 
-app.use('/users', users);
+app.use("/users", users);
+app.use("/apply", applications);
+app.use("/applications", applications);
+app.use("/jobs", jobs);
+app.use("/search", search);
 app.use('/apply', applications);
-app.use('/applications', applications);
-app.use('/',jobpostings)
+app.use('/uploadresume', uploadresume);
 
 app.use('/userdata', activitytracker)
 app.use('/incomplete', activitytrackerincomplete)
@@ -49,24 +61,24 @@ app.get("/start",(request,response)=>{
 });
 
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, './resumeFolder');
-    },
-    filename: (req, file, cb) => {
+  destination: (req, file, cb) => {
+    cb(null, "./resumeFolder");
+  },
+  filename: (req, file, cb) => {
     const newFilename = `${file.originalname}`;
     console.log("filename : " + newFilename);
     cb(null, newFilename);
-    },
-  });
-
-const uploadPhoto = multer({ storage });
-app.post('/uploadresume', uploadPhoto.single('selectedFile'), (req, res) => {
-    console.log("Inside photo upload Handler");
-    res.writeHead(200,{
-         'Content-Type' : 'text/plain'
-         })
+  }
 });
 
-var server = app.listen(3001,()=>{
-    console.log("Linkedin server has started to listen at http://localhost:3001" );
+const uploadPhoto = multer({ storage });
+app.post("/uploadresume", uploadPhoto.single("selectedFile"), (req, res) => {
+  console.log("Inside photo upload Handler");
+  res.writeHead(200, {
+    "Content-Type": "text/plain"
+  });
+});
+
+var server = app.listen(3001, () => {
+  console.log("Linkedin server has started to listen at http://localhost:3001");
 });

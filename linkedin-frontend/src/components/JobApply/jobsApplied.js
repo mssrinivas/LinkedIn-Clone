@@ -4,6 +4,7 @@ import './apply.css';
 import axios from 'axios';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
+import { connect } from 'react-redux';
 class jobsApplied extends Component {
     constructor(props){
         super(props);
@@ -16,7 +17,8 @@ class jobsApplied extends Component {
     componentWillMount(){
         
         console.log("inside componentdidmount of applied jobs")
-         axios.get(`${BASE_URL}/applications/applied`)
+        let ID = this.props.user._id;
+         axios.get(`${BASE_URL}/applications/applied/`+ID)
              .then((response) => {
             console.log("response data : " + response.data);
         
@@ -64,5 +66,10 @@ class jobsApplied extends Component {
          );
     }
 }
- 
-export default jobsApplied;
+const mapStateToProps = (state) =>{
+    return {
+        user : state.LoginReducer.currentUserDetails
+    }
+}
+
+export default connect(mapStateToProps)(jobsApplied);

@@ -8,11 +8,11 @@ const headers = {
 
 export const saveServerToken = (data) => {
   console.log("saveServerToken",data);
-  if(data.loginUser){
-    localStorage.setItem('currentUser',JSON.stringify(data.loginUser));
+  if(data.current_user){
+    localStorage.setItem('currentUser',JSON.stringify(data.current_user));
   }
-  if(data.servertoken){
-    localStorage.setItem('servertoken',data.servertoken);
+  if(data.server_token){
+    localStorage.setItem('servertoken',data.server_token);
   }
 
 };

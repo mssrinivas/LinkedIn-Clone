@@ -18,7 +18,8 @@ class Login extends Component {
 			last_name: "",
 			email: "",
 			password: "",
-			recruiter_value: ""
+			recruiter_value: "",
+			status:'Active'
 		};
 	}
 	render() {

@@ -23,17 +23,27 @@ var userschema = mongoose.Schema({
     recruiter_flag : {
         type : Number
     },
+    student_flag : {
+        type : Number
+    },
     address : {
-        type : String
+        type : String,
     },
     state : {
-        type : String
+        type : String,
+
     },
     city : {
         type : String
     },
+    country : {
+      type : String
+    },
     zip_code : {
         type : Number
+    },
+    company : {
+      type : String
     },
     experience : {
         type : String
@@ -50,9 +60,19 @@ var userschema = mongoose.Schema({
     profile_summary : {
         type : String
     },
+    headline : {
+      type : String
+    },
+    job_title : {
+      type : String
+    },
     profile_img : {
         type : String
-    }
+    },
+    resume_path: {type : Array, required : false},
+    saved_job : {type : Array, required : false},
+    applied_job:{type : Array, required : false}
+
 });
 
 const User = mongoose.model('User',userschema);
