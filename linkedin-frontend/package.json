@@ -29,11 +29,13 @@
     "react-pdf-js": "^4.0.1",
     "react-pencil": "^1.1.1",
     "react-rangeslider": "^2.2.0",
-    "react-redux": "^5.0.7",
+    "react-redux": "^5.1.1",
+    "react-redux-form": "^1.16.10",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-stepper-horizontal": "^1.0.11",
     "react-svg": "^7.1.0",
+    "react-tracker": "0.0.8",
     "redux": "^4.0.1",
     "redux-devtools": "^3.4.1",
     "redux-form": "^7.4.2",
@@ -41,7 +43,8 @@
     "redux-thunk": "^2.3.0",
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
-    "tachyons": "^4.11.1"
+    "tachyons": "^4.11.1",
+    "vue-analytics": "^5.16.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+
 var Applications = mongoose.model('Applications',{
     Job_id :{type : String, required : true},
     CompanyName :{type : String, required : true},

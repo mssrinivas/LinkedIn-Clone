@@ -46,8 +46,6 @@ class Main extends Component {
             </Switch>
             </Router>
             </Provider>
-
-
     );
   }
 }

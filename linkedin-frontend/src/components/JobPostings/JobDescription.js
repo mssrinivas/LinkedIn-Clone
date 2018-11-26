@@ -9,7 +9,6 @@ class JobDescription extends Component {
 	componentDidMount() {
     
 	}
-    
 	render ()
 	{
         
@@ -25,131 +24,93 @@ class JobDescription extends Component {
                     <p class="font-weight-bold ">Step 1: What job do you want to post?</p>
                     <br />
                     <div class="row">
-                    <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Company</p>Google
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Facebook</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">LinkedIn</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Apple</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Twilio</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
+                    <div class="col-md-4 mb-4">
+                   <p class="font-weight-bold smally">Company</p>
+                    <input className="form-control smally" type="text" placeholder="Company Name" name="Company" value={this.props.Company} onChange={this.props.Change}></input>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                    <p class="font-weight-bold smally">Job Title</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="JobTitle" value={this.props.JobTitle} onChange={this.props.Change}>
+              <option>Select a Job Title</option>
+              <option>Software Designer</option>
+				      <option>Software Programmer</option>
+				      <option>Team Lead</option>
+				      <option>Cheif Executive Officer</option>
+				    </select>
                     </div>
                     <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Job Title</p>Software Engineer
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Software Designer</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Software Programmer</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Team Lead</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Cheif Executive Officer</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Location</p>San Jose
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">San Francisco</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">New York</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Boston</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Texas</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Chicago</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
+                    <p class="font-weight-bold smally">Location</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="Location" value={this.props.Location} onChange={this.props.Change}>
+              <option>Select a City</option>
+              <option>San Francisco</option>
+				      <option>New York</option>
+				      <option>Boston</option>
+				      <option>Texas</option>
+				      <option>Chicago</option>
+				    </select>
                     </div>
                     </div>
                     <div class="row">
-                      <div class="col-md-3 mb-3">
-                      <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Seniority Level</p>Entry Level
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Internship</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Mid-Level</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Senior Level</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Director</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
+                      <div class="col-md-4 mb-4">
+                    <p class="font-weight-bold smally">Seniority Level</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="SeniorityLevel" value={this.props.SeniorityLevel} onChange={this.props.Change}>
+              <option>Select SeniorityLevel</option>
+              <option>Internship</option>
+				      <option>Mid-Level</option>
+				      <option>Senior Level</option>
+				      <option>Director</option>
+				    </select>
                     </div>
                     </div>
                     <div class="row">
-                    <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Job Function</p>Software Developer
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Quality Assurance</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Analyst</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Full Stack Developer</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Strategy/Planning</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
+                    <div class="col-md-4 mb-4">
+                    <p class="font-weight-bold smally">Job Function</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="JobFunction" value={this.props.JobFunction} onChange={this.props.Change}>
+              <option>Select Jpb Function</option>
+              <option>Quality Assurance</option>
+				      <option>Analyst</option>
+				      <option>Full Stack Developer</option>
+				      <option>Strategy/Planning</option>
+				    </select>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                    <p class="font-weight-bold smally">Employment Type</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="EmploymentType" value={this.props.EmploymentType} onChange={this.props.Change}>
+              <option>Select EmploymentType</option>
+              <option>Full Time</option>
+				      <option>Part Time</option>
+				      <option>Internship</option>
+				      <option>Contractor</option>
+				      <option>Temporary</option>
+                      <option>Volunteer</option>
+				    </select>
                     </div>
                     <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Employment Type</p>Full Time
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Full Time</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Part Time</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Internship</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Contractor</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Temporary</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Volunteer</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">Industry Type</p>Information Technology
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Information Technology</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Accounting</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Electronics</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Mechanical Industry</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Aviation</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Automotive</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Arts & Business</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Banking</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
+                    <p class="font-weight-bold smally">Industry Type</p>
+                    <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="Industry" value={this.props.Industry} onChange={this.props.Change}>
+              <option>Select Industry Type</option>
+              <option>Information Technology</option>
+				      <option>Accounting</option>
+				      <option>Electronics</option>
+				      <option>Mechanical Industry</option>
+				      <option>Aviation</option>
+              <option>Automotive</option>
+              <option>Arts & Business</option>
+              <option>Banking</option>
+				    </select>
                     </div>
                     </div>
                     <div class="row">
-                        <div class="mb-3 centery">
+                        <div class="mb-4">
                         <p class="font-weight-bold smally">Job Description</p>
-                        <textarea type="textarea" class="form-control form-control-lg font-weight-bold smally" name="aboutme" placeholder=""  />
+                        <textarea type="textarea" class="form-control form-control-lg font-weight-bold smally textareawidth" name="JobDescription" placeholder="" value={this.props.JobDescription} onChange={this.props.Change} />
                         <div class="invalid-feedback">
                         </div>
                         <br />
                         <p class="font-weight-bold smally">Recommended Mail</p>
-                        <input className="form-control form-control-sm" type="text" placeholder="Email Address"></input>
+                        <input className="form-control form-control-sm smally" type="text" name="RecommendedMail" placeholder="Email Address" value={this.props.RecommendedMail} onChange={this.props.Change}></input>
                     </div>
                     </div>
-                    <Dropdown size="sm">
-                    <DropdownToggle caret color="white">
-                    <p class="font-weight-bold smally">How did you hear about us?</p>LinkedIn
-                    </DropdownToggle>
-                    <DropdownMenu>
-                        <DropdownItem><p class="font-weight-bold smally">Google</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Facebook</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Career Fairs</p></DropdownItem>
-                        <DropdownItem><p class="font-weight-bold smally">Other Means</p></DropdownItem>
-                    </DropdownMenu>
-                    </Dropdown>
                     </div>
                 </CardBody>     
               </Card>

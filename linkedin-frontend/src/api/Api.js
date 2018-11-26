@@ -9,7 +9,6 @@ import {userSearchAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
-
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
 const headers = {
