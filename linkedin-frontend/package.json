@@ -27,6 +27,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "react-stepper-horizontal": "^1.0.11",
+    "react-time-tracker": "^1.0.0",
     "react-tracker": "0.0.8",
     "redux": "^4.0.1",
     "redux-devtools": "^3.4.1",
@@ -36,6 +37,7 @@
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
     "tachyons": "^4.11.1",
+    "timetracking": "^1.2.2",
     "vue-analytics": "^5.16.0"
   },
   "scripts": {

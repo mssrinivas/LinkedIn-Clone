@@ -13,6 +13,7 @@ import UserProfile from './applicant/userprofile'
 import UserProfileFirst from './applicant/profilefirst'
 import {history} from './../util/utils';
 import Navbar from "./navbar/Navbar";
+import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard';
 
 import ApplicantHome from "./feed/applicantHome.js";
 class Main extends Component {
@@ -30,6 +31,7 @@ class Main extends Component {
                 <Route exact path="/jobs/applied" component={JobsApplied} />
                 <Route exact path="/navbar" component={Navbar} />
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/recruiter/dashboard" component={RecruiterDashboard} />
             </Switch>
             </Router>
             </Provider>

@@ -12,6 +12,11 @@ class JobQualifications extends Component {
         super(props);  
 
     }
+
+    componentDidMount()
+    {
+      console.log("TIME",this.props.descriptionstarttime)
+    }
     
 	render ()
 	{

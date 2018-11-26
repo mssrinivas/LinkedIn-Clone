@@ -11,6 +11,8 @@ import Stepper from 'react-stepper-horizontal';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
+
+
 var swal = require('sweetalert')
 class JobPostings extends Component {
    constructor(props) {
@@ -39,7 +41,6 @@ class JobPostings extends Component {
         Redirection_Value : false,
         formActivePanel3: 1,
         formActivePanel3Changed: false,
-        
            steps: [{
         title: 'Step One',
         href: 'http://example1.com',
@@ -157,6 +158,10 @@ SliderChangeBudget = (value) => {
   componentDidMount() {
   }
 
+  onSave(totalTime){
+    console.log("TOTAL-TIME IS", totalTime)
+  }
+
   onSubmitClicked = () => {
     var url = 'http://localhost:3001/postjob'
     fetch(url, {
@@ -192,6 +197,8 @@ SliderChangeBudget = (value) => {
         swal("Job couldn't be posted due to errors!"," ", "failure");
       }
   })
+
+  
   }
 
   render ()
@@ -222,18 +229,24 @@ SliderChangeBudget = (value) => {
         Degree = {this.state.Degree}
         Change = {this.inputHandler}
         SliderChangeExperience = {this.SliderChangeExperience}
+        descriptionstarttime  = {this.state.descriptionstarttime}
         />)
     } 
 
      if(this.state.RedirecttoBudget === true)
     {
-        Redirecty = (<JobBudget 
-        Budget = {this.state.Budget}
-        Change = {this.inputHandler}
-        SliderChangeBudget = {this.SliderChangeBudget}
-        />)
-    }
+        // Redirecty = (<JobBudget 
+        // Budget = {this.state.Budget}
+        // Change = {this.inputHandler}
+        // SliderChangeBudget = {this.SliderChangeBudget}
+        // />)
+        Redirecty =  <JobBudget 
+          Budget = {this.state.Budget}
+          Change = {this.inputHandler}
+          SliderChangeBudget = {this.SliderChangeBudget}
+          />
 
+    }
     const { steps, currentStep } = this.state;
     const buttonStyle = { width: 200, padding: 16, textAlign: 'center', margin: '0 auto', marginTop: 32 };
     return (    

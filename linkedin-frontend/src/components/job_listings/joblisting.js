@@ -20,7 +20,8 @@ class JobListing extends Component {
             customApply : false,
             easyApply : false,
             error : null,
-            saveApplyJobMessage : null
+            saveApplyJobMessage : null,
+            previoustime : new Date()
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -92,6 +93,32 @@ class JobListing extends Component {
 
     jobPostCardClicked(position){
         this.setState({selectedIndex : position});
+        const obj = this.state.postings[position]
+        var url = 'http://localhost:3001/userdata/job'
+        fetch(url, {
+          method: 'post',
+          credentials : 'include',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            Company: obj.CompanyName,
+            JobTitle: obj.JobTitle
+           })
+        })
+        .then(response => response.json())
+        .then(poststatus => {
+          console.log(poststatus)
+          if(poststatus === "Tracked Successfully")
+          {
+            alert("Click Tracked")  
+          }
+          else
+          {
+            alert("Click Not Tracked")
+          }
+      })
+
+
+
     }
 
     _onMessageWasSent(message) {

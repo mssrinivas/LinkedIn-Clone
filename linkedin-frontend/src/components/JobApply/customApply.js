@@ -8,9 +8,7 @@ import {BASE_URL} from './../../components/constants/constants.js';
 var swal = require('sweetalert')
 class customApply extends Component {
     constructor(props){
-        //Call the constrictor of Super class i.e The Component
 super(props);
-        //maintain the state required for this component
 this.state = {
     firstname : "",
     lastname : "",
@@ -23,7 +21,9 @@ this.state = {
     veteran : "",
     disability : "",
     selectedFile : "",
-    cover : ""
+    cover : "",
+    touched : false,
+    goHome : false
 }
         //Bind the handlers to this class
 this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
@@ -40,6 +40,7 @@ this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
 this.hearChangeHandler = this.hearChangeHandler.bind(this);
 this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
 }
+
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
     if(nextProps.applied == true)
@@ -50,64 +51,80 @@ componentWillReceiveProps(nextProps) {
     
 }
 coverLetterChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         cover : e.target.value
     })
 }
 fnameChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         firstname : e.target.value
     })
 }
 hearChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         hear : e.target.value
     })
 }
 lnameChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         lastname : e.target.value
     })
 }
 emailChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         email : e.target.value
     })
 }
 contactChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         contact : e.target.value
     })
 }
 addressChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         address : e.target.value
     })
 }
 genderChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         gender : e.target.value
     })
 }
 raceChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         race : e.target.value
     })
 }
 veteranChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         veteran : e.target.value
     })
 }
 disabilityChangeHandler = (e) => {
+    this.setState({touched:true})
     this.setState({
         disability : e.target.value
     })
 }
 fileChangeHandler = (e) => {
+    this.setState({touched:true})
      this.setState({
          selectedFile: e.target.files[0]
        })
+ }
+
+ GoHome =()=> {
+     this.setState({goHome:true})
  }
 
 submitApplication = (e) => {
@@ -153,8 +170,14 @@ submitApplication = (e) => {
     }
 }
     render() { 
+        var RedirecttoHome = null;
+        if(this.state.goHome === true)
+        {
+            // RedirecttoHome = <Link to="/listings" />
+        }
         return (
             <div>
+            {RedirecttoHome}
             <div className="headerback">
             <div className="applytitle">
                 {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
@@ -261,8 +284,10 @@ submitApplication = (e) => {
                         </select>          
                      
                     </div>
-                   
-                    <button className="btn btn-primary1" type="submit">Submit Application</button>
+                    <button className="btn btn-primary1" type="submit">Go Back</button>
+                    &nbsp;
+                    <button className="btn btn-primary1" type="submit" onClick={this.GoHome}>Submit Application</button>
+                    
                     </form>
                     
                     

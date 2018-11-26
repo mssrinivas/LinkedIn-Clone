@@ -9,10 +9,12 @@ var applications = require('./routes/applications');
 const multer = require('multer');
 var jobpostings = require('./routes/postjob.js');
 var jobs = require('./routes/jobs.js');
-
+var activitytracker = require('./routes/activitytracker.js')
+var activitytrackerincomplete = require('./routes/activitytrackerincomplete.js')
+var dashboard = require('./routes/dashboard.js');
 
 const url = "http://localhost:3000";
-//const url = "hosting url";
+
 app.use(cors({origin:url,credentials:true}));
 
 app.use(function(req, res, next) {
@@ -35,7 +37,10 @@ app.use('/apply', applications);
 app.use('/applications', applications);
 app.use('/',jobpostings)
 
+app.use('/userdata', activitytracker)
+app.use('/incomplete', activitytrackerincomplete)
 app.use('/jobs',jobs);
+app.use('/recruiter',dashboard);
 
 app.get("/start",(request,response)=>{
 	response.status(200).json({
