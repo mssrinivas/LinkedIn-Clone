@@ -299,10 +299,13 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
-router.get("/users", function(req, res, next) {
+router.post("/users", function(req, res, next) {
   console.time("Query_Time");
+  const{first_name} = req.body;
   var result = [];
   console.log("Inside Search Post Request");
+  
+  /*
   client.get(userresult,function(err,value){
     if(err) {
       return console.log(err);
@@ -336,6 +339,25 @@ router.get("/users", function(req, res, next) {
         });
     }
   });
+  */
+
+ const regexname = new RegExp(first_name,'i'); 
+ User.find({$or:[{"first_name":regexname},{"last_name":regexname}]})
+ .then(response => {
+   //console.log("Response from find users", response);
+   
+   result = response;
+   res.status(200).json({result});
+   console.log(result);
+   //return console.timeEnd("Query_Time");
+
+ })
+ .catch(err => {
+   console.log("Error : ", err.response);
+   res.status(500).json({
+     message: "internal server error"
+   });
+ });
 });
 
 module.exports = router;
