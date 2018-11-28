@@ -28,4 +28,17 @@ var searchJobs = async function(params) {
     }
 }
 
-module.exports = {searchJobs};
+var searchingJobs = async function(params) {
+    try{
+        
+        const linkedInDB = mongodb_connection.db("linkedin");
+        const docs = await linkedInDB.collection("jobpostings").find({});
+        
+        return docs;
+    }catch(error){
+        console.log(error);
+        return null
+    }
+}
+
+module.exports = {searchJobs,searchingJobs};

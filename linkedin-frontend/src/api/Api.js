@@ -5,7 +5,9 @@ import {userSignupAction} from './../actions/index';
 import {userProfileUpdateAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
+import {userSearchAction} from './../actions/index';
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
+
 
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
@@ -143,3 +145,31 @@ export const customApplyJob =  (values) =>  dispatch =>  {
             }
         })
  };
+
+ export const userSearch = function(userDetail){
+  console.log("Data sent to API:", userDetail);
+  return (dispatch) => {
+  fetch(`${server_url}/users/users`, {
+        method: 'POST',
+        credentials:'include',
+        headers: { ...headers,'Content-Type': 'application/json' },
+        mode: 'cors',
+        body: JSON.stringify(userDetail)
+                  }).then(res => {
+                      if(res.status === 200){
+                        console.log("user search data status:",res.status);
+                        return res.json();
+                      }else{
+                        throw "User data can not be fetched"
+                      }
+                 }).then(result=>{
+                     console.log("result",result," token :",result)
+                     dispatch(userSearchAction(result));
+                     history.push('/search');
+              }).catch(err => {
+                alert(err);
+                      console.log("Error while Login!!!");
+                      return err;
+                    });
+                };
+};

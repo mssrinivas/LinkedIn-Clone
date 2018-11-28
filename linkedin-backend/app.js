@@ -75,11 +75,12 @@ const storage = multer.diskStorage({
    
   },
   filename: function(req, file, cb){
-  const newFilename = `${file.originalname}`;
-  console.log("applicant id passed in filename: " + req.body.applicant_id);
-  // console.log("request applicant id :" + req.body.applicant_id);
-  console.log("filename : " + newFilename);
-  cb(null, Date.now()+'-'+newFilename);
+  // // const newFilenam
+  // e = `${file.originalname}`;
+  // console.log("applicant id passed in filename: " + req.body.applicant_id);
+  // // console.log("request applicant id :" + req.body.applicant_id);
+  // console.log("filename : " + newFilename);
+  // cb(null, Date.now()+'-'+newFilename);
   
   }
 });
@@ -95,7 +96,7 @@ app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next
     console.log("Inside photo upload Handler");
     res.writeHead(200,{
          'Content-Type' : 'text/plain'
-         })
+        })
 });
 
 
