@@ -1,0 +1,63 @@
+.backC{
+    background-color: #f4f4f4;
+    min-height: 1000px;
+  background-size: cover
+  }
+
+.leftDiv{
+    width: 240px;
+    margin-top : 50px;
+    /* background-color: blue; */
+    margin-left :130px;
+    height: 750px;
+}
+.upperLeft{
+    height: 350px;
+    background-color: white;
+    border-radius : 2px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+}
+.lowerLeft{
+    height: 350px;
+    margin-top : 30px;
+    background-color: white;
+    border-radius : 2px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2);
+}
+.centralDiv{
+    box-sizing: border-box;
+    float: left;
+    height: 750px;
+    margin-left : 440px;
+    margin-right: -1px;
+    width: 600px;
+    /* background-color: blue; */
+    margin-top: -750px;
+
+}
+
+.rightDiv{
+    width: 240px;
+    margin-top : 30px;
+    /* background-color: blue; */
+    margin-left :1100px;
+    height: 750px;
+    margin-top: -750px;
+}
+
+.message-header{
+    width: 100%;
+    height: 30px;
+}
+
+#search-bar{
+    border:none;
+}
+
+#search-bar:focus{
+    border:0.8px solid #0077B5;
+}
+  
+.connection:hover{
+    background-color:#E2F4FC;
+}

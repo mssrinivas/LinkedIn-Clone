@@ -30,7 +30,7 @@ class JobListing extends Component {
     }
 
     componentDidMount(){
-        
+
         const url = BASE_URL+"/jobs/search";
         axios.get(url).then((response)=>{
             const {status} = response;
@@ -46,7 +46,7 @@ class JobListing extends Component {
     }
 
     async saveJob(position){
-        
+
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
         const data = {
@@ -81,7 +81,7 @@ class JobListing extends Component {
        }else{
            this.props.jobPost(postings[position]);
             this.setState({customApply : true});
-       } 
+       }
     }
 
     easyApply=(data,position)=>{
@@ -125,7 +125,7 @@ class JobListing extends Component {
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
-        
+
         if(customApply){ redirectVar = <Redirect to="/customapply" /> }
         //else if(easyApply){  redirectVar = <Redirect to="/easyapply" /> }
 
@@ -135,7 +135,7 @@ class JobListing extends Component {
                 <Navbar />
                 {errorMessageDiv}
                 {saveApplyMessageDiv}
-                
+
                 <div className="row">
                     <div className="col-md-1"></div>
                     <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
