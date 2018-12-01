@@ -106,9 +106,9 @@ export const profileUpdate = function(userDetail){
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-
+  
     axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job/12345`, values)
+    axios.post(`${server_url}/apply/job`, values)
         .then(res => {
           console.log("response status : " + res.status);
           if(res.status == 200 && res.data == "Applied successfully"){
@@ -117,10 +117,39 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 type :  CUSTOM_APPLY_SUCCESS,
                 payload: true
               })
-            }
+            }else{alert("Oops !! Something went wrong!! Please login again!!")}
         })
  };
 
+ 
+//  export const SendMessage =  (values) =>  dispatch =>  {
+//   console.log("Message to be added: " + values.Message);
+  
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/messages/send`, values)
+//         .then(res => {
+//           console.log("response status : " + res.status);
+//           if(res.status == 200){
+//             // console.log("booking failure : " + res.data);
+//             alert("Message sent Successfully !!")
+//             }else{alert("Oops !! Could not send Message!!")}
+//         })
+//  };
+
+ 
+//  export const submitMessage =  (values) =>  dispatch =>  {
+//   console.log("Conversation initiated: ");
+  
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/messages/startnew`, values)
+//         .then(res => {
+         
+//           if(res.status == 200){
+//             console.log("response status : " + res.status);
+//             history.push('/messages')
+//             }else{alert("Oops !! Could not send Message!!")}
+//         })
+//  };
 //  export const userSearch = function(userDetail){
 //   console.log("Data sent to API:", userDetail);
 //   return (dispatch) => {

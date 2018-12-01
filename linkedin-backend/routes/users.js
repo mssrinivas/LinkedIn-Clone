@@ -338,7 +338,10 @@ router.post('/getTraceData', function (req,res,next) {
 //       return console.timeEnd("Query_Time");
 //     }
 //     else {
-//       User.find({"first_name" : req.body.first_name})
+//       const regexname = new RegExp(msg.first_name,'i');
+//       console.log("regex",regexname )
+     
+//       User.find({$or :[{"first_name":regexname},{"last_name":regexname}]})
 //         .then(response => {
 //           console.log("Response from find users", response);
 //           client.set(userresult,JSON.stringify(response),function(err){
@@ -369,6 +372,7 @@ router.post("/users", function(req, res, next) {
       return console.log(err);
     }
     if(value) {
+        console.log("First name: ",req.body.first_name);
       console.log("Type of value :", typeof(value));
       result = JSON.parse(value);
       client.expire(userresult,1);
@@ -376,27 +380,67 @@ router.post("/users", function(req, res, next) {
       return console.timeEnd("Query_Time");
     }
     else {
-      kafka.make_request('search',req.body, function(err,results){
-        console.log('\n---- kafka  result of people search----');
-        console.log("results  :" + results);
-        if (err){
-            console.log("Inside err", err);
-            res.status(500).json({
-              message: "internal server error"
-            });
-        }else{  
-            console.log("\nkafka results value : ",results.value);
-            res.writeHead(200,{
-                        'Content-Type' : 'application/json'
-            })
-            res.end(JSON.stringify(results.value));
-            // res.status(200).json({results.value});
-            return console.timeEnd("Query_Time");
-        }
-    })
-  }
+      console.log("First name: ",req.body.first_name);
+      const regexname = new RegExp(req.body.first_name,'i');
+      User.find({$or :[{"first_name":regexname},{"last_name":regexname}]})
+        .then(response => {
+          console.log("Response from find users", response);
+          client.set(userresult,JSON.stringify(response),function(err){
+            if(err) {
+              return console.error(err);
+            }
+          })
+          result = response;
+          res.status(200).json({result});
+          return console.timeEnd("Query_Time");
+
+        })
+        .catch(err => {
+          console.log("Error : ", err.response);
+          res.status(500).json({
+            message: "internal server error"
+          });
+        });
+    }
+  });
 });
-});
+// router.post("/users", function(req, res, next) {
+//   console.time("Query_Time");
+//   var result = [];
+//   console.log("Inside Search Post Request");
+//   client.get(userresult,function(err,value){
+//     if(err) {
+//       return console.log(err);
+//     }
+//     if(value) {
+//       console.log("Type of value :", typeof(value));
+//       result = JSON.parse(value);
+//       client.expire(userresult,1);
+//       res.status(200).json({result});
+//       return console.timeEnd("Query_Time");
+//     }
+//     else {
+//       kafka.make_request('search',req.body, function(err,results){
+//         console.log('\n---- kafka  result of people search----');
+//         console.log("results  :" + results);
+//         if (err){
+//             console.log("Inside err", err);
+//             res.status(500).json({
+//               message: "internal server error"
+//             });
+//         }else{  
+//             console.log("\nkafka results value : ",results.value);
+//             res.writeHead(200,{
+//                         'Content-Type' : 'application/json'
+//             })
+//             res.end(JSON.stringify(results.value));
+//             // res.status(200).json({results.value});
+//             return console.timeEnd("Query_Time");
+//         }
+//     })
+//   }
+// });
+// });
      
        
   

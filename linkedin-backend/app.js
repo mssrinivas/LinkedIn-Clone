@@ -6,6 +6,7 @@ var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var messages = require('./routes/messages');
 var applications = require('./routes/applications');
 const multer = require('multer');
 var jobs = require('./routes/jobs.js');
@@ -16,8 +17,8 @@ const schema = require('./graphqlschema/schema');
 var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
-
-const url = "http://localhost:3002";
+var fs=require('file-system');
+const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
 
@@ -48,7 +49,7 @@ app.use("/jobs", jobs);
 //app.use("/search", search);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
-
+app.use('/messages', messages);
 app.get("/start", (request, response) => {
   response.status(200).json({
     msg: "Welcome to Linkedin"
@@ -57,7 +58,19 @@ app.get("/start", (request, response) => {
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./resumeFolder");
+    console.log("req body " + JSON.stringify(req.body))
+    console.log("applicant id passed in destination : " + req.body.applicant_id);
+    console.log("selected file  : " + req.body.selectedFile);
+    var currentFolder = 'public/resumeFolder/'+req.body.applicant_id+'/';
+    fs.mkdir(currentFolder, function(err){
+      if(!err) {
+        console.log("no error : " + err);
+        cb(null , currentFolder);
+      } else {
+         console.log("error : " + err);
+        cb(null , currentFolder);
+      }
+    });
   },
   filename: function(req, file, cb){
   const newFilename = `${file.originalname}`;

@@ -1,11 +1,11 @@
 var connection =  new require('./kafka/Connection');
-var appliedjob = require('./services/appliedjob.js');
-var savedjob = require('./services/savedjob.js');
+// var appliedjob = require('./services/appliedjob.js');
+// var savedjob = require('./services/savedjob.js');
 var  jobsave = require('./services/jobsave.js');
 //var customapply = require('./services/customapply.js');
 //var joblisting = require('./services/joblisting.js');
 
-var search = require('./services/search.js');
+// var search = require('./services/search.js');
 
 function handleTopicRequest(topic_name,fname){
     //var topic_name = 'root_topic';
@@ -37,13 +37,13 @@ function handleTopicRequest(topic_name,fname){
     });
 }
 
-handleTopicRequest("applied_jobs",appliedjob)
-handleTopicRequest("saved_jobs",savedjob)
+// handleTopicRequest("applied_jobs",appliedjob)
+// handleTopicRequest("saved_jobs",savedjob)
 handleTopicRequest("job_save",jobsave)
 //handleTopicRequest("custom_apply",customapply)
 //handleTopicRequest("job_listing",joblisting)
 
-handleTopicRequest("search",search)
+// handleTopicRequest("search",search)
 
 
 
