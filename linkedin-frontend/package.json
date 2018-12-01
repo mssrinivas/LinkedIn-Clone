@@ -41,7 +41,9 @@
     "redux-thunk": "^2.3.0",
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
-    "tachyons": "^4.11.1"
+    "tachyons": "^4.11.1",
+    "uniqid": "^5.0.3",
+    "sweetalert2": "^7.29.1"
   },
   "scripts": {
     "start": "react-scripts start",

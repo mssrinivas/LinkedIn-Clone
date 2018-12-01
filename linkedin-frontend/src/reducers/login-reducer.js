@@ -73,6 +73,13 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
+                  
+            case 'USER_SEARCH_ACTIVITY':
+                  console.log("User search activity", action.data.result);
+                  return Object.assign({}, state, {
+                  message: action.data.message,
+                  userSearch : action.data.result
+                })
 
           default:
     return state;

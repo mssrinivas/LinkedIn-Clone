@@ -35,9 +35,12 @@
     margin-top: -750px;
 
 }
-
+.follow{
+    margin-left:90px;
+    margin-top:-30px;
+}
 .rightDiv{
-    width: 240px;
+    width: 270px;
     margin-top : 30px;
     /* background-color: blue; */
     margin-left :1100px;
@@ -51,4 +54,30 @@
     border-radius: 300px;
 height: 90px;
 width: 90px
+}
+
+.leftPhoto1{
+    border: 2px solid #fff;
+    box-shadow: inset 0 1.5px 3px 0 rgba(0,0,0,.15), 0 1.5px 3px 0 rgba(0,0,0,.15);
+    margin: 10px auto 18px;
+    border-radius: 300px;
+height: 55px;
+width: 55px
+}
+
+.leftPhoto1{
+    border: 2px solid #fff;
+    box-shadow: inset 0 1.5px 3px 0 rgba(0,0,0,.15), 0 1.5px 3px 0 rgba(0,0,0,.15);
+    margin: 10px auto 18px;
+    border-radius: 300px;
+height: 55px;
+width: 55px
+}
+.leftPhoto2{
+    border: 2px solid #fff;
+    box-shadow: inset 0 1.5px 3px 0 rgba(0,0,0,.15), 0 1.5px 3px 0 rgba(0,0,0,.15);
+    margin: -0.5px auto 18px;
+    border-radius: 300px;
+height:85px;
+width: 85px
 }

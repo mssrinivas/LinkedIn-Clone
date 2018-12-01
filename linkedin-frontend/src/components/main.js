@@ -8,6 +8,8 @@ import CustomJobApply from './JobApply/customApply.js';
 import EasyJobApply from './JobApply/easyApplyModal.js';
 import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
+import ListAllConnections from './networks/listallconnections';
+import ShowConnectedUsers from './networks/showconnectedusers';
 import Login from './applicant/login'
 import UserProfile from './applicant/userprofile'
 import UserProfileFirst from './applicant/profilefirst'
@@ -19,6 +21,7 @@ import UserSearch from './applicant/usersearch';
 import ResumeView from './applicant/resumeview';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
+import Search from "./Search";
 import Messages from './messages/messages.js';
 class Main extends Component {
     render(){
@@ -29,6 +32,7 @@ class Main extends Component {
                 <Route exact path="/listings" component={JobListing} />
                 <Route exact path="/postjob" component={JobPostings} />
                 <Route exact path="/customapply" component={CustomJobApply} />
+                <Route exact path="/mynetworks" component={ListAllConnections} />
                 <Route exact path="/" component={Login} />
                 <Route exact path="/easyapply" component={EasyJobApply} />
                 <Route exact path="/jobs" component={Jobs} />
@@ -41,8 +45,11 @@ class Main extends Component {
                 <Route exact path="/usersearch" component={UserSearch}/>
                 <Route exact path="/resumeview" component={ResumeView}/>
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
                 <Route exact path="/resumes/:filename" component={Resumes} />
+                <Route exact path="/search" component={Search} />
+                
             </Switch>
             </Router>
             </Provider>

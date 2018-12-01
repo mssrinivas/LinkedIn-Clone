@@ -115,8 +115,10 @@ submitApplication = (e) => {
     const { selectedFile } = this.state;
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
+        console.log("job id" , this.props.customJobPost.Job_id)
     const values = {
         Applicant_id : this.props.user._id,
+        Job_id : this.props.customJobPost._id,
         email : this.state.email,
         firstname : this.state.firstname,
         lastname : this.state.lastname,
@@ -133,11 +135,11 @@ submitApplication = (e) => {
         jobtitle : this.props.customJobPost.JobTitle,
         joblocation :this.props.customJobPost.JobLocation,
         companyLogo : this.props.customJobPost.CompanyLogo,
-        id : this.props.customJobPost._id,
         easyApply : this.props.customJobPost.easyApply,
         appliedDate : new Date()
     }
     let Applicant_id = this.props.user._id;
+    console.log("Applicant_id for file upload: " + Applicant_id);
     console.log("selected file: " + selectedFile);
     console.log("selected file name: " + selectedFile.name);
     const formData = new FormData();
@@ -147,7 +149,9 @@ submitApplication = (e) => {
                      .then((response) => {
                          if(response.status == 200){
                           
-                           console.log("Status: " + response.status );
+                           console.log("Resume upload Status: " + response.status );
+                         }else{
+                             alert("Could not upload resume!!");
                          }
                 
     });
@@ -283,7 +287,7 @@ submitApplication = (e) => {
 
 const mapStateToProps = state => {
     return {
-       user: state.LoginReducer.currentUserDetails,
+        user : state.LoginReducer.currentUserDetails,
         applied : state.LoginReducer.applied,
         customJobPost : state.LoginReducer.customJobPost
      };
