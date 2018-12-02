@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Document, Page } from 'react-pdf';
+import {BASE_URL} from './../constants/constants.js';
+
 class resumes extends Component {
     
-    constructor(props){
+constructor(props){
         super(props)
         this.state = {
             fileName : this.props.match.params.filename,
+            userid:this.props.match.params.userid,
             numPages: null,
             pageNumber: 1
         }
@@ -15,6 +18,7 @@ class resumes extends Component {
 
     componentDidMount(){
         console.log(this.state.fileName);
+        console.log(this.state.userid);
     }
     
     
@@ -23,8 +27,8 @@ class resumes extends Component {
           }
 
     render() { 
-        const {fileName,pageNumber,numPages} = this.state;
-        const fileURL = "http://localhost:3001/resumeFolder/"+fileName;
+        const {fileName,userid,pageNumber,numPages} = this.state;
+        const fileURL = BASE_URL+"/resumeFolder/"+userid+"/"+fileName;
         return ( 
 
         <div>
