@@ -9,7 +9,7 @@ import {userSearchAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
-
+// export const CUSTOM_APPLY_FAILURE = "custom_apply_failure";
 
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
@@ -117,7 +117,11 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 type :  CUSTOM_APPLY_SUCCESS,
                 payload: true
               })
-            }else{alert("Oops !! Something went wrong!! Please login again!!")}
+            } 
+            // else if(res.status==401){
+            //   alert(res.message);
+            //   // throw "userlogin Failed !!!"
+            // }
         })
  };
 

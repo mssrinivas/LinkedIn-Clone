@@ -7,11 +7,17 @@ import './apply.css';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
 var swal = require('sweetalert')
+var resume = "";
+var Job_id = "";
+var RecruiterEmail = "";
 class customApply extends Component {
     constructor(props){
         //Call the constrictor of Super class i.e The Component
 super(props);
         //maintain the state required for this component
+        // this.details={
+        //     resume_name : ""
+        // };
 this.state = {
     firstname : "",
     lastname : "",
@@ -24,7 +30,8 @@ this.state = {
     veteran : "",
     disability : "",
     selectedFile : "",
-    cover : ""
+    cover : "",
+    
 }
         //Bind the handlers to this class
 this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
@@ -116,51 +123,66 @@ submitApplication = (e) => {
     e.preventDefault();
     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
         console.log("job id" , this.props.customJobPost.Job_id)
-    const values = {
-        Applicant_id : this.props.user._id,
-        Job_id : this.props.customJobPost._id,
-        email : this.state.email,
-        firstname : this.state.firstname,
-        lastname : this.state.lastname,
-        contact : this.state.contact,
-        address : this.state.address,
-        gender : this.state.gender,
-        race : this.state.race,
-        veteran : this.state.veteran,
-        disability : this.state.disability,
-        hear : this.state.hear,
-        resume : selectedFile.name,
-        cover_letter : this.state.cover,
-        company : this.props.customJobPost.CompanyName,
-        jobtitle : this.props.customJobPost.JobTitle,
-        joblocation :this.props.customJobPost.JobLocation,
-        companyLogo : this.props.customJobPost.CompanyLogo,
-        easyApply : this.props.customJobPost.easyApply,
-        appliedDate : new Date()
-    }
+    
     let Applicant_id = this.props.user._id;
     console.log("Applicant_id for file upload: " + Applicant_id);
     console.log("selected file: " + selectedFile);
     console.log("selected file name: " + selectedFile.name);
+
+    if(this.props.customJobPost.Applied == false && this.props.customJobPost.Saved == true)
+    {
+            Job_id = this.props.customJobPost.Job_id
+            RecruiterEmail = this.props.customJobPost.RecruiterEmail
+    }else{
+            Job_id = this.props.customJobPost._id
+            RecruiterEmail = this.props.customJobPost.Email
+    }
     const formData = new FormData();
     formData.append('applicant_id', Applicant_id);
     formData.append('selectedFile', selectedFile);
     axios.post(`${BASE_URL}/uploadresume`, formData)
-                     .then((response) => {
-                         if(response.status == 200){
-                          
-                           console.log("Resume upload Status: " + response.status );
-                         }else{
-                             alert("Could not upload resume!!");
-                         }
-                
+        .then((response) => {
+            if(response.status == 200){
+                console.log("Resume upload Status: " + response.status );
+                console.log("file which was uploaded: " + response.data );
+                resume = response.data;
+                const values = {
+                    Applicant_id : this.props.user._id,
+                    RecruiterEmail : RecruiterEmail,
+                    Job_id : Job_id,
+                    email : this.state.email,
+                    firstname : this.state.firstname,
+                    lastname : this.state.lastname,
+                    contact : this.state.contact,
+                    address : this.state.address,
+                    gender : this.state.gender,
+                    race : this.state.race,
+                    veteran : this.state.veteran,
+                    disability : this.state.disability,
+                    hear : this.state.hear,
+                    resume :resume ,
+                    cover_letter : this.state.cover,
+                    company : this.props.customJobPost.CompanyName,
+                    jobtitle : this.props.customJobPost.JobTitle,
+                    joblocation :this.props.customJobPost.JobLocation,
+                    companyLogo : this.props.customJobPost.CompanyLogo,
+                    easyApply : this.props.customJobPost.easyApply,
+                    appliedDate : new Date()
+                }
+                console.log("input values" , values)
+                this.props.customApplyJob(values)
+            }
+                        
     });
-    this.props.customApplyJob(values)
+    // console.log("this.state.filename" ,resume )
+    
+   
     }else {
         alert("Resume should be in pdf format")
     }
 }
-    render() { 
+    render() {
+       
         return (
             <div>
             <Navbar />
