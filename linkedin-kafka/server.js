@@ -39,7 +39,7 @@ function handleTopicRequest(topic_name,fname){
 
 // handleTopicRequest("applied_jobs",appliedjob)
 // handleTopicRequest("saved_jobs",savedjob)
-handleTopicRequest("job_save",jobsave)
+//handleTopicRequest("job_save",jobsave)
 //handleTopicRequest("custom_apply",customapply)
 //handleTopicRequest("job_listing",joblisting)
 

@@ -47,7 +47,7 @@ class Main extends Component {
                 <Route exact path="/feed" component={ApplicantHome} />
                 <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
-                <Route exact path="/resumes/:filename" component={Resumes} />
+                <Route exact path="/resumes/:userid/:filename" component={Resumes} />
                 <Route exact path="/search" component={Search} />
                 
             </Switch>

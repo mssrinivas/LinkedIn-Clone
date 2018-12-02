@@ -299,74 +299,13 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
-
-// router.post('/provideusers', function (req,res,next) {
-//   console.log("inside provideusers neha",req.body.pendingList);
-
-//   //find({email:{$in :['neha@gmail.com','varsha@gmail.com']}})
-//   User.find({email:{$in :req.body.pendingList}})
-//     .exec()
-//     .then(user => {
-//         res.status(200).json({
-//               message : "User Details fetched.",
-//               userData: user
-//             });
-//       })
-//     .catch(err => {
-//       console.log("Error : ", err);
-//       res.status(400).json({
-//               message : " User details can not be fetched successfully"
-//             });
-//     })
-
-// });
-//==============================================================================================
-
-// router.post("/users", function(req, res, next) {
-//   console.time("Query_Time");
-//   var result = [];
-//   console.log("Inside Search Post Request");
-//   client.get(userresult,function(err,value){
-//     if(err) {
-//       return console.log(err);
-//     }
-//     if(value) {
-//       console.log("Type of value :", typeof(value));
-//       result = JSON.parse(value);
-//       client.expire(userresult,5);
-//       res.status(200).json({result});
-//       return console.timeEnd("Query_Time");
-//     }
-//     else {
-//       const regexname = new RegExp(msg.first_name,'i');
-//       console.log("regex",regexname )
-     
-//       User.find({$or :[{"first_name":regexname},{"last_name":regexname}]})
-//         .then(response => {
-//           console.log("Response from find users", response);
-//           client.set(userresult,JSON.stringify(response),function(err){
-//             if(err) {
-//               return console.error(err);
-//             }
-//           })
-//           result = response;
-//           res.status(200).json({result});
-//           return console.timeEnd("Query_Time");
-
-//         })
-//         .catch(err => {
-//           console.log("Error : ", err.response);
-//           res.status(500).json({
-//             message: "internal server error"
-//           });
-//         });
-//     }
-//   });
-// });
 router.post("/users", function(req, res, next) {
   console.time("Query_Time");
+  const{first_name} = req.body;
   var result = [];
   console.log("Inside Search Post Request");
+  
+  /*
   client.get(userresult,function(err,value){
     if(err) {
       return console.log(err);
@@ -403,6 +342,25 @@ router.post("/users", function(req, res, next) {
         });
     }
   });
+  */
+
+ const regexname = new RegExp(first_name,'i'); 
+ User.find({$or:[{"first_name":regexname},{"last_name":regexname}]})
+ .then(response => {
+   //console.log("Response from find users", response);
+   
+   result = response;
+   res.status(200).json({result});
+   console.log(result);
+   //return console.timeEnd("Query_Time");
+
+ })
+ .catch(err => {
+   console.log("Error : ", err.response);
+   res.status(500).json({
+     message: "internal server error"
+   });
+ });
 });
 // router.post("/users", function(req, res, next) {
 //   console.time("Query_Time");
