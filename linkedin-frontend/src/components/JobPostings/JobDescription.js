@@ -54,7 +54,7 @@ class JobDescription extends Component {
                       <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Seniority Level</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="SeniorityLevel" value={this.props.SeniorityLevel} onChange={this.props.Change}>
-              <option>Select SeniorityLevel</option>
+              <option>Select Seniority Level</option>
               <option>Internship</option>
 				      <option>Mid-Level</option>
 				      <option>Senior Level</option>
@@ -66,7 +66,7 @@ class JobDescription extends Component {
                     <div class="col-md-4 mb-4">
                     <p class="font-weight-bold smally">Job Function</p>
                     <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="JobFunction" value={this.props.JobFunction} onChange={this.props.Change}>
-              <option>Select Jpb Function</option>
+              <option>Select Job Function</option>
               <option>Quality Assurance</option>
 				      <option>Analyst</option>
 				      <option>Full Stack Developer</option>
@@ -98,6 +98,14 @@ class JobDescription extends Component {
               <option>Arts & Business</option>
               <option>Banking</option>
 				    </select>
+                    </div>
+              <div class="col-md-3 mb-3">
+              <p class="font-weight-bold smally">Application Type</p>
+              <select class="form-control widthdropdown smally" id="exampleFormControlSelect1" name="EasyApply" value={this.props.EasyApply} onChange={this.props.Change}>
+              <option>Easy or Custom</option>
+              <option>Easy Apply</option>
+              <option>Custom Apply</option>
+				      </select>
                     </div>
                     </div>
                     <div class="row">

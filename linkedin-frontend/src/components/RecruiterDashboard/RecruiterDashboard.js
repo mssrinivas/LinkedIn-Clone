@@ -10,7 +10,9 @@ class RecruiterDashboard extends Component {
       jobData: {},
       savedJobData: {},
       userActivityData: {},
-      clickJobData: {}
+      clickJobData: {},
+      jobListings: [],
+      topTenJobsData : {}
     };
   }
 
@@ -18,7 +20,7 @@ class RecruiterDashboard extends Component {
     this.getArrayData();
   }
   componentDidMount() { 
-
+    
   }
   getArrayData() {
     var labeldb = [];
@@ -29,6 +31,39 @@ class RecruiterDashboard extends Component {
     var labelhalffilleddata = [];
     var labelfullfilled = [];
     var labelfullfilleddata = [];
+    var labeltopjobs = [];
+    var labeltopjobsdata = [];
+
+    const url = " http://localhost:3001/getjobs/tenjobs";
+    axios.get(url,{
+        params: {
+          mail: 'recruiter@gmail.com'
+        }}).then((response)=>{
+          var TenJobdatadb = [];
+          TenJobdatadb = response.data.joblistings;
+          this.setState({jobListings : response.data.joblistings})
+          var counterdb = {};
+          TenJobdatadb.forEach(function(obj) {
+              console.log("OBJ IS" + JSON.stringify(obj));
+            var key = obj.CompanyName + " " + obj.jobTitle;
+            counterdb[key] = (counterdb[key] || 0) + 1;
+            var resultTenJobsdb = Object.keys(counterdb).map(function(key) {
+              var key1 = key.substr(key.indexOf(" ") + 1);
+              return [key1, counterdb[key]];
+            });
+            for (var i = 0; i < resultTenJobsdb.length; i++) {
+              labeltopjobs[i] = resultTenJobsdb[i][0];
+              labeltopjobsdata[i] = resultTenJobsdb[i][1];
+            }
+          });
+          console.log("labelk for db", labeltopjobs);
+          console.log("labeldata for db", labeltopjobsdata);
+          this.setState({});
+        },
+        error => {
+        }
+      )
+    
 
     axios.get("http://localhost:3001/recruiter/getuserclicks").then(
         response => {
@@ -136,7 +171,7 @@ class RecruiterDashboard extends Component {
       error => {
       }
     );
-    
+      
 
     this.setState({
       savedJobData: {
@@ -243,7 +278,26 @@ class RecruiterDashboard extends Component {
             ]
           }
         ]
-      }
+      },
+      topTenJobsData: {
+        labels: labeltopjobs,
+        datasets: [
+          {
+            label: "All Top Ten Jobs",
+            data: labeltopjobsdata,
+            legendPosition : "bottom",
+            backgroundColor: [
+              "rgba(105, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(255, 206, 86, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(153, 102, 255, 0.6)",
+              "rgba(255, 159, 64, 0.6)",
+              "rgba(255, 99, 132, 0.6)"
+            ]
+          }
+        ]
+      },
     });
 
     var inCompleteForms = [
@@ -316,12 +370,27 @@ class RecruiterDashboard extends Component {
 
   }
 
+  GenerateGraph = () =>
+  {
+    console.log("REC NAME : ")
+  }
+
   
   render() {
     console.log("chart", this.state.chartData);
     console.log("jobdata", this.state.jobData);
     console.log("savedJobData", this.state.savedJobData);
     console.log("clickJobData", this.state.userActivityData);
+
+    let JobButtons = null;
+
+    if(this.state.joblist!=0)
+    {
+      console.log("LENGTH - " , this.state.jobListings.length)
+     JobButtons = (this.state.jobListings.map(function (item, index) {
+      console.log("ITEM IS")
+  }));
+    }
 
     return (
       <div>
@@ -333,11 +402,17 @@ class RecruiterDashboard extends Component {
           savedJobData={this.state.savedJobData}
           clickJobData={this.state.userActivityData}
           onlyClickedJob={this.state.clickJobData}
+          Data={this.state.jobListings}
+          topTenJobs={this.state.topTenJobsData}
           legendPosition="bottom"
         />
+        <br />
+        <br />
+        {JobButtons}
       </div>
     );
   }
 }
 
 export default RecruiterDashboard;
+

@@ -21,7 +21,8 @@ const schema = require('./graphqlschema/schema');
 // var {User} = require('./models/user');
 var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
-const redis = require('redis');
+var getjobs = require('./routes/getjobs');
+//const redis = require('redis');
 
 const url = "http://localhost:3000";
 
@@ -54,6 +55,7 @@ app.use("/jobs", jobs);
 app.use("/search", search);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
+app.use('/getjobs', getjobs);
 
 
 app.use('/userdata', activitytracker)

@@ -9,7 +9,6 @@ router.get("/search",(request,response,next)=>{
     jobpostings.searchJobs(null).then((joblistings)=>{
         console.log(joblistings);
         response.status(200).json({ joblistings });
-
     }).catch((msg)=>{
         console.log(msg);
         response.status(201).json({ msg });

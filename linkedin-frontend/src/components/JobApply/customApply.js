@@ -133,7 +133,7 @@ submitApplication = (e) => {
         jobtitle : this.props.customJobPost.JobTitle,
         joblocation :this.props.customJobPost.JobLocation,
         companyLogo : this.props.customJobPost.CompanyLogo,
-        id : this.props.customJobPost._id,
+        id : this.props.customJobPost.Job_id,
         easyApply : this.props.customJobPost.easyApply,
         appliedDate : new Date()
     }

@@ -22,7 +22,10 @@ import ResumeView from './applicant/resumeview';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
 import Messages from './messages/messages.js';
-import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard'
+import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard';
+import RecruiterJobsDashboard from './RecruiterJobsDashboard/RecruiterJobsDashboard';
+
+
 class Main extends Component {
     render(){
         return(
@@ -46,9 +49,10 @@ class Main extends Component {
                 <Route exact path="/resumeview" component={ResumeView}/>
                 <Route exact path="/feed" component={ApplicantHome} />
                 <Route exact path="/recruiter/dashboard" component={RecruiterDashboard} />
+                <Route exact path="/recruiter/myjobs" component={RecruiterJobsDashboard} />
                 <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
-                <Route exact path="/resumes/:filename" component={Resumes} />
+                <Route exact path="/resumes/:userid/:filename" component={Resumes} />
             </Switch>
             </Router>
             </Provider>

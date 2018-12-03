@@ -13,7 +13,8 @@ class Chart extends Component {
       appliedJobData : props.appliedJobData,
       onlyClickedJob : props.onlyClickedJob,
       options : null,
-      data : null
+      data : null,
+      topTenJobs : props.topTenJobsData
     };
   }
 
@@ -76,7 +77,23 @@ class Chart extends Component {
             }}
           />
         </div>
-      </div>
+        <div className="col-md-4">
+         <Bar
+           data={this.state.topTenJobs}
+           options={{
+             title: {
+               display: this.props.displayTitle,
+               text: "Top Jobs ", //+ this.props.location,
+               fontSize: 25
+             },
+             legend: {
+               display: this.props.displayLegend,
+               position: this.props.legendPosition
+             }
+           }}
+         />
+       </div>
+       </div>
     );
   }
 }

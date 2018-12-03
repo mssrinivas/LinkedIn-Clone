@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-
 var Applications = mongoose.model('Applications',{
     Job_id :{type : String, required : true},
     CompanyName :{type : String, required : true},
@@ -7,6 +6,7 @@ var Applications = mongoose.model('Applications',{
     JobLocation : {type : String, required : true},
     Applicant_id :{type : String, required : true},
     Email :{type : String, required: true},
+    RecruiterEmail : {type : String, required: true},
     Applied :{type : Boolean, default : false, required : true},
     Saved :{type : Boolean, default : false, required : true},
     easyApply : {type : Boolean, default : false, required : true},

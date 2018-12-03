@@ -17,11 +17,11 @@ var salt = bcrypt.genSaltSync(10);
 var {User} = require('./../models/user');
 var {UserTrace} = require('./../models/usertrace');
 
-const redis = require('redis');
-let client = redis.createClient(6379,'127.0.0.1');
-client.on('connect', function(){
-  console.log('connected to redis');
-})
+// const redis = require('redis');
+// let client = redis.createClient(6379,'127.0.0.1');
+// client.on('connect', function(){
+//   console.log('connected to redis');
+// })
 
 const userresult = "";
 
@@ -320,7 +320,7 @@ router.post('/getTraceData', function (req,res,next) {
 //     })
 
 // });
-
+/*
 router.get("/users", function(req, res, next) {
   console.time("Query_Time");
   var result = [];
@@ -358,6 +358,6 @@ router.get("/users", function(req, res, next) {
         });
     }
   });
-});
+});  */
 
 module.exports = router;

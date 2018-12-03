@@ -11,7 +11,7 @@ import Stepper from 'react-stepper-horizontal';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
-
+import {connect} from 'react-redux';
 
 var swal = require('sweetalert')
 class JobPostings extends Component {
@@ -177,8 +177,8 @@ SliderChangeBudget = (value) => {
         Degree :  this.state.Degree,
         Budget : this.state.Budget,
         EmploymentType : this.state.EmploymentType,
-        RecruiterName: "Srinivas",
-        EasyApply: 0,
+        RecruiterName: this.props.currentUserDetails.first_name+" "+this.props.currentUserDetails.last_name,
+        EasyApply: this.state.EasyApply,
         Industry : this.state.Industry
        })
     })
@@ -215,6 +215,7 @@ SliderChangeBudget = (value) => {
         SeniorityLevel = {this.state.SeniorityLevel}
         Info = {this.state.Info}
         Change = {this.inputHandler}
+        EasyApply = {this.state.EasyApply}
         />)
     }
 
@@ -261,4 +262,15 @@ SliderChangeBudget = (value) => {
          );
     }
 }
-export default JobPostings;
+
+function mapStateToProps(state) {
+  console.log("State",state);
+    return {
+       currentUser: state.LoginReducer.current_user,
+       currentUserDetails: state.LoginReducer.currentUserDetails,
+       userProfileDetails: state.LoginReducer.userProfileDetails
+    };
+}
+
+
+export default connect(mapStateToProps)(JobPostings);
