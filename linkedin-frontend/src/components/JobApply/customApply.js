@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import {customApplyJob} from './../../api/Api';
 import './apply.css';
+import {Link} from 'react-router-dom';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
 var swal = require('sweetalert')
@@ -47,7 +48,26 @@ this.fileChangeHandler = this.fileChangeHandler.bind(this);
 this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
 this.hearChangeHandler = this.hearChangeHandler.bind(this);
 this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
-}
+    }
+
+    // componentDidMount()
+    // {
+    //     var counter=localStorage.getItem("counter");
+    //     if(counter)
+    //     {
+    //         fetch('http://localhost:3001/useractivity/halffilled', {
+    //             method: 'post',
+    //             headers: {'Content-Type': 'application/json'},
+    //             credentials : 'include',
+    //             body: JSON.stringify({
+    //               halffilled: 1
+    //             })
+    //           })
+    //           .then(response => {
+    //               localStorage.setItem("counter",0)
+    //             })
+    //         }
+    // }
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
     if(nextProps.applied == true)
@@ -61,6 +81,8 @@ coverLetterChangeHandler = (e) => {
     this.setState({
         cover : e.target.value
     })
+    // count++;
+    // localStorage.setItem()
 }
 fnameChangeHandler = (e) => {
     this.setState({
@@ -215,7 +237,7 @@ submitApplication = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="contact">Phone*</label>
-                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" id="contact" required/>
+                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="contact" required/>
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="address">Address*</label>
@@ -231,7 +253,7 @@ submitApplication = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label">How did you hear about us</label>
-                        <select class="form-control1"  onChange = {this.hearChangeHandler}>
+                        <select class="form-control1"  onChange = {this.hearChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Linkedin">Linkedin</option>
                             <option value="company website">company website</option>
@@ -248,7 +270,7 @@ submitApplication = (e) => {
 
                     <div class="form-group1">
                         <label className="field-label">Gender</label>
-                        <select class="form-control1"  onChange = {this.genderChangeHandler}>
+                        <select class="form-control1"  onChange = {this.genderChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -273,7 +295,7 @@ submitApplication = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label">Veteran Status</label>
-                        <select class="form-control1"  onChange = {this.veteranChangeHandler}>
+                        <select class="form-control1"  onChange = {this.veteranChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="I am a veteran">I am a veteran</option>
                             <option value="I am not a veteran">I am not a veteran</option>
@@ -284,7 +306,7 @@ submitApplication = (e) => {
 
                     <div class="form-group1">
                         <label className="field-label">Disability Status</label>
-                        <select class="form-control1"  onChange = {this.disabilityChangeHandler}>
+                        <select class="form-control1"  onChange = {this.disabilityChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Yes, I have a disability (or previously had a disability)">Yes, I have a disability (or previously had a disability)</option>
                             <option value="No, I don't have a disability">No, I don't have a disability</option>
@@ -292,7 +314,7 @@ submitApplication = (e) => {
                         </select>          
                      
                     </div>
-                   
+                    <button className="btn btn-primary1" type="submit" onClick={this.HalfFillCheck}>Go Back</button>&nbsp;&nbsp;
                     <button className="btn btn-primary1" type="submit">Submit Application</button>
                     </form>
                     

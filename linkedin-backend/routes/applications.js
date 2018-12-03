@@ -341,4 +341,48 @@ router.get('/saved/:ID', function(req, res, next) {
 //     })
 // });
 
+router.post('/easy', function(req, res, next) {
+    console.log("---Inside easy apply---");
+    console.log("req sent from easy apply", req.body);
+    Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},function(err, doc) {
+        if(err){
+            console.log(err)
+            res.sendStatus(201); 
+        }
+        else{
+            if(doc){
+                console.log("\n..found saved application....\n");
+                Applications.update(
+                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
+                    {$set : 
+                         {
+                            Email : req.body.email,
+                            resume: req.body.resume,
+                            First_name: req.body.firstname,
+                            Last_name: req.body.lastname,
+                            appliedDate : req.body.appliedDate,
+                            postingDate :req.body.postingDate,
+                            Applied : true,
+                            Saved : false,
+                         }
+                     })
+                    .then(item => {
+                        console.log("application after update : ", item);
+                        res.writeHead(200,{
+                            'Content-Type' : 'application/json'
+                        });
+                        res.end(JSON.stringify("Applied successfully"));
+                    })
+                    .catch(err => {
+                        console.log("error while updating saved application", err);
+                        res.sendStatus(201); 
+                    })
+            }
+            else{
+                console.log("Inside else of easy apply")
+            }
+        }
+    })
+                  
+  });
   module.exports = router;

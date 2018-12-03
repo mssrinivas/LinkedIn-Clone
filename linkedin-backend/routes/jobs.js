@@ -88,7 +88,7 @@ router.post("/save/:jobid", async (request, response, next) => {
     try {
         console.log("inside jobs save");
         const jobid = request.params.jobid;
-        const { companyName, jobTitle, jobLocation, applicant_id, RecruiterEmail,Email, companyLogo, easyApply } = request.body;
+        const { companyName, jobTitle, jobLocation, applicant_id, RecruiterEmail,Email, companyLogo, easyApply, postingDate } = request.body;
         console.log(request.body);
         const application = new Applications({
             Job_id: jobid,
@@ -101,7 +101,8 @@ router.post("/save/:jobid", async (request, response, next) => {
             Applied: false,
             Saved: true,
             CompanyLogo: companyLogo,
-            easyApply: easyApply
+            easyApply: easyApply,
+            postingDate : postingDate
         });
         
         const savedApplication = await application.save();
@@ -167,8 +168,10 @@ router.post("/easyapply/:jobid", async (request,response)=>{
         easyApply : true,
         First_name : data.First_name,
         Last_name : data.Last_name,
-        resume : data.resume
-
+        resume : data.resume,
+        appliedDate : new Date(),
+        postingDate : data.postingDate,
+        CompanyLogo : data.CompanyLogo
     });
     
     try{
@@ -224,8 +227,9 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                 easyApply : true,
                 First_name : savedjob.First_name,
                 Last_name : savedjob.Last_name,
-                resume : savedjob.resume
-        
+                resume : savedjob.resume,
+                postingDate : data.postingDate,
+                CompanyLogo : data.CompanyLogo
             });
 
             
@@ -250,6 +254,7 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                                 }else{
                                     console.log("in success of applied job array user");
                                     response.sendStatus(200);
+                                    
                                 }
                             })
                             

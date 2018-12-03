@@ -18,6 +18,7 @@ var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
 var fs=require('file-system');
+var useractivity = require('./routes/useractivity');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
@@ -50,6 +51,7 @@ app.use("/jobs", jobs);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
 app.use('/messages', messages);
+//app.use('/useractivity',useractivity)
 app.get("/start", (request, response) => {
   response.status(200).json({
     msg: "Welcome to Linkedin"
