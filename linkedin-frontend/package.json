@@ -10,6 +10,7 @@
     "hashmap": "^2.3.0",
     "jquery": "^3.3.1",
     "mdbreact": "^4.8.3",
+    "moment": "^2.22.2",
     "nodemon": "^1.18.6",
     "query-string": "^6.2.0",
     "react": "^16.5.2",
@@ -20,6 +21,7 @@
     "react-chat-window": "^1.0.8",
     "react-cookie": "^3.0.4",
     "react-cookies": "^0.1.0",
+    "react-datepicker": "^2.0.0",
     "react-dom": "^16.5.2",
     "react-dropzone": "^6.0.0",
     "react-facebook-login": "^4.1.0",
@@ -41,9 +43,9 @@
     "redux-thunk": "^2.3.0",
     "serialize-form": "^1.1.4",
     "sweetalert": "^2.1.2",
+    "sweetalert2": "^7.29.1",
     "tachyons": "^4.11.1",
-    "uniqid": "^5.0.3",
-    "sweetalert2": "^7.29.1"
+    "uniqid": "^5.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

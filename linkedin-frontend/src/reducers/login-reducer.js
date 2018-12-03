@@ -1,5 +1,5 @@
 import * as UTIL from './../util/utils';
-import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
+import {SELECTED_CUSTOM_JOB_POST,UPDATED_JOB_SEARCH_CRITERIA,ADD_JOB_ID_TO_APPLIED_JOB,ADD_JOB_ID_TO_SAVED_JOB} from './../components/constants/reduxActionConstants';
 import {CUSTOM_APPLY_SAVED_JOB} from './../components/constants/reduxActionConstants';
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
@@ -12,7 +12,13 @@ const initialState = {
         userSearch:[],
         recruiter_flag:false,
         applied : false,
-        customJobPost : {}
+        customJobPost : {},
+        jobSearchCriteria : {
+            CompanyName : null,
+            date : "",//YYYY-MM-DD
+            seniorityLevel : null,
+            location : null
+        }
 };
 
 export default function (state = initialState, action) {
@@ -73,7 +79,12 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
-                  
+            
+            case UPDATED_JOB_SEARCH_CRITERIA :
+                 console.log("Inside updated search job criteria")
+                 console.log(action.payload);
+                 return Object.assign({},state,{jobSearchCriteria:action.payload })
+                 
             case 'USER_SEARCH_ACTIVITY':
                   console.log("User search activity", action.data.result);
                   return Object.assign({}, state, {

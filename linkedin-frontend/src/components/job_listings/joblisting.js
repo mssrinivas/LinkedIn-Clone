@@ -7,7 +7,8 @@ import {Launcher} from 'react-chat-window'
 import axios from 'axios';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
-import {SELECTED_CUSTOM_JOB_POST} from './../constants/reduxActionConstants.js';
+import {SELECTED_CUSTOM_JOB_POST,ADD_JOB_ID_TO_APPLIED_JOB,ADD_JOB_ID_TO_SAVED_JOB} from './../constants/reduxActionConstants.js';
+import SearchBar from './SearchBar.jsx';
 import EasyApplyModal from './EasyApplyModal/easyApplyModal.js';
 
 class JobListing extends Component {
@@ -73,7 +74,8 @@ class JobListing extends Component {
             "applicant_id" :this.props.user._id,
             "email" :posting.Email,
             "companyLogo" : posting.CompanyLogo,
-            "easyApply" : posting.easyApply
+            "easyApply" : posting.easyApply,
+            "RecruiterEmail" : posting.Email
         };
 
         try {
@@ -236,7 +238,7 @@ class JobListing extends Component {
         console.log("Printing filtering criterias");
         console.log(CompanyNameFilter,postingDateFilter,seniorityLevelFilter,locationFilter);
 
-
+        /*
         const newPostings = postings.filter((post)=>{
             var companyNameFilterResult = true;
             var postingDateFilterResult = true;
@@ -264,6 +266,38 @@ class JobListing extends Component {
             return (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
         });
 
+        */
+
+        const newPostings = postings.map((post,index)=>{
+        var companyNameFilterResult = true;
+        var postingDateFilterResult = true;
+        var seniorityLevelFilterResult = true;
+        var locationFilterResult = true;
+
+        if(CompanyNameFilter != ""){
+            const regexCompanyName = new RegExp(CompanyNameFilter,'i');
+            companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+            console.log("Company name regex");
+        }
+
+        if(seniorityLevelFilter != ""){
+            const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
+            seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+            console.log("Seniority level regex");
+        }
+
+        if(locationFilter != ""){
+            const regexLocationFilter = new RegExp(locationFilter,'i');
+            locationFilterResult = regexLocationFilter.test(post.JobLocation);
+            console.log("Location regex");  
+        }
+
+        const cond = (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
+
+        return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} show={cond} />);
+
+    });
+
         console.log("Printing new postings");
         console.log(newPostings.length);
         console.log(newPostings);
@@ -285,6 +319,7 @@ class JobListing extends Component {
             <div>
                 {redirectVar}
                 <Navbar />
+                <SearchBar />
                 {errorMessageDiv}
                 {saveApplyMessageDiv}
 
@@ -292,9 +327,13 @@ class JobListing extends Component {
                     <div className="col-md-1"></div>
                     <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
                         {
+                            /*
                             postings.map((post, index) => {
-                                return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} />);
+                                return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} show={true}/>);
                             })
+                            */
+                            
+                           newPostings
                         }
                     </div>
                     <div className={descriptionClassName}>
@@ -311,14 +350,11 @@ class JobListing extends Component {
 }
 
 const mapStateToProps = (state) =>{
+    console.log("In map state to props of job listings");
+    console.log(state.LoginReducer.jobSearchCriteria);
     return {
         user : state.LoginReducer.currentUserDetails,
-        searchCriteria : {
-            "CompanyName" : "Yahoo",
-            "date" : "",//YYYY-MM-DD
-            "seniorityLevel" : "Entry level",
-            "location" : "fremont"
-        }
+        searchCriteria : state.LoginReducer.jobSearchCriteria
     }
 }
 
@@ -329,6 +365,20 @@ const mapDispatchToProps = (dispatch)=>{
                 type:SELECTED_CUSTOM_JOB_POST,
                 payload : jobpost
             });
+        },
+
+        addJobIdToAppliedJob : (jobid)=>{
+            dispatch({
+                type : ADD_JOB_ID_TO_APPLIED_JOB,
+                payload:jobid
+            })
+        },
+
+        addJobIdToSavedJob : (jobid)=>{
+            dispatch({
+                type : ADD_JOB_ID_TO_SAVED_JOB,
+                payload:jobid
+            })
         }
     }
 }
