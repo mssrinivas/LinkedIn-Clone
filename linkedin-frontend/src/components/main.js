@@ -25,6 +25,7 @@ import Search from "./Search";
 import Messages from './messages/messages.js';
 class Main extends Component {
     render(){
+        localStorage.setItem("counter",0)
         return(
             <Provider store={store}>
             <Router history={history}>

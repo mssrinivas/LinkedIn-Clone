@@ -41,6 +41,90 @@ var kafka = require('./../kafka/client.js');
 //     })
                   
 //   });
+// router.post('/job', function(req, res, next) {
+//     console.log("inside custom apply");
+//     console.log("req sent from custom apply", req.body);
+//     Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},function(err, doc) {
+//         if(err){res.status(400).send("error occured")}
+//         else{
+//             if(doc){
+//                 console.log("\n..found saved application....\n");
+//                 Applications.update(
+//                     {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
+//                     {$set : 
+//                          {
+//                             HowDidYouHear: req.body.hear,
+//                             Email : req.body.email,
+//                             resume: req.body.resume,
+//                             First_name: req.body.firstname,
+//                             Last_name: req.body.lastname,
+//                             Address : req.body.address,
+//                             Phone : req.body.contact,
+//                             Gender : req.body.gender,
+//                             Race : req.body.race,
+//                             Veteran : req.body.veteran,
+//                             Disability : req.body.disability,
+//                             Applied : true,
+//                             Saved : false,
+//                          }
+//                      })
+//                     .then(item => {
+//                         console.log("application after update : ", item);
+//                         res.writeHead(200,{
+//                             'Content-Type' : 'application/json'
+//                         });
+//                         res.end(JSON.stringify("Applied successfully"));
+//                     })
+//                     .catch(err => {
+//                         console.log("error while updating saved application", err);
+//                         // res.status(400).json({
+//                         //     message : "User profile could not be updated"
+//                         // });
+//                     })
+//             }
+//             else{
+//                 console.log("-----it's new application....")
+//                 const customApplyDetail = new Applications({
+//                     Applicant_id : req.body.Applicant_id,
+//                     HowDidYouHear: req.body.hear,
+//                     Email : req.body.email,
+//                     resume: req.body.resume,
+//                     First_name: req.body.firstname,
+//                     Last_name: req.body.lastname,
+//                     Address : req.body.address,
+//                     Phone : req.body.contact,
+//                     Gender : req.body.gender,
+//                     Race : req.body.race,
+//                     Veteran : req.body.veteran,
+//                     Disability : req.body.disability,
+//                     CompanyName : req.body.company,
+//                     JobTitle : req.body.jobtitle,
+//                     JobLocation : req.body.joblocation,
+//                     Applied : true,
+//                     Saved : false,
+//                     CompanyLogo : req.body.companyLogo,
+//                     Job_id : req.body.Job_id,
+//                     easyApply : req.body.easyApply,
+//                     appliedDate : req.body.appliedDate,
+//                     cover_letter : req.body.cover_letter
+//                 });
+//                 customApplyDetail.save().then((result)=> {
+//                     console.log("apply successful : ",result);
+//                                      // res.sendStatus(200).end();
+//                                      res.writeHead(200,{
+//                                          'Content-Type' : 'application/json'
+//                                      });
+//                                      res.end(JSON.stringify("Applied successfully"));
+//                 },(err)=>{
+//                     console.log("Error While applying to custom job");
+
+//                 })
+//             }
+//         }
+//     })
+    
+                  
+//   });
 router.post('/job', function(req, res, next) {
     console.log("inside custom apply");
     console.log("req sent from custom apply", req.body);
@@ -83,40 +167,56 @@ router.post('/job', function(req, res, next) {
                     })
             }
             else{
-                console.log("-----it's new application....")
-                const customApplyDetail = new Applications({
-                    Applicant_id : req.body.Applicant_id,
-                    HowDidYouHear: req.body.hear,
-                    Email : req.body.email,
-                    resume: req.body.resume,
-                    First_name: req.body.firstname,
-                    Last_name: req.body.lastname,
-                    Address : req.body.address,
-                    Phone : req.body.contact,
-                    Gender : req.body.gender,
-                    Race : req.body.race,
-                    Veteran : req.body.veteran,
-                    Disability : req.body.disability,
-                    CompanyName : req.body.company,
-                    JobTitle : req.body.jobtitle,
-                    JobLocation : req.body.joblocation,
-                    Applied : true,
-                    Saved : false,
-                    CompanyLogo : req.body.companyLogo,
-                    Job_id : req.body.Job_id,
-                    easyApply : req.body.easyApply,
-                    appliedDate : req.body.appliedDate
-                });
-                customApplyDetail.save().then((result)=> {
-                    console.log("apply successful : ",result);
-                                     // res.sendStatus(200).end();
-                                     res.writeHead(200,{
-                                         'Content-Type' : 'application/json'
-                                     });
-                                     res.end(JSON.stringify("Applied successfully"));
-                },(err)=>{
-                    console.log("Error While applying custom job");
+                Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Applied:true, Saved:false},function(err, doc) {
+                    if(err){res.status(400).send("error occured")}
+                    else {
+                        if(doc){
+                            console.log("Already applied to this job ")
+                            res.status(401).json({
+                                message: "Already applied to this job"
+                            });
+                        }
+                        else{console.log("-----it's new application....")
+                        const customApplyDetail = new Applications({
+                            Applicant_id : req.body.Applicant_id,
+                            RecruiterEmail : req.body.RecruiterEmail,
+                            HowDidYouHear: req.body.hear,
+                            Email : req.body.email,
+                            resume: req.body.resume,
+                            First_name: req.body.firstname,
+                            Last_name: req.body.lastname,
+                            Address : req.body.address,
+                            Phone : req.body.contact,
+                            Gender : req.body.gender,
+                            Race : req.body.race,
+                            Veteran : req.body.veteran,
+                            Disability : req.body.disability,
+                            CompanyName : req.body.company,
+                            JobTitle : req.body.jobtitle,
+                            JobLocation : req.body.joblocation,
+                            Applied : true,
+                            Saved : false,
+                            CompanyLogo : req.body.companyLogo,
+                            Job_id : req.body.Job_id,
+                            easyApply : req.body.easyApply,
+                            appliedDate : req.body.appliedDate,
+                            cover_letter : req.body.cover_letter
+                        });
+                        customApplyDetail.save().then((result)=> {
+                            console.log("apply successful : ",result);
+                                             // res.sendStatus(200).end();
+                                             res.writeHead(200,{
+                                                 'Content-Type' : 'application/json'
+                                             });
+                                             res.end(JSON.stringify("Applied successfully"));
+                        },(err)=>{
+                            console.log("Error While applying to custom job");
+        
+                        })}
+                    }
+
                 })
+                
             }
         }
     })
@@ -241,4 +341,48 @@ router.get('/saved/:ID', function(req, res, next) {
 //     })
 // });
 
+router.post('/easy', function(req, res, next) {
+    console.log("---Inside easy apply---");
+    console.log("req sent from easy apply", req.body);
+    Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},function(err, doc) {
+        if(err){
+            console.log(err)
+            res.sendStatus(201); 
+        }
+        else{
+            if(doc){
+                console.log("\n..found saved application....\n");
+                Applications.update(
+                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
+                    {$set : 
+                         {
+                            Email : req.body.email,
+                            resume: req.body.resume,
+                            First_name: req.body.firstname,
+                            Last_name: req.body.lastname,
+                            appliedDate : req.body.appliedDate,
+                            postingDate :req.body.postingDate,
+                            Applied : true,
+                            Saved : false,
+                         }
+                     })
+                    .then(item => {
+                        console.log("application after update : ", item);
+                        res.writeHead(200,{
+                            'Content-Type' : 'application/json'
+                        });
+                        res.end(JSON.stringify("Applied successfully"));
+                    })
+                    .catch(err => {
+                        console.log("error while updating saved application", err);
+                        res.sendStatus(201); 
+                    })
+            }
+            else{
+                console.log("Inside else of easy apply")
+            }
+        }
+    })
+                  
+  });
   module.exports = router;

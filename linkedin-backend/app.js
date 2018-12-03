@@ -18,6 +18,7 @@ var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
 var fs=require('file-system');
+var useractivity = require('./routes/useractivity');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
@@ -50,6 +51,7 @@ app.use("/jobs", jobs);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
 app.use('/messages', messages);
+//app.use('/useractivity',useractivity)
 app.get("/start", (request, response) => {
   response.status(200).json({
     msg: "Welcome to Linkedin"
@@ -73,13 +75,15 @@ const storage = multer.diskStorage({
     });
   },
   filename: function(req, file, cb){
-  const newFilename = `${file.originalname}`;
-  e = `${file.originalname}`;
-  console.log("applicant id passed in filename: " + req.body.applicant_id);
-  // console.log("request applicant id :" + req.body.applicant_id);
-  console.log("filename : " + newFilename);
-  cb(null, Date.now()+'-'+newFilename);
-  
+  // const newFilename = `${file.originalname}`;
+  // e = `${file.originalname}`;
+  // console.log("applicant id passed in filename: " + req.body.applicant_id);
+  // // console.log("request applicant id :" + req.body.applicant_id);
+  // console.log("filename : " + newFilename);
+  // cb(null, Date.now()+'-'+newFilename);
+  console.log("File to be uploaded : " + file.originalname);
+  filename=Date.now()+'-'+file.originalname;
+  cb(null, filename);
   }
 });
 
@@ -91,10 +95,12 @@ const upload = multer({
  });
 app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next){
   console.log("applicant id in uploadPhoto " + req.body.applicant_id)
+  console.log("Filename " + filename)
     console.log("Inside photo upload Handler");
     res.writeHead(200,{
          'Content-Type' : 'text/plain'
         })
+      res.end(JSON.stringify(filename))
 });
 
 

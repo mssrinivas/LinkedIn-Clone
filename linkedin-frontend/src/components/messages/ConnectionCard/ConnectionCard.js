@@ -21,12 +21,13 @@ class ConnectionCard extends Component {
         return ( 
             <div className="row connection" onClick={this.connectionClicked} style={{ borderBottom: '1px solid #cdcfd2' }} >
                 <div className="col-md-1"></div>
-                <div className="col-md-2" style={{ padding: '4px' }}>
+                <div className="col-md-1" style={{ padding: '4px' }}>
                     <img className="w-100 contain" src="https://img.icons8.com/color/100/7a7a7a/user.png" alt="" style={{ borderRadius: '50%', border: '1px solid #cdcfd2' }} />
                 </div>
                 <div className="col-md-1"></div>
                 <div className="col-md-7">
-                    <p>Connection Name</p>
+                    <p>{person.First_name} {person.Last_name}</p>
+                    {/* <p>{person.Chat.substring(0, person.Chat.length>10?10:person.Chat.length)}</p> */}
                     {shortChat}
                 </div>
             </div>

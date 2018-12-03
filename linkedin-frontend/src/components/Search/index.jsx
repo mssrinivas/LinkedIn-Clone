@@ -18,21 +18,32 @@ class Search extends Component {
     };
     this.submitMessages = this.submitMessages.bind(this)
   }
-  submitMessages = (ID, e) => {
+  submitMessages = (ID, first_name, last_name, e) => {
     e.preventDefault();
-    if (this.props.currentUser.recruiter_flag == 0){
+    if (this.props.currentUser.recruiter_flag == 0){ //current user is applicant
       var values = {
         Applicant_id : this.props.currentUser._id,
+        First_name : first_name,
+        Last_name : last_name,
         Recruiter_id : ID,
         Message : ""
-      }
+    }
     }else{
-      var values = {
+      var values = {   
         Recruiter_id : this.props.currentUser._id,
+        First_name : first_name,
+        Last_name : last_name,
         Applicant_id : ID,
         Message : ""
       }
     }
+    // const values = {
+    //   From_id : this.props.currentUser._id,
+    //   To_id : ID,
+    //   First_name : first_name,
+    //   Last_name : last_name,
+    //   Message : ""
+    // }
     alert("Please Go to Messaging tab")
     axios.post(`${BASE_URL}/messages/startnew`, values)
                  .then((response ) => {
@@ -73,7 +84,7 @@ class Search extends Component {
             <div>
               <span id="designation">San Jose</span>
               <span>
-                <Link to="/messages" onClick = {this.submitMessages.bind(this, user._id)} className="btn message-btn">Message</Link>
+                <Link to="/messages" onClick = {this.submitMessages.bind(this, user._id, user.first_name, user.last_name)} className="btn message-btn">Message</Link>
               </span>
             </div>
             <div id="location">Systems </div>

@@ -54,9 +54,11 @@ class JobListing extends Component {
             "jobTitle" : posting.JobTitle,
             "jobLocation" : posting.JobLocation,
             "applicant_id" :this.props.user._id,
-            "email" :posting.Email,
+            "RecruiterEmail" :posting.Email,
+            "Email" :this.props.user.email,
             "companyLogo" : posting.CompanyLogo,
-            "easyApply" : posting.easyApply
+            "easyApply" : posting.easyApply,
+            "postingDate" : posting.postingDate
         };
 
         try {
@@ -122,6 +124,8 @@ class JobListing extends Component {
         easyApply : true,
         First_name : data.firstname,
         Last_name : data.lastname,
+        postingDate : posting.postingDate,
+        CompanyLogo : posting.CompanyLogo
     } 
 
         if(data.file != null){
@@ -167,6 +171,7 @@ class JobListing extends Component {
                 resume : this.props.user.resume_path[parseInt(data.existingresume)]
             }*/
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume : this.props.user.resume_path[parseInt(data.existingresume)]});
+
             axios.post(url,newDataToBeSent).then((response)=>{
                     if(response.status === 200){
                         this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
