@@ -32,15 +32,32 @@ class JobListing extends Component {
     componentDidMount(){
 
         const url = BASE_URL+"/jobs/search";
+        console.log("inside cdm")
+        console.log(url);
         axios.get(url).then((response)=>{
-            const {status} = response;
-            if(status===200){
-                console.log(response.data);
-                this.setState({ postings : response.data.joblistings });
+                        
+            if(response.status===200){
+                console.log("in response");
+                const listings = response.data.joblistings;
+
+                const {applied_job,saved_job} = this.props.user;
+                const notShowJobs = [].concat(applied_job,saved_job);
+
+                console.log("not show jobs :"+JSON.stringify(notShowJobs));
+
+                const filteredList = listings.filter((post)=>{
+                    const id = post._id;
+                    return !notShowJobs.includes(id);
+
+                })
+
+                this.setState({ postings : filteredList });
+
             }else{
-                this.setState({error : response.data.msg});
+                this.setState({error : "Could not fetch jobs!!!"});
             }
         }).catch((error)=>{
+            console.log("inside error");
             this.setState({error : "Connection timed out"});
         })
     }
@@ -206,17 +223,63 @@ class JobListing extends Component {
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
-        const {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage} = this.state;
+        
+        var {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage} = this.state;
+        var searchCriteria = this.props.searchCriteria;
+
+        /*  Filtering list */
+        const CompanyNameFilter = searchCriteria.CompanyName==null ? "" : searchCriteria.CompanyName;
+        const postingDateFilter = searchCriteria.date==null ? "" : searchCriteria.date;
+        const seniorityLevelFilter = searchCriteria.seniorityLevel==null ? "" : searchCriteria.seniorityLevel;
+        const locationFilter = searchCriteria.location==null ? "" : searchCriteria.location;
+
+        console.log("Printing filtering criterias");
+        console.log(CompanyNameFilter,postingDateFilter,seniorityLevelFilter,locationFilter);
+
+
+        const newPostings = postings.filter((post)=>{
+            var companyNameFilterResult = true;
+            var postingDateFilterResult = true;
+            var seniorityLevelFilterResult = true;
+            var locationFilterResult = true;
+
+            if(CompanyNameFilter != ""){
+                const regexCompanyName = new RegExp(CompanyNameFilter,'i');
+                companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+                console.log("Company name regex");
+            }
+
+            if(seniorityLevelFilter != ""){
+                const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
+                seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+                console.log("Seniority level regex");
+            }
+
+            if(locationFilter != ""){
+                const regexLocationFilter = new RegExp(locationFilter,'i');
+                locationFilterResult = regexLocationFilter.test(post.JobLocation);
+                console.log("Location regex");  
+            }
+
+            return (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
+        });
+
+        console.log("Printing new postings");
+        console.log(newPostings.length);
+        console.log(newPostings);
+
+        //console.log("\n\n new Postings"+ JSON.stringify(newPostings));
+
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} onEasyApply={this.easyApply} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
+        
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
 
         if(customApply){ redirectVar = <Redirect to="/customapply" /> }
-        //else if(easyApply){  redirectVar = <Redirect to="/easyapply" /> }
 
         return (
             <div>
@@ -249,12 +312,18 @@ class JobListing extends Component {
 
 const mapStateToProps = (state) =>{
     return {
-        user : state.LoginReducer.currentUserDetails
+        user : state.LoginReducer.currentUserDetails,
+        searchCriteria : {
+            "CompanyName" : "Yahoo",
+            "date" : "",//YYYY-MM-DD
+            "seniorityLevel" : "Entry level",
+            "location" : "fremont"
+        }
     }
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
+const mapDispatchToProps = (dispatch)=>{
+    return {
         jobPost: (jobpost)=>{
             dispatch({
                 type:SELECTED_CUSTOM_JOB_POST,

@@ -41,8 +41,20 @@ const storage=multer.diskStorage({
 
 var upload = multer({ storage: storage }).any();
 
-router.get("/search",(request,response,next)=>{
-    console.log("Inside Jobs search");
+router.get("/search",async (request,response,next)=>{
+    console.log("Inside new Jobs search");
+
+    try{
+        const joblistings = await jobpostings.find({});
+        console.log(joblistings);
+        response.status(200).json({joblistings});
+    }
+    catch(error){
+        console.log(error);
+        response.sendStatus(201);
+    }
+    
+    /*
     jobpostings_db.searchJobs(null).then((joblistings)=>{
         console.log(joblistings);
         response.status(200).json({ joblistings });
@@ -51,9 +63,13 @@ router.get("/search",(request,response,next)=>{
         console.log(msg);
         response.status(201).json({ msg });
     });
+    */
+    
 });
 
 //job listing with kafka
+
+/*
 router.get("/search",function(request,response,next){
     console.log("Inside Jobs search");
     kafka.make_request('job_listing',null, function(err,results){
@@ -75,6 +91,8 @@ router.get("/search",function(request,response,next){
          }
     });
 });
+
+*/
     // jobpostings.searchJobs(null).then((joblistings)=>{
     //     console.log(joblistings);
         
