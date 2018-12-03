@@ -31,7 +31,7 @@ class JobListing extends Component {
 
     componentWillMount(){
         const url = BASE_URL+"/jobs/search";
-        axios.post(url).then((response)=>{
+        axios.get(url).then((response)=>{
             const {status} = response;
             if(status===200){
                 console.log(response.data);
@@ -124,7 +124,7 @@ class JobListing extends Component {
         Last_name : data.lastname,
         postingDate : posting.postingDate,
         CompanyLogo : posting.CompanyLogo
-    } 
+    }
 
         if(data.file != null){
 
@@ -134,11 +134,11 @@ class JobListing extends Component {
             const timestamp = new Date().getTime();
             const resumeName = "http://localhost:3001/resumeFolder/"+this.props.user._id+"/"+timestamp+"-"+data.file.name;
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume:resumeName});
-            
+
             let formData = new FormData();
             formData.set("savejob",JSON.stringify(newDataToBeSent));
             formData.set("files",data.file);
-            
+
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){

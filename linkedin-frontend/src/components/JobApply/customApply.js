@@ -139,11 +139,6 @@ fileChangeHandler = (e) => {
          selectedFile: e.target.files[0]
        })
  }
- submitApplication = (e) => {
-     const { selectedFile } = this.state;
-     e.preventDefault();
-     if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
-         console.log("job id" , this.props.customJobPost.Job_id)
 
 submitApplication = (e) => {
     const { selectedFile } = this.state;
@@ -314,8 +309,8 @@ submitApplication = (e) => {
                         <select class="form-control1"  onChange = {this.disabilityChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Yes, I have a disability (or previously had a disability)">Yes, I have a disability (or previously had a disability)</option>
-                            <option value="No, I don't have a disability">No, I don't have a disability</option>
-                            <option value="I don't wish to answer">I don't wish to answer</option>
+                            <option value="No, I don't have a disability">No, I dont have a disability</option>
+                            <option value="I don't wish to answer">I dont wish to answer</option>
                         </select>
 
                     </div>

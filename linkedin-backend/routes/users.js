@@ -7,7 +7,6 @@ var { mongoose } = require("./../db/mongoose");
 // var LocalStrategy = require('passport-local').Strategy;
 const multer = require("multer");
 var app = express();
-<<<<<<< HEAD
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
@@ -24,24 +23,13 @@ var {UserTrace} = require('./../models/usertrace');
 //   console.log('connected to redis');
 // })
 
-=======
-var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
-var session = require('express-session');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
-var salt = bcrypt.genSaltSync(10);
 // var kafka = require('./../kafka/client');
-var kafka = require('./../kafka/client.js');
-var {User} = require('./../models/user');
-var {UserTrace} = require('./../models/usertrace');
 
 const redis = require('redis');
 let client = redis.createClient(6379,'127.0.0.1');
 client.on('connect', function(){
   console.log('connected to redis');
 })
->>>>>>> developer
 const userresult = "";
 console.time("Query_Time");
 

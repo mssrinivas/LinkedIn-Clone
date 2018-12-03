@@ -28,7 +28,6 @@ import ResumeView from './applicant/resumeview';
 import PlotylyGraph from './graph/plotly';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
-import Search from "./Search";
 import Messages from './messages/messages.js';
 import PieGraph from './graph/pie.js';
 
