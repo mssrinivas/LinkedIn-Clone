@@ -29,10 +29,9 @@ class JobListing extends Component {
         this.easyApply = this.easyApply.bind(this);
     }
 
-    componentDidMount(){
-
+    componentWillMount(){
         const url = BASE_URL+"/jobs/search";
-        axios.get(url).then((response)=>{
+        axios.post(url).then((response)=>{
             const {status} = response;
             if(status===200){
                 console.log(response.data);
@@ -46,7 +45,6 @@ class JobListing extends Component {
     }
 
     async saveJob(position){
-
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
         const data = {
@@ -113,7 +111,9 @@ class JobListing extends Component {
       }
 
     render() {
-        
+      if(this.props.jobSearch.joblistings!=null && this.props.jobSearch.joblistings != undefined && this.props.jobSearch.joblistings.length!=0 && this.props.jobSearch.joblistings!=[]) {
+          this.state.postings = this.props.jobSearch.joblistings
+      }
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
@@ -160,7 +160,9 @@ class JobListing extends Component {
 
 const mapStateToProps = (state) =>{
     return {
-        user : state.LoginReducer.currentUserDetails
+        user : state.LoginReducer.currentUserDetails,
+        jobSearch : state.LoginReducer.jobSearch,
+        jobSearchCriteria : state.LoginReducer.jobSearchCriteria
     }
 }
 

@@ -46,7 +46,7 @@ var userschema = mongoose.Schema({
       type : String
     },
     experience : {
-        type : String
+        type : Number
     },
     education : {
         type : String
@@ -68,6 +68,15 @@ var userschema = mongoose.Schema({
     },
     profile_img : {
         type : String
+    },
+    status : {
+      type: String
+    },
+    workexperience : {
+      type: Array
+    },
+    education : {
+      type : Array
     },
     resume_path: {type : Array, required : false},
     saved_job : {type : Array, required : false},

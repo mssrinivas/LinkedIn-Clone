@@ -37,3 +37,28 @@ export const userSearchAction = (userDetail) => {
         data: userDetail
     }
 };
+
+export const userClickedAction = (userDetail) => {
+    return {
+        type: 'USER_CLICK_ACTIVITY',
+        data: userDetail
+    }
+};
+export const searchFieldAction = (userDetail) => {
+    return {
+        type: 'SEARCH_FIELD_ACTIVITY',
+        data: userDetail
+    }
+};
+export const jobsearchFieldAction = (userDetail) => {
+    return {
+        type: 'JOBSEARCH_FIELD_ACTIVITY',
+        data: userDetail
+    }
+};
+export const recuriterDashBoardTraceAction = (userDetail) => {
+    return {
+        type: 'RECRUITER_DASHBOARD_FETCH',
+        data: userDetail
+    }
+};

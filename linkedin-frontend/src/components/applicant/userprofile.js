@@ -43,8 +43,10 @@ class UserProfile extends Component {
           zip_code:'',
           job_title: '',
           profileResume:'',
-          skills:''
+          skills:'',
+          status:'Active'
         }
+        this.savePhoto = this.savePhoto.bind(this);
     }
     componentWillMount(){
       this.userDetails={
@@ -63,6 +65,8 @@ class UserProfile extends Component {
         experience :this.props.currentUserDetails.experience,
         zip_code : this.props.currentUserDetails.zip_code,
         skills: this.props.currentUserDetails.skills,
+        status: this.props.currentUserDetails.status,
+        student_flag: (this.props.currentUserDetails.student_flag!=1 ? false : true),
         profileResume:"http://localhost:3001/resumeFolder/"+this.props.currentUserDetails.applicant_id,
         profileImage:"http://localhost:3001/uploads/"+this.props.currentUserDetails.applicant_id+".jpeg",
       }
@@ -95,6 +99,25 @@ class UserProfile extends Component {
              alert("Resume uploaded Successfully.!!!");
          })
  }
+ handleImageUpload = (event)=> {
+   event.preventDefault();
+   const photos=event.target.files[0];
+   const applicantId=this.props.currentUserDetails.applicant_id;
+   const fd=new FormData();
+   fd.append('applicant_id',applicantId);
+   fd.append('photos',photos,photos.name);
+   var contentType={
+     headers : {
+       "content-type" : "multipart/form-data"
+     }
+   }
+   axios.post('http://localhost:3001/users/uploadprofilepic',fd,contentType)
+     .then(res=> {
+       console.log("Response here: ", res);
+       this.message=res.data.message
+       alert("Image uploaded Successfully.!!!");
+   })
+ }
  graphData =(e) => {
    e.preventDefault();
    this.data.applicant_id = this.props.currentUserDetails.applicant_id
@@ -104,17 +127,50 @@ class UserProfile extends Component {
    e.preventDefault();
    history.push('/resumeview');
  }
+ savePhoto =(e) => {
+   e.preventDefault();
+   this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
+   this.props.profileUpdate(this.userDetails);
+ }
+
   render() {
-    let resume = this.props.currentUserDetails.resume_path.split(this.props.currentUserDetails.applicant_id)[1];
-    resume = resume.replace("/", "");
-    resume = resume.split('-')[1];
+    let resume="";
+    let workdetails="Working professional with experience of :" +this.userDetails.experience;
+    if(this.props.currentUserDetails.resume_path!=null || this.props.currentUserDetails.resume_path!=undefined) {
+      if(this.props.currentUserDetails.resume_path.length!=0){
+        resume = this.props.currentUserDetails.resume_path[0].split(this.props.currentUserDetails.applicant_id)[1];
+        resume = resume.replace("/", "");
+        resume = resume.split('-')[1];
+      }
+    }
+    if(this.props.currentUserDetails.company!=null && this.props.currentUserDetails.job_title !=null) {
+       workdetails ="Works at  " +this.userDetails.company+ "  as " +this.props.currentUserDetails.job_title
+    }
+
     return (
     		 <div>
           <Navbar />
           <div className="card-display">
             <div className='bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>
                   <img className="image-class" src="https://cdn.hipwallpaper.com/i/32/78/ZcPfiN.jpg"/>
-                  <img className="applicant-image"  src={this.userDetails.profileImage} alt="Avatar"/>
+                  <button className="image-btn" data-toggle="modal" data-target="#imageUpdateModal">
+                    <img className="applicant-image"  src={this.userDetails.profileImage} alt="Edit photo"/>
+                </button>
+                <div className="modal fade" id="imageUpdateModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                    <div className="modal-dialog" role="document">
+                      <div className="modal-content custommodel">
+                          <div className="modal-header">
+                              <h3> Profile Photo </h3>
+                              <img className="applicantimage-model"  src={this.userDetails.profileImage} alt="Avatar"/>
+                              <input className="image-upload" type="file" name="photos" onChange={this.handleImageUpload}/>
+                          </div>
+                          <div className="modal-footer">
+                              <button type="button" className="btn btn-primary" data-dismiss="modal">Close</button>
+                              <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(e) => {this.savePhoto(e)}}>Save changes</button>
+                          </div>
+                      </div>
+                      </div>
+                </div>
                   <h2 className="profile-name">{this.userDetails.first_name}  {this.userDetails.last_name} </h2>
                   <a href="" data-toggle="modal" data-target="#exampleModal">
                     <img className="edit-gly"src="https://imageog.flaticon.com/icons/png/512/61/61456.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"/>
@@ -245,7 +301,7 @@ class UserProfile extends Component {
                 </div>
             </div>
         </div>
-                  <h4 className="profile-headline">{this.props.currentUserDetails.student_flag!=0? "Pursuing  " +this.props.currentUserDetails.education+ " at  " +this.props.currentUserDetails.school: "Works at  " +this.userDetails.company+ "  as " +this.props.currentUserDetails.job_title}</h4>
+                  <h4 className="profile-headline">{this.props.currentUserDetails.student_flag!=0? "Pursuing  " +this.props.currentUserDetails.education+ " at  " +this.props.currentUserDetails.school: workdetails}</h4>
                   <a href="#">
                     <img className="contact-gly"src="https://cdn2.vectorstock.com/i/1000x1000/72/26/phone-book-line-icon-contact-us-and-website-vector-14597226.jpg"/>
                   </a>
@@ -256,6 +312,7 @@ class UserProfile extends Component {
                   <a className="connection-link"> See Connection</a>
                   <br></br>
                   <h5 className="profile-area">{this.props.currentUserDetails.city!=null? this.props.currentUserDetails.address : "Please tell us where you stay"}</h5>
+                  <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Connections</button>
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>
@@ -307,7 +364,7 @@ class UserProfile extends Component {
                         <h4 className="details"> Salary Insights</h4>
                         <br></br>
                         <h5 className="details">See how your salary compares to others in the community</h5>
-                        <br></br><br></br>
+                        <br></br><br></br><br></br>
                     </div>
               </div>
             </div>

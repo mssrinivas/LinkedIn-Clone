@@ -8,7 +8,7 @@ class ResumeView extends Component {
     constructor(props){
         super(props)
         this.state = {
-            fileName : this.props.currentUserDetails.resume_path,
+            fileName : this.props.currentUserDetails.resume_path[0],
             numPages: null,
             pageNumber: 1
         }
@@ -17,7 +17,7 @@ class ResumeView extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.currentUserDetails.resume_path);
+        console.log(this.props.currentUserDetails.resume_path[0]);
     }
 
 
@@ -27,12 +27,12 @@ class ResumeView extends Component {
 
     render() {
         const {fileName,pageNumber,numPages} = this.state;
-        const fileURL = this.props.currentUserDetails.resume_path;
+        const fileURL = this.props.currentUserDetails.resume_path[0];
         return (
 
         <div>
             <Document
-          file={this.props.currentUserDetails.resume_path}
+          file={this.props.currentUserDetails.resume_path[0]}
           onLoadSuccess={this.onDocumentLoad}
         >
           <Page pageNumber={pageNumber} />

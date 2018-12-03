@@ -7,26 +7,21 @@ var { mongoose } = require("./../db/mongoose");
 // var LocalStrategy = require('passport-local').Strategy;
 const multer = require("multer");
 var app = express();
-var bcrypt = require("bcrypt-nodejs");
+var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 var salt = bcrypt.genSaltSync(10);
 // var kafka = require('./../kafka/client');
-var { User } = require("./../models/user");
-
-const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    cb(null, "./public/uploads/");
 var {User} = require('./../models/user');
 var {UserTrace} = require('./../models/usertrace');
 
-const redis = require('redis');
-let client = redis.createClient(6379,'127.0.0.1');
-client.on('connect', function(){
-  console.log('connected to redis');
-})
+// const redis = require('redis');
+// let client = redis.createClient(6379,'127.0.0.1');
+// client.on('connect', function(){
+//   console.log('connected to redis');
+// })
 
 const userresult = "";
 console.time("Query_Time");
@@ -177,10 +172,14 @@ router.post("/signup", function(req, res, next) {
 //=======================================================================
 router.post('/updateProfile', function (req,res,next) {
 	console.log("inside update profile",req.body);
-  console.log("Student flag is : ", req.body.studentFlag);
-  var student_flag = req.body.studentFlag == true ? 1 : 0;
-  User.updateOne({applicant_id : req.body.applicant_id},{$set:{
-    first_name : req.body.first_name,
+  console.log("Student flag is : ", req.body.student_flag);
+  var workexperience="";
+  if(req.body.company != undefined && req.body.experience !='') {
+      workexperience = req.body.experience +" years of experience at : " + req.body.company;
+  }
+  var student_flag = req.body.student_flag == true ? 1 : 0;
+  var dataChange={$push: { workexperience: workexperience},$set:
+  {
     last_name : req.body.last_name,
     email : req.body.email,
     job_title : req.body.job_title,
@@ -200,8 +199,9 @@ router.post('/updateProfile', function (req,res,next) {
     status : req.body.status,
     headline : req.body.headline,
     resume_path : req.body.profileResume
-
-  }})
+  }}
+  console.log("Work details: ", workexperience);
+  User.updateOne({applicant_id : req.body.applicant_id},dataChange)
     .exec()
     .then(doc => {
       console.log("Data Obtained after updation is : ", doc);
@@ -238,7 +238,7 @@ router.post('/getProfile', function (req,res,next) {
       else {
         res.status(200).json({
               message : "User profile fetched successfully",
-              userDetails: doc
+              userDetails: doc[0]
             });
           }
       })
@@ -282,8 +282,6 @@ router.post('/getTraceData', function (req,res,next) {
   var d = new Date();
   d.setMonth(d.getMonth() - 1);
   console.log("Value of d: ", d);
-  var applicant_id = req.body.applicant_id;
-  console.log("Type of applicant id: ", typeof(req.body.applicant_id));
   UserTrace.find({
               "applicant_id" : req.body.applicant_id,
               "timestamp": {
@@ -303,43 +301,63 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
-router.get("/users", function(req, res, next) {
-  console.time("Query_Time");
-  var result = [];
-  console.log("Inside Search Post Request");
-  client.get(userresult,function(err,value){
-    if(err) {
-      return console.log(err);
-    }
-    if(value) {
-      console.log("Type of value :", typeof(value));
-      result = JSON.parse(value);
-      client.expire(userresult,5);
+// router.post("/users", function(req, res, next) {
+//   console.time("Query_Time");
+//   var result = [];
+//   console.log("Inside Search Post Request");
+//   client.get(userresult,function(err,value){
+//     if(err) {
+//       return console.log(err);
+//     }
+//     if(value) {
+//         console.log("First name: ",req.body.first_name);
+//       console.log("Type of value :", typeof(value));
+//       result = JSON.parse(value);
+//       client.expire(userresult,1);
+//       res.status(200).json({result});
+//       return console.timeEnd("Query_Time");
+//     }
+//     else {
+//       console.log("First name: ",req.body.first_name);
+//       const regexname = new RegExp(req.body.first_name);
+//       User.find({"first_name":regexname})
+//         .then(response => {
+//           console.log("Response from find users", response);
+//           client.set(userresult,JSON.stringify(response),function(err){
+//             // if(err) {
+//               return console.error(err);
+//             }
+//           })
+//           result = response;
+//           res.status(200).json({result});
+//           return console.timeEnd("Query_Time");
+//
+//         })
+//         .catch(err => {
+//           console.log("Error : ", err.response);
+//           res.status(500).json({
+//             message: "internal server error"
+//           });
+//         });
+//     }
+//   });
+// });
+router.post("/users", function(req, res, next) {
+  console.log("Inside Search Post Request", req);
+  let result={};
+  const regexname = new RegExp(req.body.first_name,'i');
+  User.find({"first_name":regexname})
+    .then(response => {
+      console.log("Response from find users", response);
+      result = response;
       res.status(200).json({result});
-      return console.timeEnd("Query_Time");
-    }
-    else {
-      User.find()
-        .then(response => {
-          console.log("Response from find users", response);
-          client.set(userresult,JSON.stringify(response),function(err){
-            if(err) {
-              return console.error(err);
-            }
-          })
-          result = response;
-          res.status(200).json({result});
-          return console.timeEnd("Query_Time");
-
-        })
-        .catch(err => {
-          console.log("Error : ", err.response);
-          res.status(500).json({
-            message: "internal server error"
-          });
-        });
-    }
-  });
+    })
+    .catch(err => {
+      console.log("Error : ", err.response);
+      res.status(500).json({
+        message: "internal server error"
+      });
+    });
 });
 
 module.exports = router;

@@ -2,10 +2,14 @@ import BASE_URL from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
+import {userClickedAction} from './../actions/index';
 import {userProfileUpdateAction} from './../actions/index';
 import {userDeleteAction} from './../actions/index';
 import {userTraceAction} from './../actions/index';
 import {userSearchAction} from './../actions/index';
+import {searchFieldAction} from './../actions/index';
+import {jobsearchFieldAction} from './../actions/index';
+import {recuriterDashBoardTraceAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
@@ -40,6 +44,7 @@ export const userLogin = function(userDetail){
          console.log("results")
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
+         history.push('/feed');
          // history.push('/userprofile');
           history.push('/listings');
   }).catch(err => {
@@ -78,6 +83,7 @@ export const userSignUp = function(userDetail){
 };
 export const profileUpdate = function(userDetail){
   return (dispatch) => {
+    console.log("User details: ",userDetail);
     fetch(`${server_url}/users/updateProfile`, {
           method: 'POST',
           credentials:'include',
@@ -102,12 +108,11 @@ export const profileUpdate = function(userDetail){
     };
 };
 
-
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
 
     axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job/12345`, values)
+    axios.post(`${server_url}/apply/job`, values)
         .then(res => {
           console.log("response status : " + res.status);
           if(res.status == 200 && res.data == "Applied successfully"){
@@ -118,8 +123,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
               })
             }
         })
-      };
-
+ };
   export const userDelete = function(userDetail){
         return (dispatch) => {
           fetch(`${server_url}/users/updateProfile`, {
@@ -177,13 +181,14 @@ export const customApplyJob =  (values) =>  dispatch =>  {
               };
           };
 export const userSearch = function(userDetail){
-    console.log("Data sent to API:", userDetail);
+    console.log("Data sent to API:", userDetail.search_filter);
     return (dispatch) => {
     fetch(`${server_url}/users/users`, {
-          method: 'GET',
+          method: 'POST',
           credentials:'include',
           headers: { ...headers,'Content-Type': 'application/json' },
-                    mode: 'cors'
+          mode: 'cors',
+          body: JSON.stringify(userDetail)
                     }).then(res => {
                         if(res.status === 200){
                           console.log("user search data status:",res.status);
@@ -192,13 +197,83 @@ export const userSearch = function(userDetail){
                           throw "User data can not be fetched"
                         }
                    }).then(result=>{
-                       console.log("result",result," token :",result)
+                       console.log("result",result)
                        dispatch(userSearchAction(result));
-                       history.push('/usersearch');
+                       history.push('/userlisting');
                 }).catch(err => {
                   alert(err);
-                        console.log("Error while Login!!!");
+                        console.log("Error while searching for data!!!");
                         return err;
                       });
                   };
 };
+
+
+
+export const jobSearch = function(userDetail){
+    console.log("Data sent to API:", userDetail);
+    return (dispatch) => {
+                          dispatch(jobsearchFieldAction(userDetail));
+                  };
+                };
+export const onUserClicked = function(userDetail){
+    console.log("Data sent to API on user click:", userDetail);
+    return (dispatch) => {
+    fetch(`${server_url}/users/getProfile`, {
+          method: 'POST',
+          credentials:'include',
+          headers: { ...headers,'Content-Type': 'application/json' },
+          mode: 'cors',
+          body: JSON.stringify(userDetail)
+                    }).then(res => {
+                        if(res.status === 200){
+                          console.log("user data status on clicking:",res.status);
+                          return res.json();
+                        }else{
+                          throw "User data can not be fetched on click"
+                        }
+                   }).then(result=>{
+                       console.log("result",result," token :",result)
+                       dispatch(userClickedAction(result));
+                       history.push('/uservisit');
+                }).catch(err => {
+                  alert(err);
+                        console.log("Error while fetching user data on click!!!");
+                        return err;
+                      });
+                  };
+};
+export const recuriterDashBoardSearch = function(userDetail){
+  console.log("Data sent to API:", userDetail);
+      return (dispatch) => {
+        fetch(`${server_url}/applications/getrecruiterdashboard`, {
+              method: 'POST',
+              credentials:'include',
+              headers: { ...headers,'Content-Type': 'application/json' },
+              mode: 'cors',
+              body: JSON.stringify(userDetail)
+          }).then(res => {
+              if(res.status === 200){
+                console.log("user trace fetch data status:",res.status);
+                return res.json();
+              }else{
+                throw "User trace data can not be fetched"
+              }
+         }).then(result=>{
+             console.log("result",result," token :",result)
+             dispatch(recuriterDashBoardTraceAction(result));
+             history.push('/recruiterdashboard');
+      }).catch(err => {
+        alert(err);
+              console.log("Error while Login!!!");
+              return err;
+            });
+        };
+};
+
+export const searchCriteriaFilter = function(searchCriteria){
+    console.log("Data sent to API on entering search criteria click:", searchCriteria);
+    return (dispatch) => {
+                       dispatch(searchFieldAction(searchCriteria));
+                     };
+                   };

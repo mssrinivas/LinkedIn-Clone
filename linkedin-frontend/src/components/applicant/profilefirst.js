@@ -12,13 +12,14 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import {profileUpdate} from './../../api/Api';
+import Navbar from './../navbar/Navbar.jsx';
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
 
 class UserProfileFirst extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      studentFlag : true,
+      student_flag : true,
       communityFlag : false,
       headerMessage :'Your profile helps you discover the right people and opportunities',
       photoFlag : false,
@@ -33,7 +34,7 @@ class UserProfileFirst extends Component {
       photo : '',
       profile_img : '',
       status : 'Active',
-      studentFlag : true
+      student_flag : true
     }
     this.onClickStudent =  this.onClickStudent.bind(this);
     this.onClickProfessional = this.onClickProfessional.bind(this);
@@ -43,14 +44,14 @@ class UserProfileFirst extends Component {
   }
   onClickStudent = () => {
     this.setState({
-      studentFlag: true,
+      student_flag: true,
       headerMessage: 'Your profile helps you discover the right people and opportunities'
     });
-    this.userDetails.studentFlag = this.state.studentFlag;
+    this.userDetails.student_flag = this.state.student_flag;
   }
   onClickProfessional = () => {
     this.setState({
-      studentFlag: false,
+      student_flag: false,
       headerMessage: 'Your profile helps you discover the right people and opportunities'
     });
   }
@@ -110,7 +111,7 @@ onSubmitClick(e) {
   this.userDetails.email = this.props.currentUserDetails.user_Details.email;
   this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
   this.userDetails.profile_img = 'http://localhost:3001/uploads/'+this.props.currentUserDetails.applicant_id+".jpeg";
-  this.userDetails.studentFlag = this.state.studentFlag;
+  this.userDetails.student_flag = this.state.student_flag;
   this.props.profileUpdate(this.userDetails);
 }
   render ()
@@ -119,7 +120,7 @@ onSubmitClick(e) {
     let Studentcheck = null;
     let Communitycheck = null;
     let Photocheck = null;
-    if(this.state.studentFlag === true)
+    if(this.state.student_flag === true)
     {
       Studentcheck = (
         <div>
@@ -137,7 +138,7 @@ onSubmitClick(e) {
           <br></br><br></br>
         </div>)
     }
-    if(this.state.studentFlag === false)
+    if(this.state.student_flag === false)
     {
       Studentcheck = (
         <div>
@@ -194,7 +195,7 @@ onSubmitClick(e) {
     }
     return (
             <div>
-              <Navigation/>
+              <Navbar/>
             <div style={ buttonStyle } >
               <h3 className="user-first"> {this.state.headerMessage} </h3>
               <div className="cardstudent">

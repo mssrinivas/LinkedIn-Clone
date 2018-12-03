@@ -4,9 +4,18 @@ var {Applications} = require('./../models/application.js');
 var {mongoose} = require('../db/mongoose');
 var jobpostings = require('../db/jobpostings.js');
 
-router.get("/search",(request,response,next)=>{
-    console.log("Inside Jobs search");
-    jobpostings.searchJobs(null).then((joblistings)=>{
+
+router.post("/search",(request,response,next)=>{
+    console.log("Inside Jobs search",request.body);
+    let param=null;
+    if(request.body == {}) {
+      param=null;
+    }
+    else {
+      param = request.body.CompanyName;
+    }
+
+    jobpostings.searchJobs(param).then((joblistings)=>{
         console.log(joblistings);
         response.status(200).json({ joblistings });
 
@@ -35,7 +44,7 @@ router.post("/save/:jobid", async (request, response, next) => {
             CompanyLogo: companyLogo,
             easyApply: easyApply
         });
-        
+
         const savedApplication = await application.save();
         console.log(savedApplication);
         response.sendStatus(200);
@@ -44,7 +53,4 @@ router.post("/save/:jobid", async (request, response, next) => {
         response.sendStatus(201);
     }
 });
-
-
-
 module.exports = router;
