@@ -7,6 +7,7 @@ var { mongoose } = require("./../db/mongoose");
 // var LocalStrategy = require('passport-local').Strategy;
 const multer = require("multer");
 var app = express();
+<<<<<<< HEAD
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
 var session = require("express-session");
@@ -23,8 +24,27 @@ var {UserTrace} = require('./../models/usertrace');
 //   console.log('connected to redis');
 // })
 
+=======
+var bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
+var session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+var salt = bcrypt.genSaltSync(10);
+// var kafka = require('./../kafka/client');
+var kafka = require('./../kafka/client.js');
+var {User} = require('./../models/user');
+var {UserTrace} = require('./../models/usertrace');
+
+const redis = require('redis');
+let client = redis.createClient(6379,'127.0.0.1');
+client.on('connect', function(){
+  console.log('connected to redis');
+})
+>>>>>>> developer
 const userresult = "";
 console.time("Query_Time");
+
 const storage=multer.diskStorage({
   destination :function(req,file, cb) {
     cb(null,'./public/uploads/');
@@ -301,6 +321,69 @@ router.post('/getTraceData', function (req,res,next) {
   });
 });
 //==============================================================================================
+router.post("/users", function(req, res, next) {
+  console.time("Query_Time");
+  const{first_name} = req.body;
+  var result = [];
+  console.log("Inside Search Post Request");
+
+  /*
+  client.get(userresult,function(err,value){
+    if(err) {
+      return console.log(err);
+    }
+    if(value) {
+        console.log("First name: ",req.body.first_name);
+      console.log("Type of value :", typeof(value));
+      result = JSON.parse(value);
+      client.expire(userresult,1);
+      res.status(200).json({result});
+      return console.timeEnd("Query_Time");
+    }
+    else {
+      console.log("First name: ",req.body.first_name);
+      const regexname = new RegExp(req.body.first_name,'i');
+      User.find({$or :[{"first_name":regexname},{"last_name":regexname}]})
+        .then(response => {
+          console.log("Response from find users", response);
+          client.set(userresult,JSON.stringify(response),function(err){
+            if(err) {
+              return console.error(err);
+            }
+          })
+          result = response;
+          res.status(200).json({result});
+          return console.timeEnd("Query_Time");
+
+        })
+        .catch(err => {
+          console.log("Error : ", err.response);
+          res.status(500).json({
+            message: "internal server error"
+          });
+        });
+    }
+  });
+  */
+
+ const regexname = new RegExp(first_name,'i');
+ User.find({$or:[{"first_name":regexname},{"last_name":regexname}]})
+ .then(response => {
+   //console.log("Response from find users", response);
+
+   result = response;
+   res.status(200).json({result});
+   console.log(result);
+   //return console.timeEnd("Query_Time");
+
+ })
+ .catch(err => {
+   console.log("Error : ", err.response);
+   res.status(500).json({
+     message: "internal server error"
+   });
+ });
+});
 // router.post("/users", function(req, res, next) {
 //   console.time("Query_Time");
 //   var result = [];
@@ -310,7 +393,6 @@ router.post('/getTraceData', function (req,res,next) {
 //       return console.log(err);
 //     }
 //     if(value) {
-//         console.log("First name: ",req.body.first_name);
 //       console.log("Type of value :", typeof(value));
 //       result = JSON.parse(value);
 //       client.expire(userresult,1);
@@ -318,46 +400,29 @@ router.post('/getTraceData', function (req,res,next) {
 //       return console.timeEnd("Query_Time");
 //     }
 //     else {
-//       console.log("First name: ",req.body.first_name);
-//       const regexname = new RegExp(req.body.first_name);
-//       User.find({"first_name":regexname})
-//         .then(response => {
-//           console.log("Response from find users", response);
-//           client.set(userresult,JSON.stringify(response),function(err){
-//             // if(err) {
-//               return console.error(err);
-//             }
-//           })
-//           result = response;
-//           res.status(200).json({result});
-//           return console.timeEnd("Query_Time");
-//
-//         })
-//         .catch(err => {
-//           console.log("Error : ", err.response);
-//           res.status(500).json({
-//             message: "internal server error"
-//           });
-//         });
-//     }
-//   });
+//       kafka.make_request('search',req.body, function(err,results){
+//         console.log('\n---- kafka  result of people search----');
+//         console.log("results  :" + results);
+//         if (err){
+//             console.log("Inside err", err);
+//             res.status(500).json({
+//               message: "internal server error"
+//             });
+//         }else{
+//             console.log("\nkafka results value : ",results.value);
+//             res.writeHead(200,{
+//                         'Content-Type' : 'application/json'
+//             })
+//             res.end(JSON.stringify(results.value));
+//             // res.status(200).json({results.value});
+//             return console.timeEnd("Query_Time");
+//         }
+//     })
+//   }
 // });
-router.post("/users", function(req, res, next) {
-  console.log("Inside Search Post Request", req);
-  let result={};
-  const regexname = new RegExp(req.body.first_name,'i');
-  User.find({"first_name":regexname})
-    .then(response => {
-      console.log("Response from find users", response);
-      result = response;
-      res.status(200).json({result});
-    })
-    .catch(err => {
-      console.log("Error : ", err.response);
-      res.status(500).json({
-        message: "internal server error"
-      });
-    });
-});
+// });
+
+
+
 
 module.exports = router;

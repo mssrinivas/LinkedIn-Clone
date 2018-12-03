@@ -9,9 +9,6 @@ import {history} from "../../util/utils";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {userSearch} from './../../api/Api';
-import {jobSearch} from './../../api/Api';
-import {searchCriteriaFilter} from './../../api/Api';
-import {searchFieldAction} from './../../actions/index';
 
 class Navbar extends Component {
   constructor() {
@@ -80,8 +77,8 @@ class Navbar extends Component {
               style={{
                 height: 30,
                 marginLeft: 50,
-                marginRight: 20,
-                marginBottom: "10px"
+                marginBottom: "20px"
+
               }}
               src={LinkedInLogo1}
               alt="linkedin"
@@ -99,8 +96,13 @@ class Navbar extends Component {
               style={{ width: 40 }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATrSURBVGhD7Vjtb1NVHB5fNDF+MvLBxBgTNca/QL8QVEyQxEhgDj+Y9eWctkpLB2OBwWBoImDEzSnDlyFmjYnLZBN1g72ikjCZRoJMDQQRiTEgaoyQKGuL2c/nd3vu7Wl7Nrf23r0kfZIn7bLb3/M89563360oo4wyvEM8Hr/Z7/c/HAwGd4Cd4Ah4UvEouB+MSSkfUD+ZX/D5fPfAYGsgEPgTnzRNfgvWRCKRW1SZuQPu7G0w8zb4rzI3YyL876BAuUWZqrMMIcQjMHCpwJyQJDa/ROLlThKv95FsGyH51jGSLT0kdraTiG/OvV4RtQbxuViVnx1A1A/eyDETrSW5d5BCH/1BoSPXp6TsuEBiV4KCMpwTBryIuvcpGW+BJ/EMBCcccRki2XyIZM9Vo+kp+cHPJBqac8IgyC8855ScN4DQUjA7H55dRzIxZjY5XR7+h8SegxiSQg90NhqN3qpk3QVPbNyty47Yc3GSnReN5sJg/WfjtPuLJL32VYqav0zSi8eTVDM4bryeKfYO6EGYCSXtLlCYV6eMCMZ2KHG6wAwHeGU0SR+fS9PwTzcKOAR2fJ+mrZ+bA8nd7+lBJnhBUfLuAE/jXn1yi6ZDBSbWD1+n7rPZAH3n05QYS9GbJ1PU9k3aCjB0IRuo7VTKCp5T5/DfJGp36GFGlQV3gBD7nOK8OuVN7A0I0aOeQu8Pado5kqRIn2ZQcR2GFgfjIHwtBw3nXSfbT+lBePIvUTZKQ1VV1U0o5uzY1hKrCTPf+DplGTt4Jk2xgcnngc3tx8ap/8dMmLqjhdfzPqSFeUdZKQ3q7JQpis3OtE/Eh8atubG2//9D2NyExaAJi0DB8AJF67Ae5FfYKH3XRyE+AFpF+U7li3rCD69AL7scY9Lfr+wUDwyrDqcgjh1GYQ+Yd5RZpewUDwQ57gTB2ckk6gWDm3Y5QTC848pO8UChMbug3H/CKOoFRWOrEwTcouwUDxThpigTBKdYk6gXFNtanCAYFfXKTvFAoU+dIDiKm0S9YHDj804QDK2wslM8cDfa7ILcT5hEXScfJNfW6EGWKTvFA4ViThCsJEZhlynfP+eEALllKL3h4hcFWlGrKTKJu0mxp0sPMqaslA4Mr+/swtzZmcRdY881Csbq9CDblI3SgWI1TmEc4SU6O6MJFyhbevUQqerq6ruUjdLBr2xQ9DdbgNtTnpAmIyWx+zK6zpgTBCPhgLLgHlBU2AJWGLSnRjPFEq1BsLbRqQ9eC4fDdyh5V7EIxQccIfTYsnXIbGqm/OQvCm5t0kPw0+B3Xd4AAoshcF4X5PaUOzujwemw61L+k7AIndJ386mg2t7sSwgmjHBnZzQ6GbE6WRM7Es0JoNPzMNhp74bImQJx9Cty37DVTxjNg7zZ8T4hcpfYSenzBRqUrDfg904I0w6x7Ms6h2iKcAoQOIrzKVY0vEqi7oWcY4dO1LmK5inAx3X87dTz+QO09IlKerzy6W4l6x34lQ1ER23xGTIFvquvTnYYO8SDy1danJUwDNzVJeAB8Ipm1MQJXHMan42hUOhO9fMcVAcCG/UQsx7GBvfYMLqK7y5M1zPxPQwuw+Z6u7psSjz6ZGV/fpA5CeMGymHmK8ph5ismC7Ni9ZoudcnCQX6Yh8Dlq9dsV/9eWLDDLOgQNh5b+VTvgg9RRhlzhoqK/wD8WDrVjI1PyAAAAABJRU5ErkJggg=="
             />
+            <img
+              onClick={this.searchUsers}
+              style={{ width: 40 }}
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATrSURBVGhD7Vjtb1NVHB5fNDF+MvLBxBgTNca/QL8QVEyQxEhgDj+Y9eWctkpLB2OBwWBoImDEzSnDlyFmjYnLZBN1g72ikjCZRoJMDQQRiTEgaoyQKGuL2c/nd3vu7Wl7Nrf23r0kfZIn7bLb3/M89563360oo4wyvEM8Hr/Z7/c/HAwGd4Cd4Ah4UvEouB+MSSkfUD+ZX/D5fPfAYGsgEPgTnzRNfgvWRCKRW1SZuQPu7G0w8zb4rzI3YyL876BAuUWZqrMMIcQjMHCpwJyQJDa/ROLlThKv95FsGyH51jGSLT0kdraTiG/OvV4RtQbxuViVnx1A1A/eyDETrSW5d5BCH/1BoSPXp6TsuEBiV4KCMpwTBryIuvcpGW+BJ/EMBCcccRki2XyIZM9Vo+kp+cHPJBqac8IgyC8855ScN4DQUjA7H55dRzIxZjY5XR7+h8SegxiSQg90NhqN3qpk3QVPbNyty47Yc3GSnReN5sJg/WfjtPuLJL32VYqav0zSi8eTVDM4bryeKfYO6EGYCSXtLlCYV6eMCMZ2KHG6wAwHeGU0SR+fS9PwTzcKOAR2fJ+mrZ+bA8nd7+lBJnhBUfLuAE/jXn1yi6ZDBSbWD1+n7rPZAH3n05QYS9GbJ1PU9k3aCjB0IRuo7VTKCp5T5/DfJGp36GFGlQV3gBD7nOK8OuVN7A0I0aOeQu8Pado5kqRIn2ZQcR2GFgfjIHwtBw3nXSfbT+lBePIvUTZKQ1VV1U0o5uzY1hKrCTPf+DplGTt4Jk2xgcnngc3tx8ap/8dMmLqjhdfzPqSFeUdZKQ3q7JQpis3OtE/Eh8atubG2//9D2NyExaAJi0DB8AJF67Ae5FfYKH3XRyE+AFpF+U7li3rCD69AL7scY9Lfr+wUDwyrDqcgjh1GYQ+Yd5RZpewUDwQ57gTB2ckk6gWDm3Y5QTC848pO8UChMbug3H/CKOoFRWOrEwTcouwUDxThpigTBKdYk6gXFNtanCAYFfXKTvFAoU+dIDiKm0S9YHDj804QDK2wslM8cDfa7ILcT5hEXScfJNfW6EGWKTvFA4ViThCsJEZhlynfP+eEALllKL3h4hcFWlGrKTKJu0mxp0sPMqaslA4Mr+/swtzZmcRdY881Csbq9CDblI3SgWI1TmEc4SU6O6MJFyhbevUQqerq6ruUjdLBr2xQ9DdbgNtTnpAmIyWx+zK6zpgTBCPhgLLgHlBU2AJWGLSnRjPFEq1BsLbRqQ9eC4fDdyh5V7EIxQccIfTYsnXIbGqm/OQvCm5t0kPw0+B3Xd4AAoshcF4X5PaUOzujwemw61L+k7AIndJ386mg2t7sSwgmjHBnZzQ6GbE6WRM7Es0JoNPzMNhp74bImQJx9Cty37DVTxjNg7zZ8T4hcpfYSenzBRqUrDfg904I0w6x7Ms6h2iKcAoQOIrzKVY0vEqi7oWcY4dO1LmK5inAx3X87dTz+QO09IlKerzy6W4l6x34lQ1ER23xGTIFvquvTnYYO8SDy1danJUwDNzVJeAB8Ipm1MQJXHMan42hUOhO9fMcVAcCG/UQsx7GBvfYMLqK7y5M1zPxPQwuw+Z6u7psSjz6ZGV/fpA5CeMGymHmK8ph5ismC7Ni9ZoudcnCQX6Yh8Dlq9dsV/9eWLDDLOgQNh5b+VTvgg9RRhlzhoqK/wD8WDrVjI1PyAAAAABJRU5ErkJggg=="
+            />
           </span>
-          <Link to="">
+          <Link to="/feed">
             <div
               style={{
                 display: "inline-block",

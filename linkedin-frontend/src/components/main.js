@@ -8,6 +8,8 @@ import CustomJobApply from './JobApply/customApply.js';
 import EasyJobApply from './JobApply/easyApplyModal.js';
 import Jobs from './JobApply/jobs.js';
 import JobsApplied from './JobApply/jobsApplied.js';
+import ListAllConnections from './networks/listallconnections';
+import ShowConnectedUsers from './networks/showconnectedusers';
 import Login from './applicant/login'
 import UserProfile from './applicant/userprofile'
 import UserVisit from './applicant/uservisit'
@@ -26,11 +28,13 @@ import ResumeView from './applicant/resumeview';
 import PlotylyGraph from './graph/plotly';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
+import Search from "./Search";
 import Messages from './messages/messages.js';
 import PieGraph from './graph/pie.js';
 
 class Main extends Component {
     render(){
+        localStorage.setItem("counter",0)
         return(
             <Provider store={store}>
             <Router history={history}>
@@ -39,6 +43,7 @@ class Main extends Component {
                 <Route exact path="/userlisting" component={UserListing} />
                 <Route exact path="/postjob" component={JobPostings} />
                 <Route exact path="/customapply" component={CustomJobApply} />
+                <Route exact path="/mynetworks" component={ListAllConnections} />
                 <Route exact path="/" component={Login} />
                 <Route exact path="/easyapply" component={EasyJobApply} />
                 <Route exact path="/jobs" component={Jobs} />
@@ -54,13 +59,12 @@ class Main extends Component {
                 <Route exact path="/usersearch" component={UserSearch}/>
                 <Route exact path="/resumeview" component={ResumeView}/>
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
-                <Route exact path="/resumes/:filename" component={Resumes} />
-                <Route exact path="/plotly" component={PlotylyGraph} />
-                <Route exact path="/pie" component={PieGraph} />
                 <Route exact path="/citywiseapplication" component={CityApplications} />
                 <Route exact path="/linechartexample" component={LineChartExample} />
-            </Switch>
+                <Route exact path="/resumes/:userid/:filename" component={Resumes} />
+                </Switch>
             </Router>
             </Provider>
 

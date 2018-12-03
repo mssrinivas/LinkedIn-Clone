@@ -17,6 +17,6 @@ module.exports = {
      // 'MONGO_URI' : "mongodb+srv://linkedin:linkedin@linkedin-5oyqd.mongodb.net/linkedin?retryWrites=true",
      'MONGO_DB_NAME' : "linkedin",
      'MONGO_COLLECTION_JOB_POSTINGS' : "jobpostings",
-    // 'MONGO_URI' : "mongodb://localhost:27017/LinkedIN"
+    //'MONGO_URI' : "mongodb://localhost:27017/LinkedIN"
 
 };

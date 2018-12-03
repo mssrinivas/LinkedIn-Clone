@@ -4,19 +4,21 @@ import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
 import {customApplyJob} from './../../api/Api';
 import './apply.css';
+import {Link} from 'react-router-dom';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
 var swal = require('sweetalert')
+var resume = "";
 var Job_id = "";
 var RecruiterEmail = "";
-var resume = "";
-var postingDate = "";
 class customApply extends Component {
     constructor(props){
         //Call the constrictor of Super class i.e The Component
 super(props);
         //maintain the state required for this component
-
+        // this.details={
+        //     resume_name : ""
+        // };
 this.state = {
     firstname : "",
     lastname : "",
@@ -29,7 +31,8 @@ this.state = {
     veteran : "",
     disability : "",
     selectedFile : "",
-    cover : ""
+    cover : "",
+
 }
         //Bind the handlers to this class
 this.fnameChangeHandler = this.fnameChangeHandler.bind(this);
@@ -45,7 +48,26 @@ this.fileChangeHandler = this.fileChangeHandler.bind(this);
 this.disabilityChangeHandler = this.disabilityChangeHandler.bind(this);
 this.hearChangeHandler = this.hearChangeHandler.bind(this);
 this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
-}
+    }
+
+    // componentDidMount()
+    // {
+    //     var counter=localStorage.getItem("counter");
+    //     if(counter)
+    //     {
+    //         fetch('http://localhost:3001/useractivity/halffilled', {
+    //             method: 'post',
+    //             headers: {'Content-Type': 'application/json'},
+    //             credentials : 'include',
+    //             body: JSON.stringify({
+    //               halffilled: 1
+    //             })
+    //           })
+    //           .then(response => {
+    //               localStorage.setItem("counter",0)
+    //             })
+    //         }
+    // }
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
     if(nextProps.applied == true)
@@ -59,6 +81,8 @@ coverLetterChangeHandler = (e) => {
     this.setState({
         cover : e.target.value
     })
+    // count++;
+    // localStorage.setItem()
 }
 fnameChangeHandler = (e) => {
     this.setState({
@@ -121,68 +145,71 @@ fileChangeHandler = (e) => {
      if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
          console.log("job id" , this.props.customJobPost.Job_id)
 
-     let Applicant_id = this.props.user._id;
-     console.log("Applicant_id for file upload: " + Applicant_id);
-     console.log("selected file: " + selectedFile);
-     console.log("selected file name: " + selectedFile.name);
+submitApplication = (e) => {
+    const { selectedFile } = this.state;
+    e.preventDefault();
+    if(selectedFile.name.substring(selectedFile.name.lastIndexOf('.')+1) == "pdf"){
+        console.log("job id" , this.props.customJobPost.Job_id)
 
-     if(this.props.customJobPost.Applied == false && this.props.customJobPost.Saved == true)
-     {
-             Job_id = this.props.customJobPost.Job_id
-             RecruiterEmail = this.props.customJobPost.RecruiterEmail
-             postingDate = this.props.customJobPost.postingDate
+    let Applicant_id = this.props.user._id;
+    console.log("Applicant_id for file upload: " + Applicant_id);
+    console.log("selected file: " + selectedFile);
+    console.log("selected file name: " + selectedFile.name);
 
-     }else{
-             Job_id = this.props.customJobPost._id
-             RecruiterEmail = this.props.customJobPost.Email
-             postingDate = this.props.customJobPost.postingDate
-     }
-     const formData = new FormData();
-     formData.append('applicant_id', Applicant_id);
-     formData.append('selectedFile', selectedFile);
-     axios.post(`${BASE_URL}/uploadresume`, formData)
-         .then((response) => {
-             if(response.status == 200){
-                 console.log("Resume upload Status: " + response.status );
-                 console.log("file which was uploaded: " + response.data );
-                 resume = response.data;
-                 const values = {
-                     Applicant_id : this.props.user._id,
-                     RecruiterEmail : RecruiterEmail,
-                     postingDate : postingDate,
-                     Job_id : Job_id,
-                     email : this.state.email,
-                     firstname : this.state.firstname,
-                     lastname : this.state.lastname,
-                     contact : this.state.contact,
-                     address : this.state.address,
-                     gender : this.state.gender,
-                     race : this.state.race,
-                     veteran : this.state.veteran,
-                     disability : this.state.disability,
-                     hear : this.state.hear,
-                     resume :resume ,
-                     cover_letter : this.state.cover,
-                     company : this.props.customJobPost.CompanyName,
-                     jobtitle : this.props.customJobPost.JobTitle,
-                     joblocation :this.props.customJobPost.JobLocation,
-                     companyLogo : this.props.customJobPost.CompanyLogo,
-                     easyApply : this.props.customJobPost.easyApply,
-                     appliedDate : new Date()
-                 }
-                 console.log("input values" , values)
-                 this.props.customApplyJob(values)
-             }
+    if(this.props.customJobPost.Applied == false && this.props.customJobPost.Saved == true)
+    {
+            Job_id = this.props.customJobPost.Job_id
+            RecruiterEmail = this.props.customJobPost.RecruiterEmail
+    }else{
+            Job_id = this.props.customJobPost._id
+            RecruiterEmail = this.props.customJobPost.Email
+    }
+    const formData = new FormData();
+    formData.append('applicant_id', Applicant_id);
+    formData.append('selectedFile', selectedFile);
+    axios.post(`${BASE_URL}/uploadresume`, formData)
+        .then((response) => {
+            if(response.status == 200){
+                console.log("Resume upload Status: " + response.status );
+                console.log("file which was uploaded: " + response.data );
+                resume = response.data;
+                const values = {
+                    Applicant_id : this.props.user._id,
+                    RecruiterEmail : RecruiterEmail,
+                    Job_id : Job_id,
+                    email : this.state.email,
+                    firstname : this.state.firstname,
+                    lastname : this.state.lastname,
+                    contact : this.state.contact,
+                    address : this.state.address,
+                    gender : this.state.gender,
+                    race : this.state.race,
+                    veteran : this.state.veteran,
+                    disability : this.state.disability,
+                    hear : this.state.hear,
+                    resume :resume ,
+                    cover_letter : this.state.cover,
+                    company : this.props.customJobPost.CompanyName,
+                    jobtitle : this.props.customJobPost.JobTitle,
+                    joblocation :this.props.customJobPost.JobLocation,
+                    companyLogo : this.props.customJobPost.CompanyLogo,
+                    easyApply : this.props.customJobPost.easyApply,
+                    appliedDate : new Date()
+                }
+                console.log("input values" , values)
+                this.props.customApplyJob(values)
+            }
 
-     });
-     // console.log("this.state.filename" ,resume )
+    });
+    // console.log("this.state.filename" ,resume )
 
 
-     }else {
-         alert("Resume should be in pdf format")
-     }
- }
+    }else {
+        alert("Resume should be in pdf format")
+    }
+}
     render() {
+
         return (
             <div>
             <Navbar />
@@ -215,7 +242,7 @@ fileChangeHandler = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="contact">Phone*</label>
-                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" id="contact" required/>
+                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="contact" required/>
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="address">Address*</label>
@@ -231,7 +258,7 @@ fileChangeHandler = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label">How did you hear about us</label>
-                        <select class="form-control1"  onChange = {this.hearChangeHandler}>
+                        <select class="form-control1"  onChange = {this.hearChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Linkedin">Linkedin</option>
                             <option value="company website">company website</option>
@@ -248,7 +275,7 @@ fileChangeHandler = (e) => {
 
                     <div class="form-group1">
                         <label className="field-label">Gender</label>
-                        <select class="form-control1"  onChange = {this.genderChangeHandler}>
+                        <select class="form-control1"  onChange = {this.genderChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -273,7 +300,7 @@ fileChangeHandler = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label">Veteran Status</label>
-                        <select class="form-control1"  onChange = {this.veteranChangeHandler}>
+                        <select class="form-control1"  onChange = {this.veteranChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="I am a veteran">I am a veteran</option>
                             <option value="I am not a veteran">I am not a veteran</option>
@@ -284,7 +311,7 @@ fileChangeHandler = (e) => {
 
                     <div class="form-group1">
                         <label className="field-label">Disability Status</label>
-                        <select class="form-control1"  onChange = {this.disabilityChangeHandler}>
+                        <select class="form-control1"  onChange = {this.disabilityChangeHandler} required>
                         <option value="Select">Select</option>
                             <option value="Yes, I have a disability (or previously had a disability)">Yes, I have a disability (or previously had a disability)</option>
                             <option value="No, I don't have a disability">No, I don't have a disability</option>
@@ -292,7 +319,7 @@ fileChangeHandler = (e) => {
                         </select>
 
                     </div>
-
+                    <button className="btn btn-primary1" type="submit" onClick={this.HalfFillCheck}>Go Back</button>&nbsp;&nbsp;
                     <button className="btn btn-primary1" type="submit">Submit Application</button>
                     </form>
 

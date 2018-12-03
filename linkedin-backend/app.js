@@ -5,15 +5,21 @@ var fs=require('file-system');
 var session = require("express-session");
 var cors = require("cors");
 var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
-var users = require("./routes/users");
-var applications = require("./routes/applications");
-const multer = require("multer");
-var jobs = require("./routes/jobs.js");
+var bodyParser = require('body-parser');
+var users = require('./routes/users');
+var messages = require('./routes/messages');
+var applications = require('./routes/applications');
+const multer = require('multer');
+var jobs = require('./routes/jobs.js');
+var listusernetwork = require('./routes/listusernetworks');
+const graphqlHTTP = require('express-graphql');
+const schema = require('./graphqlschema/schema');
+// var {User} = require('./models/user');
 var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 const redis = require('redis');
-
+var fs=require('file-system');
+var useractivity = require('./routes/useractivity');
 const url = "http://localhost:3000";
 //const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
@@ -42,10 +48,11 @@ app.use("/users", users);
 app.use("/apply", applications);
 app.use("/applications", applications);
 app.use("/jobs", jobs);
-app.use("/search", search);
-app.use('/apply', applications);
+//app.use("/search", search);
+app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
-
+app.use('/messages', messages);
+//app.use('/useractivity',useractivity)
 app.get("/start", (request, response) => {
   response.status(200).json({
     msg: "Welcome to Linkedin"
@@ -90,6 +97,11 @@ app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next
         })
       res.end(JSON.stringify(filename))
 });
-var server = app.listen(3001, () => {
-  console.log("Linkedin server has started to listen at http://localhost:3001");
+
+app.use("/graphql",graphqlHTTP({
+  schema,
+  graphiql: true
+}));
+var server = app.listen(3001,()=>{
+    console.log("Linkedin server has started to listen at http://localhost:3001" );
 });

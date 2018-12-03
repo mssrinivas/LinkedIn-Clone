@@ -2,6 +2,9 @@ import * as UTIL from './../util/utils';
 import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
 import {CUSTOM_APPLY_SAVED_JOB} from './../components/constants/reduxActionConstants';
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
+// import { CUSTOM_APPLY_FAILURE } from "../api/Api";
+
+
 const initialState = {
         current_user: '',
         currentUserDetails:{},
@@ -87,7 +90,13 @@ export default function (state = initialState, action) {
                 ...state,
                 applied : action.payload
             }
-
+            
+            // case CUSTOM_APPLY_FAILURE:
+            //   console.log("Custom apply job reducer failure");
+            //   return {
+            //     ...state,
+            //     applied : action.payload
+            // }
             case SELECTED_CUSTOM_JOB_POST :
                  console.log("in selected job post redux");
                  console.log(action.payload);
@@ -97,6 +106,13 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
+                  
+            case 'USER_SEARCH_ACTIVITY':
+                  console.log("User search activity", action.data.result);
+                  return Object.assign({}, state, {
+                  message: action.data.message,
+                  userSearch : action.data.result
+                })
 
           default:
     return state;

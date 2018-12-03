@@ -26,15 +26,15 @@ class Navigation extends Component {
             </div>
             <ul class="navbar-nav">
                 <li class="nav-item padtopnavbar">
-                <a class="btn bgwhite " href="/home" role="button">HOME</a> 
+                <Link to="/feed" class="btn bgwhite " role="button">HOME</Link> 
                 &nbsp; &nbsp; &nbsp; 
                 </li>
                 <li class="nav-item padtopnavbar spacebetween">
-                <a class="btn bgwhite" href="/postjob" role="button">POST JOB</a> 
+                <Link to="/postjob" class="btn bgwhite" role="button">POST JOB</Link> 
                 &nbsp; &nbsp; &nbsp;       
                 </li>
                 <li class="nav-item padtopnavbar spacebetween">
-                <a class="btn bgwhite " href="/home" role="button">LINKEDIN.COM</a> 
+                <Link to="/home" class="btn bgwhite " role="button">LINKEDIN.COM</Link> 
                 &nbsp; &nbsp; &nbsp; 
                
                 </li>
