@@ -18,7 +18,24 @@ class LineChart extends Component{
         {
           label:data.labelName,
           data:data.datasets,
-          backgroundColor:this.chartColor
+          backgroundColor:this.chartColor,
+          fill: false,
+            lineTension: 0.1,
+            backgroundColor: 'rgba(0, 177, 228,0.7)',
+            borderColor: 'rgba(0, 177, 228,0.7)', // The main line color
+            borderCapStyle: 'square',
+            borderDash: [], // try [5, 15] for instance
+            borderDashOffset: 0.0,
+            borderJoinStyle: 'miter',
+            pointBorderColor: "black",
+            pointBackgroundColor: "white",
+            pointBorderWidth: 1,
+            pointHoverRadius: 8,
+            pointHoverBackgroundColor: "black",
+            pointHoverBorderColor: "brown",
+            pointHoverBorderWidth: 2,
+            pointRadius: 4,
+            pointHitRadius: 10,
         }
       ]
     }

@@ -49,7 +49,7 @@ var userschema = mongoose.Schema({
       type : String
     },
     experience : {
-        type : String
+        type : Number
     },
     education : {
         type : String
@@ -72,7 +72,12 @@ var userschema = mongoose.Schema({
     profile_img : {
         type : String
     },
-  
+    workexperience : {
+      type: Array
+    },
+    education : {
+      type : Array
+    },
     connections:[
         {
             email:String,
@@ -80,16 +85,13 @@ var userschema = mongoose.Schema({
             last_name:String,
             job_title:String,
             experience:Number,
-          
         }
     ],
-
     pending:[{
         email:String,
         first_name:String,
         last_name:String,
         job_title:String,
-       
     }
     ],
     waiting:[

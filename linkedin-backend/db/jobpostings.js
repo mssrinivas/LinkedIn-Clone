@@ -12,9 +12,14 @@ mongo.then((db)=>{
 
 var searchJobs = async function(params) {
     try{
-
+        let docs=[];
         const linkedInDB = mongodb_connection.db(MONGO_DB_NAME);
-        const docs = await linkedInDB.collection(collectionJobPostings).find({});
+        if(params == null) {
+          docs = await linkedInDB.collection(collectionJobPostings).find({});
+        }
+        else {
+          docs = await linkedInDB.collection(collectionJobPostings).find({"CompanyName":params});
+        }
 
         if(docs == null){
             return Promise.reject("No Jobs found");

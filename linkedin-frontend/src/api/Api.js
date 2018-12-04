@@ -10,9 +10,14 @@ import {userTraceAction} from './../actions/index';
 import {userSearchAction} from './../actions/index';
 import {searchFieldAction} from './../actions/index';
 import {jobsearchFieldAction} from './../actions/index';
+<<<<<<< HEAD
+=======
+import {recuriterDashBoardTraceAction} from './../actions/index';
+>>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
+// export const CUSTOM_APPLY_FAILURE = "custom_apply_failure";
 
 const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
@@ -110,7 +115,7 @@ export const profileUpdate = function(userDetail){
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-
+  
     axios.defaults.withCredentials = true;
     axios.post(`${server_url}/apply/job`, values)
         .then(res => {
@@ -121,10 +126,21 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 type :  CUSTOM_APPLY_SUCCESS,
                 payload: true
               })
+            } 
+            else if(res.status == 200 && res.data == "Already applied"){
+              // dispatch({
+              //   type :  CUSTOM_APPLY_FAIL,
+              //   payload: true
+              // })
+              alert("Already applied for this job")
             }
+           else {
+             alert("Oops !! Something went wrong. Login again")
+           }
         })
  };
 
+<<<<<<< HEAD
 //  export const respondToFriendRequest =  (values) =>  dispatch =>  {
 //   console.log("User details while sending friend request: " + values.firstname);
 
@@ -159,6 +175,65 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //         })
 //  };
  
+=======
+
+//  export const SendMessage =  (values) =>  dispatch =>  {
+//   console.log("Message to be added: " + values.Message);
+
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/messages/send`, values)
+//         .then(res => {
+//           console.log("response status : " + res.status);
+//           if(res.status == 200){
+//             // console.log("booking failure : " + res.data);
+//             alert("Message sent Successfully !!")
+//             }else{alert("Oops !! Could not send Message!!")}
+//         })
+//  };
+
+
+//  export const submitMessage =  (values) =>  dispatch =>  {
+//   console.log("Conversation initiated: ");
+
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/messages/startnew`, values)
+//         .then(res => {
+
+//           if(res.status == 200){
+//             console.log("response status : " + res.status);
+//             history.push('/messages')
+//             }else{alert("Oops !! Could not send Message!!")}
+//         })
+//  };
+//  export const userSearch = function(userDetail){
+//   console.log("Data sent to API:", userDetail);
+//   return (dispatch) => {
+//   fetch(`${server_url}/users/users`, {
+//         method: 'POST',
+//         credentials:'include',
+//         headers: { ...headers,'Content-Type': 'application/json' },
+//         mode: 'cors',
+//         body: JSON.stringify(userDetail)
+//                   }).then(res => {
+//                       if(res.status === 200){
+//                         console.log("user search data status:",res.status);
+//                         return res.json();
+//                       }else{
+//                         throw "User data can not be fetched"
+//                       }
+//                  }).then(result=>{
+//                      console.log("result",result," token :",result)
+//                      dispatch(userSearchAction(result));
+//                      history.push('/search');
+//               }).catch(err => {
+//                 alert(err);
+//                       console.log("Error while Login!!!");
+//                       return err;
+//                     });
+//                 };
+// };
+//       };
+>>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 
   export const userDelete = function(userDetail){
         return (dispatch) => {
@@ -249,6 +324,7 @@ export const userSearch = function(userDetail){
 export const jobSearch = function(userDetail){
     console.log("Data sent to API:", userDetail);
     return (dispatch) => {
+<<<<<<< HEAD
     fetch(`${server_url}/jobs/search`, {
           method: 'POST',
           credentials:'include',
@@ -276,6 +352,11 @@ export const jobSearch = function(userDetail){
 
 
 
+=======
+                          dispatch(jobsearchFieldAction(userDetail));
+                  };
+                };
+>>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 export const onUserClicked = function(userDetail){
     console.log("Data sent to API on user click:", userDetail);
     return (dispatch) => {
@@ -303,6 +384,36 @@ export const onUserClicked = function(userDetail){
                       });
                   };
 };
+<<<<<<< HEAD
+=======
+export const recuriterDashBoardSearch = function(userDetail){
+  console.log("Data sent to API:", userDetail);
+      return (dispatch) => {
+        fetch(`${server_url}/applications/getrecruiterdashboard`, {
+              method: 'POST',
+              credentials:'include',
+              headers: { ...headers,'Content-Type': 'application/json' },
+              mode: 'cors',
+              body: JSON.stringify(userDetail)
+          }).then(res => {
+              if(res.status === 200){
+                console.log("user trace fetch data status:",res.status);
+                return res.json();
+              }else{
+                throw "User trace data can not be fetched"
+              }
+         }).then(result=>{
+             console.log("result",result," token :",result)
+             dispatch(recuriterDashBoardTraceAction(result));
+             history.push('/recruiterdashboard');
+      }).catch(err => {
+        alert(err);
+              console.log("Error while Login!!!");
+              return err;
+            });
+        };
+};
+>>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 
 export const searchCriteriaFilter = function(searchCriteria){
     console.log("Data sent to API on entering search criteria click:", searchCriteria);

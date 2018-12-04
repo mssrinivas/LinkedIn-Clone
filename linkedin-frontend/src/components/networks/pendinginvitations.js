@@ -91,7 +91,7 @@ loadPendingInvitations(){
       console.log("USER-->",user)
     return (
       <div>
-             <div class="card" style={{border:'1px solid grey',width: "127%",height: "166%",marginTop:"13%"}}>
+             <div class="cardneha" style={{border:'1px solid grey',width: "127%",height: "166%",marginTop:"13%"}}>
                 <div className="row">         
                   <div className="col-md-3" style={{margin:"auto"}}>
                   <img class="rounded-circle center" src={ require('../../images/avatar.png')} alt="Avatar" style={{width:"75%"}}/>

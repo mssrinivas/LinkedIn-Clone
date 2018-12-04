@@ -6,6 +6,7 @@ var Applications = mongoose.model('Applications',{
     JobLocation : {type : String, required : true},
     Applicant_id :{type : String, required : true},
     Email :{type : String, required: true},
+    RecruiterEmail : {type : String, required: true},
     Applied :{type : Boolean, default : false, required : true},
     Saved :{type : Boolean, default : false, required : true},
     easyApply : {type : Boolean, default : false, required : true},
@@ -21,6 +22,7 @@ var Applications = mongoose.model('Applications',{
     Race :{type : String, required : false},
     Veteran :{type : String, required : false},
     Disability :{type : String, required : false},
-    appliedDate : {type : Date, required: false}
+    appliedDate : {type : Date, required: false},
+    postingDate : {type : Date, required: false}
 });
 module.exports = {Applications};

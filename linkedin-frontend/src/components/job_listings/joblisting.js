@@ -20,7 +20,8 @@ class JobListing extends Component {
             customApply : false,
             easyApply : false,
             error : null,
-            saveApplyJobMessage : null
+            saveApplyJobMessage : null,
+            previoustime : new Date()
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -29,8 +30,7 @@ class JobListing extends Component {
         this.easyApply = this.easyApply.bind(this);
     }
 
-    componentDidMount(){
-
+    componentWillMount(){
         const url = BASE_URL+"/jobs/search";
         axios.get(url).then((response)=>{
             const {status} = response;
@@ -46,7 +46,6 @@ class JobListing extends Component {
     }
 
     async saveJob(position){
-
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
         const data = {
@@ -54,9 +53,11 @@ class JobListing extends Component {
             "jobTitle" : posting.JobTitle,
             "jobLocation" : posting.JobLocation,
             "applicant_id" :this.props.user._id,
-            "email" :posting.Email,
+            "RecruiterEmail" :posting.Email,
+            "Email" :this.props.user.email,
             "companyLogo" : posting.CompanyLogo,
-            "easyApply" : posting.easyApply
+            "easyApply" : posting.easyApply,
+            "postingDate" : posting.postingDate
         };
 
         try {
@@ -88,10 +89,130 @@ class JobListing extends Component {
         console.log("in easy apply of joblistings");
         console.log(data);
         console.log(position);
+        const posting = this.state.postings[position];
+        /*
+        {
+            "_id": "5bef8b0f212f417c61a2ef2b",
+            "CompanyName": "LinkedIn",
+            "Email": "recruiter@gmail.com",
+            "recruiterName": "Beth Andre",
+            "CompanyLogo": "https://img.icons8.com/color/200/5e6d77/linkedin.png",
+            "JobTitle": "Software Engineer",
+            "jobFunction": "Data Analytics",
+            "easyApply": false,
+            "JobLocation": "San Jose,California",
+            "numberofApplicants": 0,
+            "seniorityLevel": "Entry Level",
+            "description": "Design and build high performance tolerant and scalable applications using azure services\nDesign and build high performance tolerant and scalable applications using azure services\nDesign and build high performance tolerant and scalable applications using azure services\nDesign and build high performance tolerant and scalable applications using azure servicesDesign and build high performance tolerant and scalable applications using azure services",
+            "postingDate": "2018-10-14",
+            "employmentType": "Full Time",
+            "industryType": "Information Technology",
+            "experience": 2,
+            "budget": 90
+        },
+        */
+       const dataToBeSent = {
+        CompanyName : posting.CompanyName,
+        JobTitle : posting.JobTitle,
+        JobLocation : posting.JobLocation,
+        Applicant_id : this.props.user._id,
+        Email :data.email,
+        RecruiterEmail : posting.Email,
+        Applied :true,
+        Saved : false,
+        easyApply : true,
+        First_name : data.firstname,
+        Last_name : data.lastname,
+        postingDate : posting.postingDate,
+        CompanyLogo : posting.CompanyLogo
+    }
+
+        if(data.file != null){
+
+            const url = `${BASE_URL}/jobs/easyapplywithfile/${posting._id}`;
+            const config= { headers:{ 'Content-Type':'multipart/form-data' } };
+
+            const timestamp = new Date().getTime();
+            const resumeName = "http://localhost:3001/resumeFolder/"+this.props.user._id+"/"+timestamp+"-"+data.file.name;
+            const newDataToBeSent = Object.assign({},dataToBeSent,{resume:resumeName});
+
+            let formData = new FormData();
+            formData.set("savejob",JSON.stringify(newDataToBeSent));
+            formData.set("files",data.file);
+
+            console.log(newDataToBeSent);
+            axios.post(url,formData,config).then((response)=>{
+                if(response.status === 200){
+                    this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                }else{
+                    this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
+                }
+        }).catch((error)=>{
+            this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
+        })
+
+
+        }else{
+            const url = `${BASE_URL}/jobs/easyapply/${posting._id}`;
+            /*
+            const dataToBeSent = {
+                CompanyName : posting.CompanyName,
+                JobTitle : posting.JobTitle,
+                JobLocation : posting.JobLocation,
+                Applicant_id : this.props.user._id,
+                Email :data.email,
+                RecruiterEmail : posting.Email,
+                Applied :true,
+                Saved : false,
+                easyApply : true,
+                First_name : data.firstname,
+                Last_name : data.lastname,
+                resume : this.props.user.resume_path[parseInt(data.existingresume)]
+            }*/
+            const newDataToBeSent = Object.assign({},dataToBeSent,{resume : this.props.user.resume_path[parseInt(data.existingresume)]});
+
+            axios.post(url,newDataToBeSent).then((response)=>{
+                    if(response.status === 200){
+                        this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                    }else{
+                        this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
+                    }
+            }).catch((error)=>{
+                this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
+            })
+        }
     }
 
     jobPostCardClicked(position){
         this.setState({selectedIndex : position});
+        const obj = this.state.postings[position]
+        localStorage.setItem("RECRUITERNAME",obj.recruiterName)
+        var url = 'http://localhost:3001/userdata/job'
+        fetch(url, {
+          method: 'post',
+          credentials : 'include',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            Company: obj.CompanyName,
+            JobTitle: obj.JobTitle,
+            recruiterName: obj.recruiterName
+           })
+        })
+        .then(response => response.json())
+        .then(poststatus => {
+          console.log(poststatus)
+          if(poststatus === "Tracked Successfully")
+          {
+            alert("Click Tracked")  
+          }
+          else
+          {
+            alert("Click Not Tracked")
+          }
+      })
+
+
+
     }
 
     _onMessageWasSent(message) {
@@ -113,7 +234,9 @@ class JobListing extends Component {
       }
 
     render() {
-        
+      if(this.props.jobSearch.joblistings!=null && this.props.jobSearch.joblistings != undefined && this.props.jobSearch.joblistings.length!=0 && this.props.jobSearch.joblistings!=[]) {
+          this.state.postings = this.props.jobSearch.joblistings
+      }
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
@@ -148,6 +271,7 @@ class JobListing extends Component {
                     <div className={descriptionClassName}>
                         {jobdescription}
                         {launcher}
+                        &nbps;&nbps;&nbps;<p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
                     </div>
                     <div className="col-md-1"></div>
                 </div>
@@ -160,7 +284,9 @@ class JobListing extends Component {
 
 const mapStateToProps = (state) =>{
     return {
-        user : state.LoginReducer.currentUserDetails
+        user : state.LoginReducer.currentUserDetails,
+        jobSearch : state.LoginReducer.jobSearch,
+        jobSearchCriteria : state.LoginReducer.jobSearchCriteria
     }
 }
 

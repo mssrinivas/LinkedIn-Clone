@@ -167,6 +167,7 @@ debugger
                   <br></br>
                   <h5 className="profile-area">{this.props.clickedUserDetails.city!=null? this.props.clickedUserDetails.address : "Please tell us where you stay"}</h5>
 {connectButton}
+                  <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Connections</button>
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>

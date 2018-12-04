@@ -6,3 +6,13 @@ navbar-input {
   height: 34px;
   background-color: #e1e9ee;
 }
+.select-box{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
+  width:200px;
+  height: 30px;
+  margin-top: -200px;
+  border-radius: 1px;
+}

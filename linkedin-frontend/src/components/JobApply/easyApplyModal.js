@@ -33,7 +33,8 @@ class easyApplyModal extends Component {
         </div>
         </div>
       <div class="modal-footer d-flex justify-content-center">
-      <button className="but" data-dismiss="modal" >Cancel</button>
+      {/* <button className="but" data-dismiss="modal" >Cancel</button> */}
+      <button type="button" className="but" data-dismiss="modal">Cancel</button>
       <button className="but" type="submit">Submit Application</button>
       </div>
     </div>
