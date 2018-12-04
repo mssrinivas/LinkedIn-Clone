@@ -45,7 +45,7 @@ class UserInfoCard extends Component {
   <div class="container">
 <center> 
     <b ><a style={{fontSize: "100%", color:"black"}} href="#" >{this.props.firstname} {this.props.lastname}</a></b> 
-    <p style={{margin:"auto"}}>Architect & Engineer</p> 
+    <p style={{margin:"auto"}}>{this.props.headline}</p> 
     </center> 
   </div>
   

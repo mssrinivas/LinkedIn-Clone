@@ -12,45 +12,41 @@ var {Notification}=require('../models/notification');
 //io.listen(3000)
 
 
-// router.get('/listallconnections', function(req, res, next) {
-// console.log("listallconnections request",req.query.email )
-// var list=[];
-// User.find({
-// email:{$ne:req.query.email }
-// }, function(err, users) {
-// //var emailuser = req.query.email;
-// User.find({
-// 	email:{$eq:req.query.email }
-// 	}, function(err, userone) {
-// 		users.map(user=>{
-// 		//	console.log("connections",userone.connections.length)
-// 			console.log("user--->",userone[0])
-// 			console.log(user)
-// 			if(userone[0].connections.length) //all connection
-// 			{
-// 			for(var i=0;i<userone[0].connections.length;i++) //for all conn
-// 			{
-// 				console.log("Coming Here")
-// 				if(user.email!=userone[0].connections[i].email) // if not in conection
-// 				{ console.log("if starts***********************")
-// 					list.push(user);
-// 					console.log("if end***********************")
-// 				}
-// 			}}
+router.get('/listallconnections', function(req, res, next) {
+console.log("listallconnections request",req.query.email )
+var list=[];
+User.find({
+email:{$ne:req.query.email }
+}, function(err, users) {
+//var emailuser = req.query.email;
+User.find({
+	email:{$eq:req.query.email }
+	}, function(err, userone) {
+		users.map(user=>{
+		//	console.log("connections",userone.connections.length)
+			console.log("user--->",userone[0])
+			console.log(user)
+			if(userone[0].connections.length) //all connection
+			{
+			for(var i=0;i<userone[0].connections.length;i++) //for all conn
+			{
+			
+				if(user.email!=userone[0].connections[i].email) // if not in conection
+				{ 
+					list.push(user);
+				}
+			}}
 
-// 			else{
-// 				console.log("In ELSE")
-// 				list.push(user)
-// 				console.log("------------")
-// 				console.log(list)
-// 				console.log("------------")
-// 			}
-// 	})
-// 	console.log("before sending response is ",list)
-// 	res.status(200).json({responseData:list});
-// })
-// });
-// });
+			else{	
+				list.push(user)		
+				console.log(list)
+			}
+	})
+	console.log("before sending response is ",list)
+	res.status(200).json({responseData:list});
+})
+});
+});
 
 
 

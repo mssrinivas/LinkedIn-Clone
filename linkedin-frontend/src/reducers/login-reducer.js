@@ -90,9 +90,11 @@ export default function (state = initialState, action) {
             })
             case 'JOBSEARCH_FIELD_ACTIVITY':
               console.log("Search Field activity: ", action.data);
-              return Object.assign({}, state, {
-              jobSearchCriteria:action.data
-            })
+              // return Object.assign({}, state, {
+              // jobSearchCriteria:action.data
+              const newJobSearchCriteriaFromNavbar = Object.assign({},state.jobSearchCriteria,{CompanyName:action.data.CompanyName});
+              //return Object.assign({}, state, {jobSearchCriteria:action.data})
+              return Object.assign({},state,{jobSearchCriteria : newJobSearchCriteriaFromNavbar});
             case 'JOBTITLE_UPDATE_ACTIVITY':
               console.log("Job title Field : ", action.data);
               return Object.assign({}, state, {
@@ -123,8 +125,14 @@ export default function (state = initialState, action) {
 
             case UPDATED_JOB_SEARCH_CRITERIA :
                  console.log("Inside updated search job criteria")
-                 console.log(action.payload);
-                 return Object.assign({},state,{jobSearchCriteria:action.payload })
+                 const newJobSerachCriteriaFromSearchBar = Object.assign({},state.jobSearchCriteria,{
+                  date : action.payload.date,//YYYY-MM-DD
+                  seniorityLevel : action.payload.seniorityLevel,
+                  location : action.payload.location
+                 });
+                 //return Object.assign({},state,{jobSearchCriteria:action.payload })
+                 return Object.assign({},state,{jobSearchCriteria:newJobSerachCriteriaFromSearchBar});
+
 
             case ADD_JOB_ID_TO_APPLIED_JOB :
                  console.log("Job add redux");

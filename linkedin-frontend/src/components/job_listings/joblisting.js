@@ -284,13 +284,13 @@ class JobListing extends Component {
         var searchCriteria = this.props.searchCriteria;
 
         /*  Filtering list */
-        const CompanyNameFilter = searchCriteria.CompanyName==null ? "" : searchCriteria.CompanyName;
-        const postingDateFilter = searchCriteria.date==null ? "" : searchCriteria.date;
-        const seniorityLevelFilter = searchCriteria.seniorityLevel==null ? "" : searchCriteria.seniorityLevel;
-        const locationFilter = searchCriteria.location==null ? "" : searchCriteria.location;
+        const CompanyNameFilter = (searchCriteria.CompanyName==null || searchCriteria.CompanyName==undefined) ? "" : searchCriteria.CompanyName;
+        const postingDateFilter = (searchCriteria.date==null || searchCriteria.date==undefined) ? "" : searchCriteria.date;
+        const seniorityLevelFilter = (searchCriteria.seniorityLevel==null || searchCriteria.seniorityLevel==undefined) ? "" : searchCriteria.seniorityLevel;
+        const locationFilter = (searchCriteria.location==null || searchCriteria.location==undefined) ? "" : searchCriteria.location;
 
-        console.log("Printing filtering criterias");
-        console.log(CompanyNameFilter,postingDateFilter,seniorityLevelFilter,locationFilter);
+        //console.log("Printing filtering criterias");
+        //console.log(CompanyNameFilter,postingDateFilter,seniorityLevelFilter,locationFilter);
 
         /*
         const newPostings = postings.filter((post)=>{
@@ -333,13 +333,13 @@ class JobListing extends Component {
         var seniorityLevelFilterResult = true;
         var locationFilterResult = true;
 
-        if(CompanyNameFilter != ""){
+        if(CompanyNameFilter != "" || CompanyNameFilter != " "){
             const regexCompanyName = new RegExp(CompanyNameFilter,'i');
             companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
-            console.log("Company name regex");
+            //console.log("Company name regex");
         }
 
-        if(postingDateFilter != ""){
+        if(postingDateFilter != "" || postingDateFilter != " "){
             const postDate = new Date(post.postingDate).getTime();
             const filteredDate = new Date(postingDateFilter).getTime();
 
@@ -347,19 +347,24 @@ class JobListing extends Component {
                 postingDateFilterResult = false;
             }
 
-            console.log("Posting Date regex");
+           // console.log("Posting Date regex");
         }
 
-        if(seniorityLevelFilter != ""){
+        if(seniorityLevelFilter != "" || seniorityLevelFilter != " "){
             const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
             seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
-            console.log("Seniority level regex");
+            //console.log("Seniority level regex");
         }
 
-        if(locationFilter != ""){
+        if(locationFilter != "" || locationFilter != " "){
             const regexLocationFilter = new RegExp(locationFilter,'i');
             locationFilterResult = regexLocationFilter.test(post.JobLocation);
-            console.log("Location regex");  
+            //console.log("state :"+post.state);
+            if(!(post.State==null || post.State==undefined || post.State=="" || post.State==" ")){
+                locationFilterResult = locationFilterResult || regexLocationFilter.test(post.State)
+                //console.log("state filter regex :" + regexLocationFilter.test(post.State));
+            }
+            //console.log("Location regex");  
         }
 
         const cond = (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
@@ -422,6 +427,7 @@ class JobListing extends Component {
 
 const mapStateToProps = (state) =>{
     console.log("In map state to props of job listings");
+    console.log("search criteria");
     console.log(state.LoginReducer.jobSearchCriteria);
     return {
         user : state.LoginReducer.currentUserDetails,

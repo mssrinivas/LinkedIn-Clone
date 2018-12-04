@@ -102,6 +102,9 @@ debugger
         console.log("Matched friends")
         connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>You are Friends</button>
       }
+      else if(this.props.clickedUserDetails.email==this.props.currentUser){
+        connectButton=null;
+      }
       else{
         connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
       }
@@ -118,6 +121,9 @@ debugger
         console.log("already send freind request")
         connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>Reuqested Connection</button>
       }
+      else if(this.props.clickedUserDetails.email==this.props.currentUser){
+        connectButton=null;
+      }
     }
     }
    if(pendingUsers.length>0){
@@ -130,21 +136,16 @@ debugger
           console.log("already send freind request")
           connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>Pending Request</button>
         }
+        else if(this.props.clickedUserDetails.email==this.props.currentUser){
+          connectButton=null;
+        }
+        else{
+          connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
+        }
       }
       }
-      // else{
-      //   connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
-      // }
-    
-   
   }
-//     for(var i=0;i<friends.length;i++)
-//     {
-//     if(!friends[i].email==this.props.clickedUserDetails.email){
-//     console.log("No friends")
-    
-//   }
-// }
+
     return (
     		 <div>
           <Navbar />

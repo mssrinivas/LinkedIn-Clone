@@ -99,7 +99,7 @@ loadPendingInvitations(){
 
                   <div className="col-md-4">
                   <b>{user.first_name} {user.last_name}</b>
-                  <p>Actively Seeking Internhsip Opportunities</p>
+                  <p>{user.headline}</p>
                   </div>
 
                   <div className="col-md-5" >

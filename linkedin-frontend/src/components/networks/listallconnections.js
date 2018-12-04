@@ -55,7 +55,7 @@ class listallconnections extends Component {
     userlist = this.state.data.map(user => {
       console.log("USER-->",user)
       return(
-          <UserInfoCard email={user.email} firstname={user.first_name} lastname={user.last_name}></UserInfoCard>
+          <UserInfoCard email={user.email} firstname={user.first_name} lastname={user.last_name} headline={user.headline}></UserInfoCard>
       )
     })
   }
@@ -66,8 +66,8 @@ class listallconnections extends Component {
       <div class="col-lg-4">
       <div class="cardneha" style={{width: "19%",height: "50%",position: "fixed", marginTop:"4%"}}>
   <h3 style={{textAlign:"center"}}><span style={{fontSize: "30px",color:"#0084bf"}}>{this.state.count}</span></h3>
- <b style={{textAlign:"center"}}> <span>Your connections</span></b>
-  <Link to="/mynetwork/connections" style={{cursor:"pointer",margin:"auto", color:"#0084bf"}}>see all</Link>
+ <div><center><b style={{textAlign:"center"}}> Your connections</b></center></div>
+ <center><Link to="/mynetwork/connections" style={{cursor:"pointer",margin:"auto", color:"#0084bf"}}>see all</Link></center>
 </div>
       </div>
       <div class="col-lg-8">

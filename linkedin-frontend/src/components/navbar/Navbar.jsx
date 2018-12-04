@@ -19,7 +19,7 @@ class Navbar extends Component {
     super();
     this.userDetails={};
     this.state = {
-      first_name: "",
+      CompanyName: "",
       search_filter:"",
       JobLocation:null,
       postingDate:null,
