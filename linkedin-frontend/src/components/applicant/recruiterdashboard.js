@@ -12,6 +12,7 @@ import {history} from "../../util/utils";
 import {jobtitleUpdate} from './../../api/Api';
 import Chart from './chart.js';
 import axios from 'axios';
+import '../RecruiterDashboard/RecruiterDashboard.css'
 
 class RecruiterDashBoard extends Component {
   constructor(props) {
@@ -486,6 +487,9 @@ getArrayData() {
     return (
             <div>
               <Navbar />
+              <div class="HeadingClass">
+                <p>Dashboard</p>
+               </div>
               <label className="login-label"> Job Title</label><br></br>
               <select className="title-graph" onChange={this.cityHandler}
                      name="UserType">
@@ -516,9 +520,7 @@ getArrayData() {
                       </div>
                   </div>
                   <div>
-                      <div class="HeadingClass">
-                        <p>Dashboard</p>
-                       </div>
+
                     <Chart
                       chartData={this.state.jobData}
                       savedJobData={this.state.savedJobData}

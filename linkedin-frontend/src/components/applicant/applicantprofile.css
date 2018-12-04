@@ -438,7 +438,7 @@
 }
 .header-graph1{
   margin-left: 0px;
-  margin-top: 10px;
+  margin-top: -10px;
   background-color: white;
   background: transparent
 }
@@ -449,12 +449,15 @@
   background: transparent;
   padding-left: 30px;
   margin-left: 30px;
+  padding-bottom: 10px;
 }
 .car-graph-4{
   width :1000px;
   height: 500px;
+  margin-top: -10px;
   background-color: white;
-  background: transparent
+  background: transparent;
+    padding-bottom: 10px;
 }
 .chart{
   margin-top: 10px;

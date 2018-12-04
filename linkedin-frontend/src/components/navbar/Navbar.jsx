@@ -400,6 +400,7 @@ class Navbar extends Component {
               </div>
             </span>
           </span>
+          {this.props.currentUserDetails.recruiter_flag != 0 ?
           <Link to="/postjob">
             <div
               style={{
@@ -431,7 +432,8 @@ class Navbar extends Component {
                 </div>
               </span>
             </div>
-          </Link>
+          </Link>:''
+        }
           {this.props.currentUserDetails.recruiter_flag != 0 ?
           <Link to="/recruiterdashboard">
             <div onClick={this.clickSearch}
