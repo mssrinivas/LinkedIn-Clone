@@ -38,14 +38,14 @@ class JobListing extends Component {
         console.log("inside cdm")
         console.log(url);
         axios.get(url).then((response)=>{
-                        
+
             if(response.status===200){
                 console.log("in response");
                 const listings = response.data.joblistings;
 
                 const {applied_job,saved_job} = this.props.user;
                 const notShowJobs = [].concat(applied_job,saved_job,this.state.applied_job,this.state.saved_job);
-                
+
 
                 console.log("not show jobs :"+JSON.stringify(notShowJobs));
 
@@ -97,7 +97,7 @@ class JobListing extends Component {
             }else{
                 this.setState({saveApplyJobMessage:null,error:"We could not save the job"});
             }
-            
+
         } catch (error) {
             //alert("Could not connect to db");
             this.setState({saveApplyJobMessage:null,error : "Could not connect to db"});
@@ -174,13 +174,13 @@ class JobListing extends Component {
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){
-                    
+
                     const a = this.state.applied_job;
                     a.push(posting._id);
                     this.setState({saveApplyJobMessage:"Successfully applied for job",error:null,applied_job:a});
                     //alert("Job applied successfully")
                     //this.props.addJobIdToAppliedJob(posting._id);
-                    
+
                 }else{
                     this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
                 }
@@ -244,7 +244,7 @@ class JobListing extends Component {
           console.log(poststatus)
           if(poststatus === "Tracked Successfully")
           {
-            alert("Click Tracked")  
+              console.log("Click Tracked")
           }
           else
           {
@@ -275,11 +275,11 @@ class JobListing extends Component {
       }
 
     render() {
-      
+
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
-        
+
         var {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage,saved_job,applied_job} = this.state;
         var searchCriteria = this.props.searchCriteria;
 
@@ -301,20 +301,20 @@ class JobListing extends Component {
 
             if(CompanyNameFilter != ""){
                 const regexCompanyName = new RegExp(CompanyNameFilter,'i');
-                companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+                companyNameFilterResult = regexCompanyName.test(post.CompanyName);
                 console.log("Company name regex");
             }
 
             if(seniorityLevelFilter != ""){
                 const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
-                seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+                seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);
                 console.log("Seniority level regex");
             }
 
             if(locationFilter != ""){
                 const regexLocationFilter = new RegExp(locationFilter,'i');
                 locationFilterResult = regexLocationFilter.test(post.JobLocation);
-                console.log("Location regex");  
+                console.log("Location regex");
             }
 
             return (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
@@ -323,11 +323,11 @@ class JobListing extends Component {
         */
 
         const newPostings = postings.map((post,index)=>{
-        
+
         if(applied_job.includes(post._id) || saved_job.includes(post._id)){
             return false;
-        }    
-        
+        }
+
         var companyNameFilterResult = true;
         var postingDateFilterResult = true;
         var seniorityLevelFilterResult = true;
@@ -335,7 +335,7 @@ class JobListing extends Component {
 
         if(CompanyNameFilter != "" || CompanyNameFilter != " "){
             const regexCompanyName = new RegExp(CompanyNameFilter,'i');
-            companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+            companyNameFilterResult = regexCompanyName.test(post.CompanyName) || regexCompanyName.test(post.JobTitle);
             //console.log("Company name regex");
         }
 
@@ -352,7 +352,7 @@ class JobListing extends Component {
 
         if(seniorityLevelFilter != "" || seniorityLevelFilter != " "){
             const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
-            seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+            seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);
             //console.log("Seniority level regex");
         }
 
@@ -364,7 +364,7 @@ class JobListing extends Component {
                 locationFilterResult = locationFilterResult || regexLocationFilter.test(post.State)
                 //console.log("state filter regex :" + regexLocationFilter.test(post.State));
             }
-            //console.log("Location regex");  
+            //console.log("Location regex");
         }
 
         const cond = (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
@@ -384,7 +384,7 @@ class JobListing extends Component {
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} onEasyApply={this.easyApply} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
-        
+
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
 
@@ -407,14 +407,14 @@ class JobListing extends Component {
                                 return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} show={true}/>);
                             })
                             */
-                            
+
                            newPostings
                         }
                     </div>
                     <div className={descriptionClassName}>
                         {jobdescription}
                         {launcher}
-                        &nbps;&nbps;&nbps;<p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
+                        &nbsp;&nbsp;<p>{localStorage.getItem("RECRUITERNAME")}</p>
                     </div>
                     <div className="col-md-1"></div>
                 </div>

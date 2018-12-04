@@ -32,9 +32,9 @@ class JobPostings extends Component {
         Experience : 0,
         ZipCode: null,
         Degree : [],
-        Budget : 15,
+        Budget : 0,
         EmploymentType : "",
-        RecruiterName : "Srinivas",
+        RecruiterName : "",
         PostingDate : "",
         EasyApply : null,
         RedirecttoDescription: true,
@@ -198,23 +198,23 @@ SliderChangeBudget = (value) => {
       console.log(poststatus)
       if(poststatus === "Applied successfully")
       {
-        swal("Job Posted successfully!", " ", "success");  
+        swal("Job Posted successfully!", " ", "success");
       }
       else
       {
         swal("Job couldn't be posted due to errors!"," ", "failure");
       }
-    
+
   })
     }
-  } 
+  }
 
   render ()
   {
     let Redirecty = null;
     if(this.state.RedirecttoDescription === true)
     {
-        Redirecty = (<JobDescription 
+        Redirecty = (<JobDescription
         Company = {this.state.Company}
         JobTitle = {this.state.JobTitle}
         Location = {this.state.Location}
@@ -234,24 +234,24 @@ SliderChangeBudget = (value) => {
 
     if(this.state.RedirecttoQualification === true)
     {
-      Redirecty = (<JobQualifications 
-        Skills = {this.state.Skills} 
+      Redirecty = (<JobQualifications
+        Skills = {this.state.Skills}
         Experience = {this.state.Experience}
         Degree = {this.state.Degree}
         Change = {this.inputHandler}
         SliderChangeExperience = {this.SliderChangeExperience}
         descriptionstarttime  = {this.state.descriptionstarttime}
         />)
-    } 
+    }
 
      if(this.state.RedirecttoBudget === true)
     {
-        // Redirecty = (<JobBudget 
+        // Redirecty = (<JobBudget
         // Budget = {this.state.Budget}
         // Change = {this.inputHandler}
         // SliderChangeBudget = {this.SliderChangeBudget}
         // />)
-        Redirecty =  <JobBudget 
+        Redirecty =  <JobBudget
           Budget = {this.state.Budget}
           Change = {this.inputHandler}
           SliderChangeBudget = {this.SliderChangeBudget}
@@ -260,11 +260,11 @@ SliderChangeBudget = (value) => {
     }
     const { steps, currentStep } = this.state;
     const buttonStyle = { width: 200, padding: 16, textAlign: 'center', margin: '0 auto', marginTop: 32 };
-    return (    
+    return (
             <div>
-            {<Navigation />}   
+            {<Navigation />}
             <Stepper steps={ steps } activeStep={ currentStep }/>
-            <div class ="addtexttocenter"> 
+            <div class ="addtexttocenter">
             </div>
             {Redirecty}
             <div style={ buttonStyle } >

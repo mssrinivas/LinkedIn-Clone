@@ -35,6 +35,7 @@ import PieGraph from './graph/pie.js';
 class Main extends Component {
     render(){
         localStorage.setItem("counter",0)
+        localStorage.setItem("RECRUITERNAME","");
         return(
             <Provider store={store}>
             <Router history={history}>
