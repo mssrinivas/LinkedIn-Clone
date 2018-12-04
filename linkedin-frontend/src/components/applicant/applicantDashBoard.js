@@ -117,6 +117,10 @@ clickSearch =(e) => {
   this.props.recuriterDashBoardSearch(this.userDetails);
 }
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     return (
             <div>
               <Navbar />

@@ -78,7 +78,7 @@ class UserListCard extends Component {
         console.log("Value passed: ", data.first_name);
         var image_path="";
         if(data.profile_img!=null && data.profile_img!=undefined) {
-            image_path ="http://localhost:3001/uploads/"+data.applicant_id+".jpeg"
+            image_path =`${BASE_URL}/uploads/`+data.applicant_id+".jpeg"
         }
         else {
             image_path ="http://www.socialbiblio.com/sites/default/files/expertos/persona2.png"

@@ -17,6 +17,7 @@ import Navbar from './../navbar/Navbar.jsx';
 import Experience from './experience'
 import ResumeView from './resumeview'
 import {history} from "../../util/utils";
+import {BASE_URL} from './../../components/constants/constants.js';
 
 class UserProfile extends Component {
   constructor(props){
@@ -69,8 +70,8 @@ class UserProfile extends Component {
         skills: this.props.currentUserDetails.skills,
         status: this.props.currentUserDetails.status,
         student_flag: (this.props.currentUserDetails.student_flag!=1 ? false : true),
-        profileResume:"http://localhost:3001/resumeFolder/"+this.props.currentUserDetails.applicant_id,
-        profileImage:"http://localhost:3001/uploads/"+this.props.currentUserDetails.applicant_id+".jpeg",
+        profileResume:`${BASE_URL}/resumeFolder/`+this.props.currentUserDetails.applicant_id,
+        profileImage:`${BASE_URL}/uploads/`+this.props.currentUserDetails.applicant_id+".jpeg",
       }
     }
    handleSave=(e)=> {
@@ -78,7 +79,7 @@ class UserProfile extends Component {
       this.userDetails.status = 'Active';
       this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
       this.userDetails.student_flag = (this.props.currentUserDetails.student_flag!=1 ? false : true);
-      this.userDetails.profileResume= "http://localhost:3001/resumeFolder/"+this.props.currentUserDetails.applicant_id+"/"+this.userDetails.resumeName;
+      this.userDetails.profileResume= `${BASE_URL}/resumeFolder/`+this.props.currentUserDetails.applicant_id+"/"+this.userDetails.resumeName;
       if(this.state.file && this.state.image) {
         this.props.profileUpdate(this.userDetails);
       }
@@ -99,7 +100,7 @@ class UserProfile extends Component {
              "content-type" : "multipart/form-data"
            }
          }
-         axios.post('http://localhost:3001/uploadResume/uploadresume',fd,contentType)
+         axios.post(`${BASE_URL}/uploadResume/uploadresume`,fd,contentType)
            .then(res=> {
              console.log("Response here: ", res);
              this.message=res.data.message
@@ -126,7 +127,7 @@ class UserProfile extends Component {
        "content-type" : "multipart/form-data"
      }
    }
-   axios.post('http://localhost:3001/users/uploadprofilepic',fd,contentType)
+   axios.post(`${BASE_URL}/users/uploadprofilepic`,fd,contentType)
      .then(res=> {
        console.log("Response here: ", res);
        this.message=res.data.message;
@@ -155,6 +156,10 @@ class UserProfile extends Component {
  }
 
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let resume="";
     let workdetails="Working professional with experience of :" +this.userDetails.experience;
     if(this.props.currentUserDetails.resume_path!=null || this.props.currentUserDetails.resume_path!=undefined) {
@@ -343,7 +348,7 @@ class UserProfile extends Component {
                   <a className="connection-link"> See Connection</a>
                   <br></br>
                   <h5 className="profile-area">{this.props.currentUserDetails.city!=null? this.props.currentUserDetails.address : "Please tell us where you stay"}</h5>
-                  
+
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>

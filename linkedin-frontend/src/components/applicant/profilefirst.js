@@ -14,6 +14,8 @@ import axios from 'axios';
 import {profileUpdate} from './../../api/Api';
 import Navbar from './../navbar/Navbar.jsx';
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
+import {history} from "../../util/utils";
+import {BASE_URL} from './../../components/constants/constants.js';
 
 class UserProfileFirst extends Component {
   constructor(props) {
@@ -86,7 +88,7 @@ class UserProfileFirst extends Component {
             "content-type" : "multipart/form-data"
           }
         }
-        axios.post('http://localhost:3001/users/uploadprofilepic',fd,contentType)
+        axios.post(`${BASE_URL}/users/uploadprofilepic`, fd,contentType)
           .then(res=> {
             console.log("Response here: ", res);
             this.message=res.data.message
@@ -95,7 +97,7 @@ class UserProfileFirst extends Component {
 }
 onClickUpload = () => {
       this.setState({
-          profile_img: 'http://localhost:3001/users/uploadprofilepic/'+this.props.currentUserDetails.applicant_id
+          profile_img: `${BASE_URL}/uploads`+this.props.currentUserDetails.applicant_id
       });
   }
 onClickEmail  = () => {
@@ -110,12 +112,16 @@ onSubmitClick(e) {
   this.userDetails.last_name = this.props.currentUserDetails.user_Details.last_name;
   this.userDetails.email = this.props.currentUserDetails.user_Details.email;
   this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
-  this.userDetails.profile_img = 'http://localhost:3001/uploads/'+this.props.currentUserDetails.applicant_id+".jpeg";
+  this.userDetails.profile_img = `${BASE_URL}/uploads`+this.props.currentUserDetails.applicant_id+".jpeg";
   this.userDetails.student_flag = this.state.student_flag;
   this.props.profileUpdate(this.userDetails);
 }
   render ()
   {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     const buttonStyle = { width: 200, padding: 16, textAlign: 'center', margin: '0 auto', marginTop: 32 };
     let Studentcheck = null;
     let Communitycheck = null;

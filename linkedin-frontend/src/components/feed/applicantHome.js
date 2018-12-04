@@ -4,10 +4,15 @@ import color from '@material-ui/core/colors/green';
 import Navbar from './../navbar/Navbar.jsx';
 import LinkedInLogo1 from "./linkedin_logo_1.png";
 import { connect } from "react-redux";
+import {history} from "../../util/utils";
 class applicantHome extends Component {
     state = {  }
-    render() { 
-        return ( 
+    render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
+        return (
             <div className="backC">
             <Navbar />
             {/* left div */}
@@ -46,16 +51,16 @@ class applicantHome extends Component {
             <div className="centralDiv">
                 <div style={{height:'100px','background-color':'white', 'border-radius':'2px', 'box-shadow': '0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2)'}}>
                    <br/><p style={{"margin-left":"20px"}}>Share an article, photo, video or idea</p>
-                  
+
                        <button style={{'border-radius':'20px', 'width':'30%', 'height':'30%', 'margin-left':'20px', 'margin-top':'15px'}}>Write an article</button>
                        <button style={{'border-radius':'20px', 'width':'20%', 'height':'30%', 'margin-left':'20px', 'margin-top':'15px'}}>Images</button>
                        <button style={{'border-radius':'20px', 'width':'20%', 'height':'30%', 'margin-left':'20px', 'margin-top':'15px'}}>Videos</button>
-                 
+
                 </div>
                 <div style={{height:'700px','background-color':'white', 'margin-top':'30px', 'box-shadow': '0 0 0 1px rgba(0,0,0,.15), 0 2px 3px rgba(0,0,0,.2)'}}>
                 <img className="leftPhoto1" src="https://media.licdn.com/dms/image/C510BAQEeoSmuF7dMwQ/company-logo_400_400/0?e=1551312000&v=beta&t=1on7vcIQJpRbC6dkUxp0diM--gT9uELMrKKW4szKejg"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span style={{fontSize:'24px'}}>Checkit.net</span>
-                <p className="follow" style={{fontSize:'14px'}}>500 Followers</p> 
+                <p className="follow" style={{fontSize:'14px'}}>500 Followers</p>
                 <br/>
                 <p style={{"margin-left":"16px"}}>How can you improve compliance, visibility and control over your food service</p>
                 <p style={{"margin-left":"16px"}}>daily operations? Find out how digital approaches can help you optimize</p>
@@ -68,7 +73,7 @@ class applicantHome extends Component {
             {/* right div */}
             <div className="rightDiv">
                 <div className="upperLeft">
-                   
+
                     <p style={{"font-size":"14px"}}>What people are talking about now</p><br/>
                     <p style={{"font-size":"13px", "font-weight":"bold"}} >
                         <span style={{"width": "8px","height": "8px","border-radius": "50%", "display": "inline-block","background-color": "#65c3e8","margin-right": "8px", "margin-left": "12px" }} aria-role="presentation"></span>Report: Unilever to buy GSK unit
@@ -80,7 +85,7 @@ class applicantHome extends Component {
                         <span style={{"width": "8px","height": "8px","border-radius": "50%", "display": "inline-block","background-color": "#65c3e8","margin-right": "8px", "margin-left": "12px" }} aria-role="presentation"></span>Another generic EpiPen lands in US
                     </p><br/>
                     <p style={{"font-size":"13px", "font-weight":"bold"}} >
-                        <span style={{"width": "8px","height": "8px","border-radius": "50%", "display": "inline-block","background-color": "#65c3e8","margin-right": "8px", "margin-left": "12px" }} aria-role="presentation"></span>Condé Nast CEO to exit 
+                        <span style={{"width": "8px","height": "8px","border-radius": "50%", "display": "inline-block","background-color": "#65c3e8","margin-right": "8px", "margin-left": "12px" }} aria-role="presentation"></span>Condé Nast CEO to exit
                     </p><br/>
                     <p style={{"font-size":"13px", "font-weight":"bold"}} >
                         <span style={{"width": "8px","height": "8px","border-radius": "50%", "display": "inline-block","background-color": "#65c3e8","margin-right": "8px", "margin-left": "12px" }} aria-role="presentation"></span>More farms make bankruptcy filings
@@ -98,18 +103,18 @@ class applicantHome extends Component {
                     <span style={{"font-size":"13px","margin-left":"40px"}}>Get the Linkedin app</span>&nbsp;&nbsp;&nbsp;&nbsp;
                     <span style={{"font-size":"13px"}}>More</span><br/><br/>
                     <span style={{"font-size":"13px", "margin-left":"10px","font-weight":"bold" }}>Linked</span>
-                    <img 
+                    <img
                      style={{
                 height: 15,
                 marginRight: 20,
               }}
-                    src={LinkedInLogo1}  
+                    src={LinkedInLogo1}
                     alt="linkedin"/>
-             
+
                     <span style={{"font-size":"13px"}}>LinkedIn Corporation © 2018</span>
                 </div>
             </div>
-            
+
             </div>
          );
     }
@@ -117,14 +122,12 @@ class applicantHome extends Component {
 const mapStateToProps = state => {
     return {
         user : state.LoginReducer.currentUserDetails,
-       
+
      };
   };
-  
+
 // function mapDispatchToProps(dispatch) {
 //       return bindActionCreators({ customApplyJob }, dispatch);
 // }
 
 export default connect(mapStateToProps)(applicantHome);
-
-

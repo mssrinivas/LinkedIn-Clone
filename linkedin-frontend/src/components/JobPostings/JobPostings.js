@@ -12,6 +12,7 @@ import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
 import {connect} from 'react-redux';
+import {history} from "../../util/utils";
 //import validatePinCode from '../../util/validation.js';
 import * as VALIDATION from './../../util/validation';
 var swal = require('sweetalert')
@@ -211,6 +212,10 @@ SliderChangeBudget = (value) => {
 
   render ()
   {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let Redirecty = null;
     if(this.state.RedirecttoDescription === true)
     {

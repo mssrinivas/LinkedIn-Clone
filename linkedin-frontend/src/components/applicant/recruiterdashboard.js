@@ -13,6 +13,7 @@ import {jobtitleUpdate} from './../../api/Api';
 import Chart from './chart.js';
 import axios from 'axios';
 import '../RecruiterDashboard/RecruiterDashboard.css'
+import {BASE_URL} from './../../components/constants/constants.js';
 
 class RecruiterDashBoard extends Component {
   constructor(props) {
@@ -109,8 +110,7 @@ getArrayData() {
   var labeltopjobsdata = [];
   var labelalljobs = [];
   var labelalljobsdata = [];
-
-  const url = " http://localhost:3001/getjobs/tenjobs";
+  const url = `${BASE_URL}/getjobs/tenjobs`;
   axios.get(url,{
       params: {
         mail: this.props.currentUserDetails.email
@@ -130,8 +130,7 @@ getArrayData() {
       error => {
       }
     )
-
-    const url_2 = "http://localhost:3001/getjobs/myjobs";
+    const url_2 = `${BASE_URL}/getjobs/myjobs`;
   axios.get(url_2,{
       params: {
         mail: this.props.currentUserDetails.email
@@ -160,9 +159,7 @@ getArrayData() {
       error => {
       }
     )
-
-
-  axios.get("http://localhost:3001/recruiter/getuserclicks",
+  axios.get(`${BASE_URL}/recruiter/getuserclicks`,
   {
     params: {
       mail: this.props.currentUserDetails.first_name + " " + this.props.currentUserDetails.last_name
@@ -192,7 +189,7 @@ getArrayData() {
     }
   )
 
-  axios.get("http://localhost:3001/recruiter/halffilled",{
+  axios.get(`${BASE_URL}/recruiter/halffilled`,{
     params: {
       mail: this.props.currentUserDetails.email
     }}
@@ -222,7 +219,7 @@ getArrayData() {
     }
   )
 
-  axios.get("http://localhost:3001/recruiter/fullfilled",{
+  axios.get(`${BASE_URL}/recruiter/fullfilled`,{
     params: {
       mail: this.props.currentUserDetails.email
     }}).then(
@@ -252,7 +249,7 @@ getArrayData() {
   )
 
     // Saved Jobs
-    axios.get("http://localhost:3001/recruiter/savedjobs",
+    axios.get(`${BASE_URL}/recruiter/savedjobs`,
     {
       params: {
         mail: this.props.currentUserDetails.email
@@ -482,6 +479,10 @@ getArrayData() {
 
 }
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     const set1 = new Set(this.props.applicationDetails);
     var applications = Array.from(set1);
     return (

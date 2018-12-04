@@ -1,5 +1,5 @@
 
-import BASE_URL from './../components/constants/constants.js';
+import {BASE_URL} from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
 import {userSignupAction} from './../actions/index';
@@ -17,7 +17,6 @@ import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
 // export const CUSTOM_APPLY_FAILURE = "custom_apply_failure";
 
-const server_url = process.env.REACT_APP_CONTACTS_API_URL || 'http://localhost:3001';
 
 const headers = {
     'Accept': 'application/json'
@@ -25,7 +24,7 @@ const headers = {
 
 export const userLogin = function(userDetail){
   return (dispatch) => {
-    fetch(`${server_url}/users/login`, {
+    fetch(`${BASE_URL}/users/login`, {
           method: 'POST',
           headers: { ...headers,'Content-Type': 'application/json' },
           body: JSON.stringify(userDetail)
@@ -44,6 +43,7 @@ export const userLogin = function(userDetail){
      }).then(result=>{
          console.log("result",result.loginUser," token :",result.servertoken)
          UTIL.saveServerToken(result);
+         //localStorage.setItem("token",result.server_token)
          console.log("results")
          console.log(result.user_Details);
          dispatch(userLoggedIn(result));
@@ -59,7 +59,7 @@ export const userLogin = function(userDetail){
 };
 export const userSignUp = function(userDetail){
   return (dispatch) => {
-    fetch(`${server_url}/users/signup`, {
+    fetch(`${BASE_URL}/users/signup`, {
           method: 'POST',
           credentials:'include',
           headers: { ...headers,'Content-Type': 'application/json' },
@@ -75,6 +75,7 @@ export const userSignUp = function(userDetail){
      }).then(result=>{
          console.log("result",result," token :",result.servertoken)
          UTIL.saveServerToken(result);
+
          dispatch(userSignupAction(result));
          history.push('/profilefirst');
   }).catch(err => {
@@ -87,7 +88,7 @@ export const userSignUp = function(userDetail){
 export const profileUpdate = function(userDetail){
   return (dispatch) => {
     console.log("User details: ",userDetail);
-    fetch(`${server_url}/users/updateProfile`, {
+    fetch(`${BASE_URL}/users/updateProfile`, {
           method: 'POST',
           credentials:'include',
           headers: { ...headers,'Content-Type': 'application/json' },
@@ -113,9 +114,9 @@ export const profileUpdate = function(userDetail){
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-  
+
     axios.defaults.withCredentials = true;
-    axios.post(`${server_url}/apply/job`, values)
+    axios.post(`${BASE_URL}/apply/job`, values)
         .then(res => {
           console.log("response status : " + res.status);
           if(res.status == 200 && res.data == "Applied successfully"){
@@ -124,7 +125,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 type :  CUSTOM_APPLY_SUCCESS,
                 payload: true
               })
-            } 
+            }
             else if(res.status == 200 && res.data == "Already applied"){
               // dispatch({
               //   type :  CUSTOM_APPLY_FAIL,
@@ -142,7 +143,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //   console.log("User details while sending friend request: " + values.firstname);
 
 //     axios.defaults.withCredentials = true;
-//     axios.post(`${server_url}/user/respondtorequest`, values)
+//     axios.post(`${BASE_URL}/user/respondtorequest`, values)
 //         .then(res => {
 //           console.log("response status : " + res.status);
 //           if(res.status == 200 && res.data == "Applied successfully"){
@@ -159,7 +160,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //   console.log("User details while sending friend request: " + values.firstname);
 
 //     axios.defaults.withCredentials = true;
-//     axios.post(`${server_url}/user/requestconnection`, values)
+//     axios.post(`${BASE_URL}/user/requestconnection`, values)
 //         .then(res => {
 //           console.log("response status : " + res.status);
 //           if(res.status == 200 && res.data == "Applied successfully"){
@@ -171,13 +172,13 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //             }
 //         })
 //  };
- 
+
 
 //  export const SendMessage =  (values) =>  dispatch =>  {
 //   console.log("Message to be added: " + values.Message);
 
 //     axios.defaults.withCredentials = true;
-//     axios.post(`${server_url}/messages/send`, values)
+//     axios.post(`${BASE_URL}/messages/send`, values)
 //         .then(res => {
 //           console.log("response status : " + res.status);
 //           if(res.status == 200){
@@ -192,7 +193,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //   console.log("Conversation initiated: ");
 
 //     axios.defaults.withCredentials = true;
-//     axios.post(`${server_url}/messages/startnew`, values)
+//     axios.post(`${BASE_URL}/messages/startnew`, values)
 //         .then(res => {
 
 //           if(res.status == 200){
@@ -204,7 +205,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //  export const userSearch = function(userDetail){
 //   console.log("Data sent to API:", userDetail);
 //   return (dispatch) => {
-//   fetch(`${server_url}/users/users`, {
+//   fetch(`${BASE_URL}/users/users`, {
 //         method: 'POST',
 //         credentials:'include',
 //         headers: { ...headers,'Content-Type': 'application/json' },
@@ -232,7 +233,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 
   export const userDelete = function(userDetail){
         return (dispatch) => {
-          fetch(`${server_url}/users/updateProfile`, {
+          fetch(`${BASE_URL}/users/updateProfile`, {
                 method: 'POST',
                 credentials:'include',
                 headers: { ...headers,'Content-Type': 'application/json' },
@@ -262,7 +263,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
       export const graphUpdate = function(userDetail){
         console.log("Data sent to API:", userDetail);
             return (dispatch) => {
-              fetch(`${server_url}/users/getTraceData`, {
+              fetch(`${BASE_URL}/users/getTraceData`, {
                     method: 'POST',
                     credentials:'include',
                     headers: { ...headers,'Content-Type': 'application/json' },
@@ -289,7 +290,7 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 export const userSearch = function(userDetail){
     console.log("Data sent to API:", userDetail.search_filter);
     return (dispatch) => {
-    fetch(`${server_url}/users/users`, {
+    fetch(`${BASE_URL}/users/users`, {
           method: 'POST',
           credentials:'include',
           headers: { ...headers,'Content-Type': 'application/json' },
@@ -325,7 +326,7 @@ export const jobSearch = function(userDetail){
 export const onUserClicked = function(userDetail){
     console.log("Data sent to API on user click:", userDetail);
     return (dispatch) => {
-    fetch(`${server_url}/users/getProfile`, {
+    fetch(`${BASE_URL}/users/getProfile`, {
           method: 'POST',
           credentials:'include',
           headers: { ...headers,'Content-Type': 'application/json' },
@@ -352,7 +353,7 @@ export const onUserClicked = function(userDetail){
 export const recuriterDashBoardSearch = function(userDetail){
   console.log("Data sent to API:", userDetail);
       return (dispatch) => {
-        fetch(`${server_url}/applications/getrecruiterdashboard`, {
+        fetch(`${BASE_URL}/applications/getrecruiterdashboard`, {
               method: 'POST',
               credentials:'include',
               headers: { ...headers,'Content-Type': 'application/json' },
