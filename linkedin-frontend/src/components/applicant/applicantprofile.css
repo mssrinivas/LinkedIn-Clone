@@ -198,7 +198,8 @@
   width: 80%;
   background-color: grey;
   opacity: .9;
-  background: url("https://uploads.strikinglycdn.com/static/backgrounds/blurred-bg/53.jpg")
+  background: url("https://previews.123rf.com/images/annaleni/annaleni1605/annaleni160500156/57318371-ley-delgada-l%C3%ADnea-azul-y-sin-fisuras-patr%C3%B3n-de-justicia-dise%C3%B1o-web-site-del-vector-y-fondo-transparente-en-e.jpg");
+  height: 950px;
 }
 .profile-resume{
       border-radius: 1px;
@@ -370,6 +371,12 @@
   margin-left: 50px;
   width: 1000px;
 }
+.table2{
+  background-color: white;
+  margin-left: 50px;
+  width: 1000px;
+  border: 1px solid grey;
+}
 .career-image{
   height: 30px;
   width: 30px;
@@ -378,6 +385,10 @@
 }
 .details{
   margin-left: 10px;
+  font-size: 18px;
+}
+.details1{
+  margin-left: 50px;
   font-size: 18px;
 }
 .card-experience{
@@ -421,4 +432,46 @@
 .user-search{
   margin-left: 200px;
   margin-top: 50px;
+}
+.image-btn{
+  background-color: white;
+  display: inline;
+  background: transparent;
+  border: white;
+}
+.applicantimage-model{
+  width: 300px;
+  height: 200px;
+}
+.card-image{
+  margin-left: 30px;
+  float: left;
+}
+.tile-container{
+  border: white;
+  position: relative;
+  margin-top: 30px;
+  margin-left: 150px;
+  width:60%;
+}
+.message-button{
+  float: right;
+  width: 100px;
+  margin-right: 50px;
+  background-color: white;
+  color: #0073b1;
+  padding-top: 2px;
+  border: 1px solid #0073b1;
+  font-weight: bold;
+  margin-top: -20px;
+  font-size: 16px;
+}
+.user-image{
+  border-radius: 50%;
+  width: 100px;
+  border: 5px solid white;
+  display: float;
+  height: 70px;
+  margin-top: 10px;
+  margin-left: 50px;
 }

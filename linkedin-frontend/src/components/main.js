@@ -22,6 +22,9 @@ import ResumeView from './applicant/resumeview';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
 import Messages from './messages/messages.js';
+import UserVisit from './applicant/uservisit'
+import UserListing from './applicant/userlistings';
+
 class Main extends Component {
     render(){
         return(
@@ -47,6 +50,9 @@ class Main extends Component {
                 <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
                 <Route exact path="/resumes/:filename" component={Resumes} />
+                <Route exact path="/userlisting" component={UserListing} />
+                <Route exact path="/uservisit" component={UserVisit} />
+
             </Switch>
             </Router>
             </Provider>

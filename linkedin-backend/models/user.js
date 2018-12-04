@@ -72,20 +72,7 @@ var userschema = mongoose.Schema({
     profile_img : {
         type : String
     },
-    // connections:[
-    //     {
-    //         connection_name: String,
-    //         connection_email: String,
-    //         experience: String,
-    //         connected: Boolean,
-    //         mutual_connections:[{
-    //             mutual_connection_name: String,
-    //             mutual_connection_email: String,
-    //             mutual_connection_experience: String
-    //         }]
-    //     }
-    // ],
-    
+  
     connections:[
         {
             email:String,
@@ -107,6 +94,8 @@ var userschema = mongoose.Schema({
     ],
     waiting:[
     ],
+
+    
     resume_path: {type : Array, required : false},
     saved_job : {type : Array, required : false},
     applied_job:{type : Array, required : false}

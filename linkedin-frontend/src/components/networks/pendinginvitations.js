@@ -5,14 +5,16 @@ import {connect} from 'react-redux';
 import './listallconnections.css';
 
 class pendinginvitations extends Component {
-  
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
         pending: [],
     };
   this.loadPendingInvitations=this.loadPendingInvitations.bind(this);
+  this.ignoreRequest=this.ignoreRequest.bind(this);
+  this.acceptRequest=this.acceptRequest.bind(this);
 }
+
 
 componentDidMount(){
   console.log("will mount")
@@ -33,7 +35,7 @@ loadPendingInvitations(){
 
  ignoreRequest(email)
  {
-   var self=this;
+  var self=this;
   //e.preventDefault();
   console.log("Ignored....");
   var data={
@@ -51,10 +53,12 @@ loadPendingInvitations(){
           pending:response.data.notifData.pending
         }) }
   })
+  //self.props.onSubmitHandle(data);
+
  }
 
- acceptRequest(email){
- // e.preventDefault();
+ acceptRequest(email) {
+ //e.preventDefault();
  var self=this;
   console.log("Accepted....");
   var data={
@@ -72,7 +76,12 @@ loadPendingInvitations(){
           pending:response.data.notifData.pending
         }) }
   })
+  // self.props.onSubmitHandle(data);
+  // // self.setState({
+  // //   pending:self.props.userNetworks.data.notifData.pending
+  // // }) 
  }
+
 
   render() {
     let pendingInvitations;
@@ -119,13 +128,32 @@ loadPendingInvitations(){
 
 
 
-function mapStateToProps(state) {
+const mapStateToProps = (state)  => {
   console.log("State",state);
     return {
        currentUser: state.LoginReducer.current_user,
        currentUserDetails: state.LoginReducer.currentUserDetails,
-       userProfileDetails: state.LoginReducer.userProfileDetails
+       userProfileDetails: state.LoginReducer.userProfileDetails,
+       //userNetworks: state.LoginReducer.userNetworks
     };
 }
+
+// const mapDispatchStateToProps = dispatch => {
+//  // var self=this;
+//   return {
+//       onSubmitHandle : (data) => {
+//           axios.post('http://localhost:3001/user/respondtorequest', data)
+//           .then((response) => {
+//               // window.location.href = "http://localhost:3000/dashboard";
+//               console.log("resposne is ",response)
+//               if (response.status === 200) {
+//               console.log("response fetched..", response)
+//               dispatch({type: 'RESPOND_TO_FRIEND_REQUEST', payload : response})
+//               }
+//           });
+//       }
+//   }
+// }
+
 
 export default connect(mapStateToProps)(pendinginvitations);

@@ -1,18 +1,23 @@
 import * as UTIL from './../util/utils';
 import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
 import {CUSTOM_APPLY_SAVED_JOB} from './../components/constants/reduxActionConstants';
+import {RESPOND_TO_FRIEND_REQUEST} from './../components/constants/reduxActionConstants';
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
         currentUserDetails:{},
+        clickedUserDetails:{},
         userTraceActivity:[],
         userDetails:{},
         applicant_id:'',
         message:'',
         userSearch:[],
+        jobSearch:[],
+        searchCriteria:'',
         recruiter_flag:false,
         applied : false,
-        customJobPost : {}
+        customJobPost : {},
+        userNetworks:{}
 };
 
 export default function (state = initialState, action) {
@@ -52,10 +57,25 @@ export default function (state = initialState, action) {
               userTraceActivity : action.data.userTraceDetails
             })
             case 'USER_SEARCH_ACTIVITY':
-              console.log("User search activity", action.data.result);
               return Object.assign({}, state, {
               message: action.data.message,
               userSearch : action.data.result
+            })
+            case 'USER_CLICK_ACTIVITY':
+              return Object.assign({}, state, {
+              message: action.data.message,
+              clickedUserDetails : action.data.userDetails
+            })
+            case 'SEARCH_FIELD_ACTIVITY':
+              console.log("Search Field activity: ", action.data);
+              return Object.assign({}, state, {
+              searchCriteria: action.data,
+              userSearch:[]
+            })
+            case 'JOBSEARCH_FIELD_ACTIVITY':
+              console.log("Search Field activity: ", action.data);
+              return Object.assign({}, state, {
+              jobSearch:action.data
             })
             case CUSTOM_APPLY_SUCCESS:
               console.log("Custom apply job reducer");
@@ -73,6 +93,11 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
+            
+            case RESPOND_TO_FRIEND_REQUEST :
+                  console.log("inside friend request ignore or accept");
+                  console.log("payload : " + action.payload)
+                  return Object.assign({},state,{userNetworks:action.payload});
 
           default:
     return state;

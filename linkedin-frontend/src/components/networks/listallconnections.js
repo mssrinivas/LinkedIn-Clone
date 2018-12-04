@@ -47,15 +47,6 @@ class listallconnections extends Component {
   }
   }
 
-  // connectRequest(user){
-  //   console.log("on hover selected",user);
-  //   axios.get("http://localhost:3001/user/requestconnection")
-  //   .then(function (response) {
-  //       console.log("response",response)
-     
-  //   })
-  // }
-
   render() {
     let userlist;
     const {data} = this.state;

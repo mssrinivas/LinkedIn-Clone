@@ -3,9 +3,8 @@ var router = express.Router();
 var { mongoose } = require("./../db/mongoose");
 var { User } = require("./../models/user");
 
-router.post("/users", function(req, res, next) {
-  console.log("Inside Search Post Request", req);
-  User.find()
+router.get("/users", function(req, res, next) {
+  User.find({},null,{limit:10})
     .then(response => {
       console.log("Response from find users", response);
       res.send(response);
@@ -19,3 +18,4 @@ router.post("/users", function(req, res, next) {
 });
 
 module.exports = router;
+
