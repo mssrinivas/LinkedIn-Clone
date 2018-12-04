@@ -67,3 +67,16 @@ export function validateName (name, field) {
 			 return false;
 		 }
 }
+
+
+export function validatePinCode (pincode) {
+  var regex = /^\d{5}(?:[-]\d{4})?$/;
+  var patt = new RegExp(regex);
+  var res= patt.test(pincode);
+  console.log(res);
+  if(res){
+    return res;
+  }else{
+    alert("Pin should only be a 5 digit number");
+  }
+}

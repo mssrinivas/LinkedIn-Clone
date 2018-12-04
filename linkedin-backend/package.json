@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -32,6 +33,7 @@
     "mysql": "^2.16.0",
     "mysql2": "^1.6.1",
     "node-fetch": "^2.2.0",
+    "node-gyp": "^3.8.0",
     "nodemon": "^1.18.5",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",

@@ -23,7 +23,8 @@ class JobListing extends Component {
             error : null,
             saveApplyJobMessage : null,
             saved_job : [],
-            applied_job:[]
+            applied_job:[],
+            previoustime : new Date(),
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -33,7 +34,6 @@ class JobListing extends Component {
     }
 
     componentDidMount(){
-
         const url = BASE_URL+"/jobs/search";
         console.log("inside cdm")
         console.log(url);
@@ -76,10 +76,11 @@ class JobListing extends Component {
             "jobTitle" : posting.JobTitle,
             "jobLocation" : posting.JobLocation,
             "applicant_id" :this.props.user._id,
-            "email" :posting.Email,
+            "RecruiterEmail" :posting.Email,
+            "Email" :this.props.user.email,
             "companyLogo" : posting.CompanyLogo,
             "easyApply" : posting.easyApply,
-            "RecruiterEmail" : posting.Email
+            "postingDate" : posting.postingDate
         };
 
         console.log(data);
@@ -153,7 +154,9 @@ class JobListing extends Component {
         easyApply : true,
         First_name : data.firstname,
         Last_name : data.lastname,
-    } 
+        postingDate : posting.postingDate,
+        CompanyLogo : posting.CompanyLogo
+    }
 
         if(data.file != null){
 
@@ -163,11 +166,11 @@ class JobListing extends Component {
             const timestamp = new Date().getTime();
             const resumeName = "http://localhost:3001/resumeFolder/"+this.props.user._id+"/"+timestamp+"-"+data.file.name;
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume:resumeName});
-            
+
             let formData = new FormData();
             formData.set("savejob",JSON.stringify(newDataToBeSent));
             formData.set("files",data.file);
-            
+
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){
@@ -204,6 +207,7 @@ class JobListing extends Component {
                 resume : this.props.user.resume_path[parseInt(data.existingresume)]
             }*/
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume : this.props.user.resume_path[parseInt(data.existingresume)]});
+
             axios.post(url,newDataToBeSent).then((response)=>{
                     if(response.status === 200){
                         const a = this.state.applied_job;
@@ -222,6 +226,34 @@ class JobListing extends Component {
 
     jobPostCardClicked(position){
         this.setState({selectedIndex : position});
+        const obj = this.state.postings[position]
+        localStorage.setItem("RECRUITERNAME",obj.recruiterName)
+        var url = 'http://localhost:3001/userdata/job'
+        fetch(url, {
+          method: 'post',
+          credentials : 'include',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            Company: obj.CompanyName,
+            JobTitle: obj.JobTitle,
+            recruiterName: obj.recruiterName
+           })
+        })
+        .then(response => response.json())
+        .then(poststatus => {
+          console.log(poststatus)
+          if(poststatus === "Tracked Successfully")
+          {
+            alert("Click Tracked")  
+          }
+          else
+          {
+            alert("Click Not Tracked")
+          }
+      })
+
+
+
     }
 
     _onMessageWasSent(message) {
@@ -243,7 +275,7 @@ class JobListing extends Component {
       }
 
     render() {
-        
+      
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
@@ -377,6 +409,7 @@ class JobListing extends Component {
                     <div className={descriptionClassName}>
                         {jobdescription}
                         {launcher}
+                        &nbps;&nbps;&nbps;<p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
                     </div>
                     <div className="col-md-1"></div>
                 </div>

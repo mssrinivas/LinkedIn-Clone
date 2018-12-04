@@ -22,7 +22,7 @@ class showconnectedusers extends Component {
           <Navbar></Navbar>
          <div className="row" style={{marginTop:"5%",borderBottom: "1px solid #E0E0E0"}}>
                     <div className="col-md-1"></div>
-                    <div className="card w-75">
+                    <div className="cardneha w-75">
                                <ConnectedUserCard />
                     </div>
                     {/* <div className={descriptionClassName}>

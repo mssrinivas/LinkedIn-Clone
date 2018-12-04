@@ -18,20 +18,17 @@ class Search extends Component {
     };
     this.submitMessages = this.submitMessages.bind(this)
   }
-  submitMessages = (ID, e) => {
+  submitMessages = (ID, first_name, last_name, e) => {
     e.preventDefault();
-    if (this.props.currentUser.recruiter_flag == 0){
-      var values = {
-        Applicant_id : this.props.currentUser._id,
-        Recruiter_id : ID,
-        Message : ""
-      }
-    }else{
-      var values = {
-        Recruiter_id : this.props.currentUser._id,
-        Applicant_id : ID,
-        Message : ""
-      }
+
+    const values = {
+      From_id : this.props.currentUser._id,
+      To_id : ID,
+      From_First_name : this.props.currentUser.first_name,
+      From_Last_name :this.props.currentUser.last_name,
+      To_First_name : first_name,
+      To_Last_name : last_name,
+      Message : ""
     }
     alert("Please Go to Messaging tab")
     axios.post(`${BASE_URL}/messages/startnew`, values)
@@ -42,17 +39,17 @@ class Search extends Component {
                      if(response.status === 200 && response.data == "Started Conversation"){
                             console.log("inside")
                             console.log("response", response.data);
-                         
+
                          this.setState({
                           redirectVar : <Redirect to= "/messages"/>
                          })
-                      
+
                      }
     });
-    
+
 }
   render() {
-   
+
     let users_list = this.props.userSearch.map(user => {
       return (
         <div
@@ -73,7 +70,7 @@ class Search extends Component {
             <div>
               <span id="designation">San Jose</span>
               <span>
-                <Link to="/messages" onClick = {this.submitMessages.bind(this, user._id)} className="btn message-btn">Message</Link>
+                <Link to="/messages" onClick = {this.submitMessages.bind(this, user._id, user.first_name, user.last_name)} className="btn message-btn">Message</Link>
               </span>
             </div>
             <div id="location">Systems </div>
@@ -83,11 +80,11 @@ class Search extends Component {
       );
     });
     return (
-      
+
       <React.Fragment>
       {this.state.redirectVar}
         <Navbar />
-        
+
         {users_list}
       </React.Fragment>
     );

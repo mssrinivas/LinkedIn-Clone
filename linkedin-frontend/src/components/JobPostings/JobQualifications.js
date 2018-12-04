@@ -12,6 +12,11 @@ class JobQualifications extends Component {
         super(props);  
 
     }
+
+    componentDidMount()
+    {
+      console.log("TIME",this.props.descriptionstarttime)
+    }
     
 	render ()
 	{
@@ -43,17 +48,14 @@ class JobQualifications extends Component {
                             />
                             </div>
                             <p class="font-weight-bold smally">What level of education are you looking for?</p>
-                            <Dropdown size="sm">
-                            <DropdownToggle caret color="white">
-                            <p class="font-weight-bold smally">Degree</p>Bachelors
-                            </DropdownToggle>
-                            <DropdownMenu>
-                                <DropdownItem><p class="font-weight-bold smally">Masters</p></DropdownItem>
-                                <DropdownItem><p class="font-weight-bold smally">Ph.D</p></DropdownItem>
-                                <DropdownItem><p class="font-weight-bold smally">High School Diploma</p></DropdownItem>
-                                <DropdownItem><p class="font-weight-bold smally">Associate's Degree</p></DropdownItem>
-                            </DropdownMenu>
-                            </Dropdown>
+                            <p class="font-weight-bold smally">Degree</p>
+                            <select class="form-control widthdropdown smally leftpadd" id="exampleFormControlSelect1" name="Degree" value={this.props.Degree} onChange={this.props.Change}>
+                                      <option>Select a Degree</option>
+                                      <option>Masters</option>
+                                      <option>Ph.D</option>
+                                      <option>High School Diploma</option>
+                                      <option>Associate's Degree</option>
+                            </select>
                             </form>
                         </div>
                          </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import swal from 'sweetalert2';
+import swal from 'sweetalert';
 import {connect} from 'react-redux';
 
 class UserInfoCard extends Component {
