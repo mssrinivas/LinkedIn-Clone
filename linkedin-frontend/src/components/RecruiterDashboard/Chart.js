@@ -29,7 +29,7 @@ class Chart extends Component {
   render() {
     return (
       <div className="chart row">
-        <div className="col-md-4">
+        <div className="col-md-6">
           <Line
             data={this.state.clickJobData}
             options={{
@@ -45,7 +45,7 @@ class Chart extends Component {
             }}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
           <Bar
             data={this.state.savedJobData}
             options={{
@@ -61,7 +61,7 @@ class Chart extends Component {
             }}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
         <Line
             data={this.state.onlyClickedJob}
             options={{
@@ -77,7 +77,7 @@ class Chart extends Component {
             }}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-6">
          <Bar
            data={this.state.topTenJobs}
            options={{

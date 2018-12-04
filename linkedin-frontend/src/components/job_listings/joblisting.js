@@ -186,6 +186,7 @@ class JobListing extends Component {
     jobPostCardClicked(position){
         this.setState({selectedIndex : position});
         const obj = this.state.postings[position]
+        console.log("RECRUITER")
         localStorage.setItem("RECRUITERNAME",obj.recruiterName)
         var url = 'http://localhost:3001/userdata/job'
         fetch(url, {
@@ -271,7 +272,7 @@ class JobListing extends Component {
                     <div className={descriptionClassName}>
                         {jobdescription}
                         {launcher}
-                        &nbps;&nbps;&nbps;<p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
+                        <p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
                     </div>
                     <div className="col-md-1"></div>
                 </div>

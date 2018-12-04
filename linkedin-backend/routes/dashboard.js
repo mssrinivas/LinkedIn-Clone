@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var {UserActivity} = require('../models/UserActivity');
 var {Applications} = require('../models/application.js');
+var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/getuserclicks', function(req, res) {
     console.log("Received Body ", req.query)
@@ -43,9 +44,9 @@ var {Applications} = require('../models/application.js');
 
 
   router.get('/halffilled', function(req, res) {
-    console.log("Received Body ", req.query)
-    Applications.find({recruiterName:req.query.mail}).then((app)=> { 
-        console.log("\n Number of Clicks for" + app + "\n");
+    console.log("Received Body for HALF FILLED", req.query)
+    UserActivityIncomplete.find({RecruiterEmail:req.query.mail}).then((app)=> { 
+        console.log("\n Number of HALFFILLED" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{
             'Content-Type' : 'application/json'

@@ -23,7 +23,7 @@ router.post('/postjob', function(req, res) {
         degree: req.body.Degree,
         budget : req.body.Budget,
         recruiterName : req.body.RecruiterName,
-        State : req.body.state,
+        State : req.body.State,
         ZipCode : req.body.ZipCode
         // CompanyName : "Yahoo",
         // Email : "srinivas@yahoo.com",
@@ -50,7 +50,7 @@ router.post('/postjob', function(req, res) {
                          res.writeHead(200,{
                              'Content-Type' : 'application/json'
                          });
-                         res.end(JSON.stringify("Applied successfully"));
+                         res.end(JSON.stringify("Posted successfully"));
     },(err)=>{
         console.log(err)
         console.log("Error While applying custom job");

@@ -196,7 +196,7 @@ SliderChangeBudget = (value) => {
     .then(response => response.json())
     .then(poststatus => {
       console.log(poststatus)
-      if(poststatus === "Applied successfully")
+      if(poststatus === "Posted successfully")
       {
         swal("Job Posted successfully!", " ", "success");  
       }

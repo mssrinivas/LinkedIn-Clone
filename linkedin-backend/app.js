@@ -57,7 +57,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/users", users);
 app.use("/apply", applications);
 app.use("/applications", applications);
-app.use("/jobs", jobs);
 app.use("/search", search);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);

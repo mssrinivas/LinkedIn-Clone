@@ -17,7 +17,7 @@ constructor(props){
     }
 
     componentDidMount(){
-        console.log(this.state.fileName);
+        console.log("FILENAME" , this.state.fileName);
         console.log(this.state.userid);
     }
     

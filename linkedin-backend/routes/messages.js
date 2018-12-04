@@ -21,8 +21,7 @@ router.get('/ainbox/:ID', function(req, res, next) {
             'Content-Type' : 'text/plain'
         })
        res.end("Invalid");
-    }
-                  
+    }              
   );
 });
 router.get('/rinbox/:ID', function(req, res, next) {

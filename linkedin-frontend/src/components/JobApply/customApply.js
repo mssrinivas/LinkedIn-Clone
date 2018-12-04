@@ -7,6 +7,7 @@ import './apply.css';
 import {Link} from 'react-router-dom';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
+import { Prompt } from 'react-router'
 var swal = require('sweetalert')
 var resume = "";
 var Job_id = "";
@@ -50,24 +51,36 @@ this.hearChangeHandler = this.hearChangeHandler.bind(this);
 this.coverLetterChangeHandler = this.coverLetterChangeHandler.bind(this);
     }
 
-    // componentDidMount()
-    // {
-    //     var counter=localStorage.getItem("counter");
-    //     if(counter)
-    //     {
-    //         fetch('http://localhost:3001/useractivity/halffilled', {
-    //             method: 'post',
-    //             headers: {'Content-Type': 'application/json'},
-    //             credentials : 'include',
-    //             body: JSON.stringify({
-    //               halffilled: 1
-    //             })
-    //           })
-    //           .then(response => {
-    //               localStorage.setItem("counter",0)
-    //             })
-    //         }
-    // }
+    componentDidMount()
+    {
+        console.log("COUNT IS -ON MOUNT- ", localStorage.getItem("counter"))
+        var counter=localStorage.getItem("counter");
+        if(counter && localStorage.getItem("HALFFILLEDRECRUITER")!="" && localStorage.getItem("HALFFILLEDJOBTITLE")!= "")
+        {
+            fetch('http://localhost:3001/incomplete/halffilled', {
+                method: 'post',
+                headers: {'Content-Type': 'application/json'},
+                credentials : 'include',
+                body: JSON.stringify({
+                    RecruiterEmail: localStorage.getItem("HALFFILLEDRECRUITER"),
+                    JobTitle : localStorage.getItem("HALFFILLEDJOBTITLE")
+                })
+              })
+              .then(response => {
+                  localStorage.setItem("counter",0)
+                })
+            }
+    }
+
+    componentDidUpdate = () => {
+        if (true) {
+          window.onbeforeunload = () => true
+        } else {
+          window.onbeforeunload = undefined
+        }
+      }
+
+
 componentWillReceiveProps(nextProps) {
     console.log("nextprop applied", nextProps.applied);
     if(nextProps.applied == true)
@@ -81,63 +94,134 @@ coverLetterChangeHandler = (e) => {
     this.setState({
         cover : e.target.value
     })
-    // count++;
-    // localStorage.setItem()
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 fnameChangeHandler = (e) => {
     this.setState({
         firstname : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 hearChangeHandler = (e) => {
     this.setState({
         hear : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 lnameChangeHandler = (e) => {
     this.setState({
         lastname : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
+
 emailChangeHandler = (e) => {
     this.setState({
         email : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 contactChangeHandler = (e) => {
     this.setState({
         contact : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 addressChangeHandler = (e) => {
     this.setState({
         address : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 genderChangeHandler = (e) => {
     this.setState({
         gender : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 raceChangeHandler = (e) => {
     this.setState({
         race : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 veteranChangeHandler = (e) => {
     this.setState({
         veteran : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 disabilityChangeHandler = (e) => {
     this.setState({
         disability : e.target.value
     })
+    var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
 }
 fileChangeHandler = (e) => {
      this.setState({
          selectedFile: e.target.files[0]
        })
+       var counter=localStorage.getItem("counter");
+    counter++;
+    localStorage.setItem("counter",counter)
+    console.log("COUNT IS --- ", localStorage.getItem("counter"))
+    localStorage.setItem("HALFFILLEDRECRUITER",this.props.customJobPost.Email)
+    localStorage.setItem("HALFFILLEDJOBTITLE",this.props.customJobPost.JobTitle)
  }
 
 submitApplication = (e) => {
@@ -198,13 +282,13 @@ submitApplication = (e) => {
     });
     // console.log("this.state.filename" ,resume )
 
-
+    localStorage.setItem("HALFFILLEDRECRUITER","")
+    localStorage.setItem("HALFFILLEDJOBTITLE","")
     }else {
         alert("Resume should be in pdf format")
     }
 }
     render() {
-
         return (
             <div>
             <Navbar />

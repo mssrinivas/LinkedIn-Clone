@@ -35,6 +35,8 @@ class RecruiterDashboard extends Component {
     var labelfullfilleddata = [];
     var labeltopjobs = [];
     var labeltopjobsdata = [];
+    var labelalljobs = [];
+    var labelalljobsdata = [];
 
     const url = " http://localhost:3001/getjobs/tenjobs";
     axios.get(url,{
@@ -46,17 +48,8 @@ class RecruiterDashboard extends Component {
           this.setState({jobListings : response.data.joblistings})
           var counterdb = {};
           TenJobdatadb.forEach(function(obj) {
-              console.log("OBJ IS" + JSON.stringify(obj));
-            var key = obj.CompanyName + " " + obj.JobTitle;
-            counterdb[key] = (counterdb[key] || 0) + 1;
-            var resultTenJobsdb = Object.keys(counterdb).map(function(key) {
-              var key1 = key.substr(key.indexOf(" ") + 1);
-              return [key1, counterdb[key]];
-            });
-            for (var i = 0; i < resultTenJobsdb.length; i++) {
-              labeltopjobs[i] = resultTenJobsdb[i][0];
-              labeltopjobsdata[i] = resultTenJobsdb[i][1];
-            }
+            labeltopjobs.push(obj.JobTitle);
+            labeltopjobsdata.push(obj.numberofApplicants);
           });
           console.log("label for db Ten Jobs", labeltopjobs);
           console.log("labeldata for db Ten Jobs", labeltopjobsdata);
@@ -65,23 +58,54 @@ class RecruiterDashboard extends Component {
         error => {
         }
       )
+
+      const url_2 = "http://localhost:3001/getjobs/myjobs";
+    axios.get(url_2,{
+        params: {
+          mail: this.props.user.email
+        }}).then((response)=>{
+          var AllJobdatadb = [];
+          AllJobdatadb = response.data.joblistings;
+          this.setState({jobListings : response.data.joblistings})
+          var counterdb = {};
+          AllJobdatadb.forEach(function(obj) {
+              console.log("--------JOB OBJ IS---------- " + JSON.stringify(obj));
+            var key = obj.JobTitle;
+            counterdb[key] = (counterdb[key] || 0) + 1;
+            var resultAllJobsdb = Object.keys(counterdb).map(function(key) {
+              //var key1 = key.substr(key.indexOf(" ") + 1);
+              return [key, counterdb[key]];
+            });
+            for (var i = 0; i < resultAllJobsdb.length; i++) {
+              labelalljobs[i] = resultAllJobsdb[i][0];
+              labelalljobsdata[i] = resultAllJobsdb[i][1];
+            }
+          });
+          console.log("label for db ALL Jobs", labelalljobs);
+          console.log("labeldata for db ALL Jobs", labelalljobsdata);
+          this.setState({});
+        },
+        error => {
+        }
+      )
+    
     
     axios.get("http://localhost:3001/recruiter/getuserclicks",
     {
       params: {
-        mail: this.props.user.first_name
+        mail: this.props.user.first_name + " " + this.props.user.last_name 
       }}).then(
         response => {
         var clickedJobdatadb = [];
         clickedJobdatadb = response.data;
         var counterdb = {};
         clickedJobdatadb.forEach(function(obj) {
-            console.log("OBJ IS" + JSON.stringify(obj));
-          var key = obj.Company.jobId + " " + obj.Title;
+            console.log("OBJ IS for CLICKS" + JSON.stringify(obj));
+          var key = obj.Title;
           counterdb[key] = (counterdb[key] || 0) + 1;
           var resultClickedJobsdb = Object.keys(counterdb).map(function(key) {
-            var key1 = key.substr(key.indexOf(" ") + 1);
-            return [key1, counterdb[key]];
+          // var key1 = key.substr(key.indexOf(" ") + 1);
+            return [key, counterdb[key]];
           });
           for (var i = 0; i < resultClickedJobsdb.length; i++) {
             labeldb[i] = resultClickedJobsdb[i][0];
@@ -96,31 +120,35 @@ class RecruiterDashboard extends Component {
       }
     )
 
-    // axios.get("http://localhost:3001/recruiter/halffilled").then(
-    //     response => {
-    //     var halfFilledJobdatadb = [];
-    //     halfFilledJobdatadb = response.data;
-    //     var counterdb = {};
-    //     halfFilledJobdatadb.forEach(function(obj) {
-    //         console.log("OBJ IS" + JSON.stringify(obj));
-    //       var key = obj.Company.jobId + " " + obj.Title;
-    //       counterdb[key] = (counterdb[key] || 0) + 1;
-    //       var resulthalfFilledJobsdb = Object.keys(counterdb).map(function(key) {
-    //         var key1 = key.substr(key.indexOf(" ") + 1);
-    //         return [key1, counterdb[key]];
-    //       });
-    //       for (var i = 0; i < resulthalfFilledJobsdb.length; i++) {
-    //         labelhalffilled[i] = resulthalfFilledJobsdb[i][0];
-    //         labelhalffilleddata[i] = resulthalfFilledJobsdb[i][1];
-    //       }
-    //     });
-    //     console.log("labelk for db", labelhalffilled);
-    //     console.log("labeldata for db", labelhalffilleddata);
-    //     this.setState({});
-    //   },
-    //   error => {
-    //   }
-    // )
+    axios.get("http://localhost:3001/recruiter/halffilled",{
+      params: {
+        mail: this.props.user.email
+      }}
+    ).then(
+        response => {
+        var halfFilledJobdatadb = [];
+        halfFilledJobdatadb = response.data;
+        var counterdb = {};
+        halfFilledJobdatadb.forEach(function(obj) {
+            console.log("OBJ IS HALF FILLED" + JSON.stringify(obj));
+          var key = obj.JobTitle;
+          counterdb[key] = (counterdb[key] || 0) + 1;
+          var resulthalfFilledJobsdb = Object.keys(counterdb).map(function(key) {
+           // var key = key.substr(key.indexOf(" ") + 1);
+            return [key, counterdb[key]];
+          });
+          for (var i = 0; i < resulthalfFilledJobsdb.length; i++) {
+            labelhalffilled[i] = resulthalfFilledJobsdb[i][0];
+            labelhalffilleddata[i] = resulthalfFilledJobsdb[i][1];
+          }
+        });
+        console.log("HALF FILLED label for db", labelhalffilled);
+        console.log("HALF FILLED labeldata for db", labelhalffilleddata);
+        this.setState({});
+      },
+      error => {
+      }
+    )
 
     axios.get("http://localhost:3001/recruiter/fullfilled",{
       params: {
@@ -131,12 +159,12 @@ class RecruiterDashboard extends Component {
         fullFilledJobdatadb = response.data;
         var counterdb = {};
         fullFilledJobdatadb.forEach(function(obj) {
-            console.log("OBJ IS" + JSON.stringify(obj));
+            console.log("OBJ IS FULL FILLED" + JSON.stringify(obj));
           var key =  obj.JobTitle;
           counterdb[key] = (counterdb[key] || 0) + 1;
           var resultfullFilledJobsdb = Object.keys(counterdb).map(function(key) {
-            var key1 = key.substr(key.indexOf(" ") + 1);
-            return [key1, counterdb[key]];
+            //var key1 = key.substr(key.indexOf(" ") + 1);
+            return [key, counterdb[key]];
           });
           for (var i = 0; i < resultfullFilledJobsdb.length; i++) {
             labelfullfilled[i] = resultfullFilledJobsdb[i][0];
@@ -162,7 +190,7 @@ class RecruiterDashboard extends Component {
             savedJobs = response.data;
             var countersavedJobs = {};
             savedJobs.forEach(function(obj) {
-                console.log("OBJECT IS ", obj)
+                console.log("OBJECT IS SAVED JOBS", obj)
               var key = obj.JobTitle;
               countersavedJobs[key] = (countersavedJobs[key] || 0) + 1;
             });
@@ -206,10 +234,10 @@ class RecruiterDashboard extends Component {
         ]
       },
       userActivityData: {
-        labels: labelfullfilled,
+        labels: labelalljobs,
         datasets: [
           {
-            label: "Viewed",
+            label: "Views",
             data: labeldatadb,
             fill: false,
             lineTension: 0.1,
@@ -231,7 +259,7 @@ class RecruiterDashboard extends Component {
           },
           {
             label: "Half Filled",
-            data:[1,2,3,4],
+            data: labelhalffilleddata,
             fill: false,
             lineTension: 0.1,
             backgroundColor: "rgba(225,0,0,0.4)",
@@ -277,7 +305,7 @@ class RecruiterDashboard extends Component {
         labels: labeldb,
         datasets: [
           {
-            label: "Most Clicked Jobs",
+            label: "Clicked Jobs",
             data: labeldatadb,
             backgroundColor: [
               "rgba(255, 99, 132, 0.6)",

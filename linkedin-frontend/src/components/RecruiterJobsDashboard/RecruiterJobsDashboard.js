@@ -20,7 +20,7 @@ class RecruiterJobsDashboard extends Component {
             const url = " http://localhost:3001/getjobs/myjobs";
             axios.get(url,{
                 params: {
-                  mail: 'recruiter@gmail.com'
+                  mail: this.props.user.email
                 }}).then((response)=>{
                 console.log("Got the response");
                 this.setState({

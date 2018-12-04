@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
-router.post('/job', function(req, res) {
+router.post('/halffilled', function(req, res) {
     console.log("Received Body ", req.body)
      var UserActivityDetails = new UserActivityIncomplete({
-         Company : req.body.Company,
-         Title : req.body.JobTitle
+         RecruiterEmail : req.body.RecruiterEmail,
+         JobTitle : req.body.JobTitle,
     });
     console.log("----------")
     console.log("NEW JSON: ", UserActivityDetails)

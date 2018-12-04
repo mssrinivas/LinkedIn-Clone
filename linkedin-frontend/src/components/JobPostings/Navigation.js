@@ -31,7 +31,7 @@ class Navigation extends Component {
                 </li>
                 <li class="nav-item padtopnavbar spacebetween">
                 <a class="btn bgwhite " href="/home" role="button"></a> 
-                <Link to="/postjob" class="btn bgwhite" role="button">POST JOB</Link> 
+                <Link to="/recruiter/myjobs" class="btn bgwhite" role="button">MY JOBS</Link> 
                 &nbsp; &nbsp; &nbsp;       
                 </li>
                 <li class="nav-item padtopnavbar spacebetween">
