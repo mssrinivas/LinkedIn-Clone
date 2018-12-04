@@ -10,7 +10,7 @@ import {BASE_URL} from './../constants/constants.js';
 import {SELECTED_CUSTOM_JOB_POST,ADD_JOB_ID_TO_APPLIED_JOB,ADD_JOB_ID_TO_SAVED_JOB} from './../constants/reduxActionConstants.js';
 import SearchBar from './SearchBar.jsx';
 import EasyApplyModal from './EasyApplyModal/easyApplyModal.js';
-
+import {history} from "../../util/utils";
 class JobListing extends Component {
     constructor(props){
         super(props)
@@ -275,7 +275,10 @@ class JobListing extends Component {
       }
 
     render() {
-
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;

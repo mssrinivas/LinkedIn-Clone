@@ -19,7 +19,6 @@ import ResumeView from './resumeview'
 import {history} from "../../util/utils";
 import {BASE_URL} from './../constants/constants.js';
 import swal from 'sweetalert';
-
 class UserVisit extends Component {
   constructor(props) {
     super(props);
@@ -39,7 +38,7 @@ class UserVisit extends Component {
      applicant_id: this.props.clickedUserDetails.applicant_id,
      viewer_applicant_id : this.props.currentUserDetails.applicant_id
    })
-   axios.post('http://localhost:3001/users/userViewTrace',this.state)
+   axios.post(`${BASE_URL}/users/userViewTrace`,this.state)
      .then(res=> {
        console.log("Response here: ", res);
        this.setState({
@@ -58,7 +57,7 @@ class UserVisit extends Component {
       fromDetails:this.props.currentUserDetails,
       to:email,
   }
-  axios.post("http://localhost:3001/user/requestconnection",data)
+  axios.post(`${BASE_URL}/user/requestconnection`,data)
   .then(function (response) {
       console.log("response",response.data.notifData.body)
       // this.setState({
@@ -68,6 +67,10 @@ class UserVisit extends Component {
   })
 }
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let resume=""
     if(this.props.clickedUserDetails.resume_path!=null || this.props.clickedUserDetails.resume_path!=undefined) {
       if(this.props.clickedUserDetails.resume_path.length!=0){
@@ -82,7 +85,7 @@ debugger
     var pendingUsers=this.props.currentUserDetails.pending;
     var waitingUsers=this.props.currentUserDetails.waiting;
     var friends=this.props.currentUserDetails.connections;
-    
+
     if(this.props.clickedUserDetails.email==this.props.currentUser){
       connectButton=null;
     }
@@ -168,7 +171,7 @@ debugger
                   <br></br>
                   <h5 className="profile-area">{this.props.clickedUserDetails.city!=null? this.props.clickedUserDetails.address : "Please tell us where you stay"}</h5>
                   {connectButton}
-    
+
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>

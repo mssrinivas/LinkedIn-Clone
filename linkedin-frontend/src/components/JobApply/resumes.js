@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Document, Page } from 'react-pdf';
 import {BASE_URL} from './../constants/constants.js';
-
+import {history} from "../../util/utils";
 class resumes extends Component {
-    
+
 constructor(props){
         super(props)
         this.state = {
@@ -20,16 +20,20 @@ constructor(props){
         console.log(this.state.fileName);
         console.log(this.state.userid);
     }
-    
-    
+
+
         onDocumentLoad = ({ numPages }) => {
             this.setState({ numPages });
           }
 
-    render() { 
+    render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         const {fileName,userid,pageNumber,numPages} = this.state;
         const fileURL = BASE_URL+"/resumeFolder/"+userid+"/"+fileName;
-        return ( 
+        return (
 
         <div>
             <Document
@@ -38,10 +42,10 @@ constructor(props){
         >
           <Page pageNumber={pageNumber} />
         </Document>
-        <p>Page {pageNumber} of {numPages}</p> 
+        <p>Page {pageNumber} of {numPages}</p>
         </div>
          );
     }
 }
- 
+
 export default resumes;

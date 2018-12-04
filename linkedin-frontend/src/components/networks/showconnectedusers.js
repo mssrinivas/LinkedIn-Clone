@@ -3,7 +3,7 @@ import ConnectedUserCard from './connectedusercard.js';
 import { Link } from "react-router-dom";
 import Navbar from '../navbar/Navbar.jsx';
 import {connect} from 'react-redux';
-
+import {history} from "../../util/utils";
 class showconnectedusers extends Component {
     constructor(props){
         super(props)
@@ -13,10 +13,14 @@ class showconnectedusers extends Component {
     }
 
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
       if(this.props.currentUser){
       const friends=this.props.currentUserDetails.connections
-      console.log("list of connections",friends)   
- 
+      console.log("list of connections",friends)
+
     return (
       <div>
           <Navbar></Navbar>
@@ -32,7 +36,7 @@ class showconnectedusers extends Component {
 
       </div>
     );
-  
+
 }
 else{
     return(
@@ -52,5 +56,5 @@ function mapStateToProps(state) {
          userProfileDetails: state.LoginReducer.userProfileDetails
       };
   }
-  
+
   export default connect(mapStateToProps)(showconnectedusers);

@@ -13,6 +13,7 @@ import {connect} from 'react-redux';
 import * as VALIDATION from './../../util/validation';
 import Navbar from './../navbar/Navbar.jsx';
 import {profileUpdate} from './../../api/Api';
+import {BASE_URL} from './../../components/constants/constants.js';
 
 class Experience extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Experience extends Component {
         company:this.props.currentUserDetails.company,
         school:this.props.currentUserDetails.school,
         title : this.props.currentUserDetails.title,
-        profileImage:"http://localhost:3001/uploads/"+this.props.currentUserDetails.applicant_id+".jpeg",
+        profileImage:BASE_URL+"/"+this.props.currentUserDetails.applicant_id+".jpeg",
         status:'Active'
       }
     }

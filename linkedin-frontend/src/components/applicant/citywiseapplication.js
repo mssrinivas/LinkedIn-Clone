@@ -5,7 +5,7 @@ import BarChart from './../graph/barchart';
 import LineChart from './../graph/line_chart';
 import PieChart from './../graph/pie_chart';
 import './applicantprofile.css';
-
+import {history} from "../../util/utils";
 class CityApplications extends Component {
   constructor(props) {
     super(props)
@@ -60,6 +60,10 @@ parseData() {
     }
 }
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     return (
       <div>
           <div className="header-graph1">

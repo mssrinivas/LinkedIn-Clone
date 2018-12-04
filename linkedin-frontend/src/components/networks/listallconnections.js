@@ -6,7 +6,7 @@ import Navbar from './../navbar/Navbar.jsx';
 import PendingInvitation from './pendinginvitations';
 import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
-
+import {history} from "../../util/utils";
 class listallconnections extends Component {
   constructor() {
     super();
@@ -15,7 +15,7 @@ class listallconnections extends Component {
         count:0,
     };
     //this.connectRequest=this.connectRequest.bind(this);
-  
+
 }
   componentWillMount(){
   var self=this;
@@ -40,7 +40,7 @@ class listallconnections extends Component {
                 if(response.data.responseData!=null)
                 {
                   self.setState({
-                    data: response.data.responseData,       
+                    data: response.data.responseData,
                 })
                 }
             })
@@ -48,6 +48,10 @@ class listallconnections extends Component {
   }
 
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let userlist;
     const {data} = this.state;
     if(this.state.data!=null)
@@ -80,7 +84,7 @@ class listallconnections extends Component {
           <div class="row">
           {userlist}
           </div>
-          </div>     
+          </div>
       </div>
       </div>
       </div>

@@ -156,7 +156,7 @@ router.post('/job', function(req, res, next) {
                      })
                     .then(item => {
                         console.log("application after update : ", item);
-                        jobpostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                        JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
                             if(err){
                                 console.log(err);
                                 response.sendStatus(201);
@@ -231,7 +231,7 @@ router.post('/job', function(req, res, next) {
                         });
                         customApplyDetail.save().then((result)=> {
                             console.log("apply successful : ",result);
-                            jobpostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                            JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
                                 if(err){
                                     console.log(err);
                                     response.sendStatus(201);
@@ -443,7 +443,7 @@ router.post('/easy', function(req, res, next) {
                      })
                     .then(item => {
                         console.log("application after update : ", JSON.stringify(item));
-                        jobpostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                        JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
                             if(err){
                                 console.log(err);
                                 response.sendStatus(201);

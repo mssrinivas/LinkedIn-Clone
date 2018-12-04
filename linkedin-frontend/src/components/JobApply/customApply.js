@@ -7,6 +7,7 @@ import './apply.css';
 import {Link} from 'react-router-dom';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
+import {history} from "../../util/utils";
 var swal = require('sweetalert')
 var resume = "";
 var Job_id = "";
@@ -208,13 +209,16 @@ submitApplication = (e) => {
     }
 }
     render() {
-
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         return (
             <div>
             <Navbar />
             <div className="headerback">
             <div className="applytitle">
-            
+
                 {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
                 <img className="image1" src={this.props.customJobPost.CompanyLogo}/>
             </div>
