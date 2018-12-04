@@ -9,6 +9,7 @@ import {userTraceAction} from './../actions/index';
 import {userSearchAction} from './../actions/index';
 import {searchFieldAction} from './../actions/index';
 import {jobsearchFieldAction} from './../actions/index';
+import {jobtitleUpdateAction} from './../actions/index';
 import {recuriterDashBoardTraceAction} from './../actions/index';
 import * as UTIL from './../util/utils';
 import axios from "axios";
@@ -334,7 +335,12 @@ export const recuriterDashBoardSearch = function(userDetail){
             });
         };
 };
-
+export const jobtitleUpdate = function(userDetail){
+    console.log("Data sent to API:", userDetail);
+    return (dispatch) => {
+                          dispatch(jobtitleUpdateAction(userDetail));
+                  };
+                };
 export const searchCriteriaFilter = function(searchCriteria){
     console.log("Data sent to API on entering search criteria click:", searchCriteria);
     return (dispatch) => {

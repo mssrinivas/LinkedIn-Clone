@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Ubuntu');
 
 div{
-	font-family: 'Ubuntu', sans-serif;	
+	font-family: 'Ubuntu', sans-serif;
 }
 
 p,h1,h2,h3,h4,h5,h6{
@@ -13,19 +13,19 @@ p,h1,h2,h3,h4,h5,h6{
 .postings-parent{
     bottom: 0;
     float: left;
-    overflow-y: auto; 
+    overflow-y: auto;
     position: relative;
     height: 100%;
 }
 
 .joblist-row{
   padding : 4px;
-  border-bottom: 1px solid #E0E0E0; 
+  border-bottom: 1px solid #E0E0E0;
 }
 
 .joblist-row:hover{
   background-color:#E2F4FC;
-  border-bottom: 0px 
+  border-bottom: 0px
 }
 
 /* Job Description */
@@ -68,4 +68,6 @@ p,h1,h2,h3,h4,h5,h6{
 .connection:hover{
     background-color:#E2F4FC;
 }
-
+.body{
+	background-color: white;
+}

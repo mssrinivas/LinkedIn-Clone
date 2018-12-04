@@ -11,9 +11,12 @@ import {bindActionCreators} from 'redux';
 import {userSearch} from './../../api/Api';
 import {jobSearch} from './../../api/Api';
 import {searchCriteriaFilter} from './../../api/Api';
+import {recuriterDashBoardSearch} from './../../api/Api';
+
 class Navbar extends Component {
   constructor() {
     super();
+    this.userDetails={};
     this.state = {
       first_name: "",
       search_filter:"",
@@ -21,6 +24,11 @@ class Navbar extends Component {
       postingDate:null,
       seniorityLevel:null
     };
+  }
+  clickSearch =(e) => {
+    e.preventDefault();
+    this.userDetails.RecruiterEmail = this.props.currentUserDetails.email;
+    this.props.recuriterDashBoardSearch(this.userDetails);
   }
   handleSearchChange = e => {
     if(e.target!=undefined) {
@@ -64,7 +72,7 @@ class Navbar extends Component {
 
   };
   render() {
-    let inputText=(this.props.searchCriteria!='')?<input type="text" list="searchtype" onSelect={this.handleSearchChange} />:<input type="text" list="searchtype" onChange={(event) => { this.state.first_name = event.target.value ,  this.state.CompanyName = event.target.value}} />
+    let inputText=(this.props.searchCriteria!='')?<input style={{ marginLeft : 50}} type="text" list="searchtype" onSelect={this.handleSearchChange} />:<input style={{ marginLeft : 50}} type="text" list="searchtype" onChange={(event) => { this.state.first_name = event.target.value ,  this.state.CompanyName = event.target.value}} />
     return (
       <React.Fragment>
         <nav
@@ -73,6 +81,7 @@ class Navbar extends Component {
           tabindex="-1"
           style={{ height: 65, background: "#283e4a" }}
         >
+        <Link to="/feed">
           <span>
             <img
               style={{
@@ -81,11 +90,12 @@ class Navbar extends Component {
                 marginBottom: "10px"
 
               }}
+
               src={LinkedInLogo1}
               alt="linkedin"
             />
           </span>
-
+        </Link>
           <span>
               {inputText}
               <datalist id="searchtype" className="select-box" >
@@ -94,7 +104,7 @@ class Navbar extends Component {
               </datalist>
             <img
               onClick={this.searchUsers}
-              style={{ width: 40 }}
+              style={{ width: 40}}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAATrSURBVGhD7Vjtb1NVHB5fNDF+MvLBxBgTNca/QL8QVEyQxEhgDj+Y9eWctkpLB2OBwWBoImDEzSnDlyFmjYnLZBN1g72ikjCZRoJMDQQRiTEgaoyQKGuL2c/nd3vu7Wl7Nrf23r0kfZIn7bLb3/M89563360oo4wyvEM8Hr/Z7/c/HAwGd4Cd4Ah4UvEouB+MSSkfUD+ZX/D5fPfAYGsgEPgTnzRNfgvWRCKRW1SZuQPu7G0w8zb4rzI3YyL876BAuUWZqrMMIcQjMHCpwJyQJDa/ROLlThKv95FsGyH51jGSLT0kdraTiG/OvV4RtQbxuViVnx1A1A/eyDETrSW5d5BCH/1BoSPXp6TsuEBiV4KCMpwTBryIuvcpGW+BJ/EMBCcccRki2XyIZM9Vo+kp+cHPJBqac8IgyC8855ScN4DQUjA7H55dRzIxZjY5XR7+h8SegxiSQg90NhqN3qpk3QVPbNyty47Yc3GSnReN5sJg/WfjtPuLJL32VYqav0zSi8eTVDM4bryeKfYO6EGYCSXtLlCYV6eMCMZ2KHG6wAwHeGU0SR+fS9PwTzcKOAR2fJ+mrZ+bA8nd7+lBJnhBUfLuAE/jXn1yi6ZDBSbWD1+n7rPZAH3n05QYS9GbJ1PU9k3aCjB0IRuo7VTKCp5T5/DfJGp36GFGlQV3gBD7nOK8OuVN7A0I0aOeQu8Pado5kqRIn2ZQcR2GFgfjIHwtBw3nXSfbT+lBePIvUTZKQ1VV1U0o5uzY1hKrCTPf+DplGTt4Jk2xgcnngc3tx8ap/8dMmLqjhdfzPqSFeUdZKQ3q7JQpis3OtE/Eh8atubG2//9D2NyExaAJi0DB8AJF67Ae5FfYKH3XRyE+AFpF+U7li3rCD69AL7scY9Lfr+wUDwyrDqcgjh1GYQ+Yd5RZpewUDwQ57gTB2ckk6gWDm3Y5QTC848pO8UChMbug3H/CKOoFRWOrEwTcouwUDxThpigTBKdYk6gXFNtanCAYFfXKTvFAoU+dIDiKm0S9YHDj804QDK2wslM8cDfa7ILcT5hEXScfJNfW6EGWKTvFA4ViThCsJEZhlynfP+eEALllKL3h4hcFWlGrKTKJu0mxp0sPMqaslA4Mr+/swtzZmcRdY881Csbq9CDblI3SgWI1TmEc4SU6O6MJFyhbevUQqerq6ruUjdLBr2xQ9DdbgNtTnpAmIyWx+zK6zpgTBCPhgLLgHlBU2AJWGLSnRjPFEq1BsLbRqQ9eC4fDdyh5V7EIxQccIfTYsnXIbGqm/OQvCm5t0kPw0+B3Xd4AAoshcF4X5PaUOzujwemw61L+k7AIndJ386mg2t7sSwgmjHBnZzQ6GbE6WRM7Es0JoNPzMNhp74bImQJx9Cty37DVTxjNg7zZ8T4hcpfYSenzBRqUrDfg904I0w6x7Ms6h2iKcAoQOIrzKVY0vEqi7oWcY4dO1LmK5inAx3X87dTz+QO09IlKerzy6W4l6x34lQ1ER23xGTIFvquvTnYYO8SDy1danJUwDNzVJeAB8Ipm1MQJXHMan42hUOhO9fMcVAcCG/UQsx7GBvfYMLqK7y5M1zPxPQwuw+Z6u7psSjz6ZGV/fpA5CeMGymHmK8ph5ismC7Ni9ZoudcnCQX6Yh8Dlq9dsV/9eWLDDLOgQNh5b+VTvgg9RRhlzhoqK/wD8WDrVjI1PyAAAAABJRU5ErkJggg=="
             />
           </span>
@@ -374,7 +384,14 @@ class Navbar extends Component {
                   Profile Page
                 </Link>
                 <Link
-                  to={{ pathname: "", state: "" }}
+                  to={{ pathname: "/deleteapplicantaccount", state: "" }}
+                  className="dropdown-item"
+                >
+                  Delete Account
+                </Link>
+
+                <Link
+                  to={{ pathname: "/", state: "" }}
                   className="dropdown-item"
                 >
                   Logout
@@ -382,7 +399,7 @@ class Navbar extends Component {
               </div>
             </span>
           </span>
-          <Link to="">
+          <Link to="/postjob">
             <div
               style={{
                 display: "inline-block",
@@ -413,6 +430,39 @@ class Navbar extends Component {
               </span>
             </div>
           </Link>
+          {this.props.currentUserDetails.recruiter_flag != 0 ?
+          <Link to="/recruiterdashboard">
+            <div onClick={this.clickSearch}
+              style={{
+                display: "inline-block",
+                marginLeft: 20,
+                textAlign: "center"
+              }}
+              className="nav-home"
+            >
+              <span
+                id="notifications-tab-icon"
+                class="nav-item__icon"
+                lang="en"
+                aria-role="presentation"
+              >
+                <img src="http://cgitwebapps.coralgables.com/Images/DataServices/ic_dashboard_grey600_48dp.png" style={{ width: 20 }} />
+              </span>
+              <span>
+                <div
+                  style={{
+                    display: "block",
+                    "font-size": "0.85rem",
+                    "font-weight": 400,
+                    color: "#c7d1d8"
+                  }}
+                >
+                  Recruiter Dashboard
+                </div>
+              </span>
+            </div>
+          </Link>
+          :''}
         </nav>
       </React.Fragment>
     );
@@ -426,7 +476,7 @@ const mapStateToProps = (state) =>{
 }
 function matchDispatchToProps(dispatch){
     console.log("Dispatch",dispatch);
-    return bindActionCreators({userSearch: userSearch,jobSearch:jobSearch, searchCriteriaFilter: searchCriteriaFilter}, dispatch);
+    return bindActionCreators({userSearch: userSearch,jobSearch:jobSearch, searchCriteriaFilter: searchCriteriaFilter, recuriterDashBoardSearch: recuriterDashBoardSearch}, dispatch);
 }
 
 export default connect(mapStateToProps,matchDispatchToProps)(Navbar);

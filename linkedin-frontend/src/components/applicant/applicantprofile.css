@@ -196,7 +196,7 @@
   margin-top: 30px;
   margin-left: 100px;
   width: 80%;
-  background-color: grey;
+  /* background-color: grey; */
   opacity: .9;
   background: url("https://previews.123rf.com/images/annaleni/annaleni1605/annaleni160500156/57318371-ley-delgada-l%C3%ADnea-azul-y-sin-fisuras-patr%C3%B3n-de-justicia-dise%C3%B1o-web-site-del-vector-y-fondo-transparente-en-e.jpg");
   height: 950px;
@@ -257,6 +257,20 @@
 .edit-gly{
   margin-left: 1040px;
   margin-top: -50px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.edit-gly1{
+  margin-left: 1040px;
+  margin-top: 0px;
+  float: right;
+  position: absolute;
+  height: 20px;
+}
+.edit-gly2{
+  margin-left: 1040px;
+  margin-top: -100px;
   float: right;
   position: absolute;
   height: 20px;
@@ -396,7 +410,7 @@
   margin-top: 30px;
   margin-left: 100px;
   width: 80%;
-  background-color: rgba(0,0,0,0.05);
+
 
 }
 .dashboard-name1{
@@ -419,18 +433,28 @@
 .header-graph{
   margin-left: 200px;
   margin-top: 100px;
+  background-color: white;
+  background: transparent
 }
 .header-graph1{
   margin-left: 0px;
   margin-top: 10px;
+  background-color: white;
+  background: transparent
 }
 .car-graph-3{
   width :1000px;
   height: 500px;
+  background-color: white;
+  background: transparent;
+  padding-left: 30px;
+  margin-left: 30px;
 }
 .car-graph-4{
   width :1000px;
   height: 500px;
+  background-color: white;
+  background: transparent
 }
 .chart{
   margin-top: 10px;
@@ -482,4 +506,7 @@
   height: 70px;
   margin-top: 10px;
   margin-left: 50px;
+}
+.title-graph{
+  margin-left: 100px;
 }

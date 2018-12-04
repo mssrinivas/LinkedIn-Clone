@@ -27,7 +27,7 @@ class LoginHeader extends Component {
                     </NavbarBrand>
                     <NavbarNav right className="nav-bar">
                       <NavItem className="nav-item">
-                      <input type="text"  placeholder="Email" className="email-fld"
+                      <input type="email"  placeholder="Email" className="email-fld"
                       onChange={(userinput) => {
                           this.userDetails.email=userinput.target.value}}/>
                       <input type="password"  placeholder="Password" className="pwd-fld"

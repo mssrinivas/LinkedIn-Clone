@@ -19,7 +19,8 @@ const initialState = {
         searchCriteria:'',
         recruiter_flag:false,
         applied : false,
-        customJobPost : {}
+        customJobPost : {},
+        jobTitle:''
 };
 
 export default function (state = initialState, action) {
@@ -84,13 +85,18 @@ export default function (state = initialState, action) {
               return Object.assign({}, state, {
               jobSearchCriteria:action.data
             })
+            case 'JOBTITLE_UPDATE_ACTIVITY':
+              console.log("Job title Field : ", action.data);
+              return Object.assign({}, state, {
+              jobTitle:action.data
+            })
             case CUSTOM_APPLY_SUCCESS:
               console.log("Custom apply job reducer");
               return {
                 ...state,
                 applied : action.payload
             }
-            
+
             // case CUSTOM_APPLY_FAILURE:
             //   console.log("Custom apply job reducer failure");
             //   return {
@@ -106,7 +112,7 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
-                  
+
             case 'USER_SEARCH_ACTIVITY':
                   console.log("User search activity", action.data.result);
                   return Object.assign({}, state, {

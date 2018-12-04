@@ -62,3 +62,9 @@ export const recuriterDashBoardTraceAction = (userDetail) => {
         data: userDetail
     }
 };
+export const jobtitleUpdateAction = (userDetail) => {
+    return {
+        type: 'JOBTITLE_UPDATE_ACTIVITY',
+        data: userDetail
+    }
+};

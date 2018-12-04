@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 // import {updateProfileHandler} from './../../api/Api';
 import * as VALIDATION from './../../util/validation';
 import Navbar from './../navbar/Navbar.jsx';
+import {profileUpdate} from './../../api/Api';
 
 class Experience extends Component {
   constructor(props) {
@@ -38,7 +39,6 @@ class Experience extends Component {
 saveExperience =(e) => {
       e.preventDefault();
       this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
-      this.userDetails.company = this.
       this.props.profileUpdate(this.userDetails);
     }
   render() {
@@ -47,7 +47,7 @@ saveExperience =(e) => {
          <div className="card-experience">
            <div className='bg-light-orange  br1 pa1 ma1 bw1 shadow-1'>
            <a href="" data-toggle="modal" data-target="#experienceModal">
-             <img className="edit-gly"src="https://imageog.flaticon.com/icons/png/512/61/61456.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"/>
+             <img className="edit-gly1"src="https://imageog.flaticon.com/icons/png/512/61/61456.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"/>
            </a>
            <div className="modal fade" id="experienceModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
                <div className="modal-dialog" role="document">
@@ -55,19 +55,11 @@ saveExperience =(e) => {
                  <div className="modal-body">
                    <table>
                    <tbody>
-                   <tr>
-                       <label className="label-class"> Education*</label>
-                     </tr>
-                     <tr>
-                       <textarea className="about-class"rows="1" cols="50" defaultValue={this.props.currentUserDetails.education}
-                       onChange={(event) => { this.userDetails.education = event.target.value}}/>
-
-                     </tr>
                      <tr>
                        <label className="label-class"> Job Title*</label>
                      </tr>
                      <tr>
-                       <textarea className="about-class"rows="1" cols="50" defaultValue={this.props.currentUserDetails.job_title}
+                       <textarea className="about-class"rows="1" cols="50"
                        onChange={(event) => { this.userDetails.job_title = event.target.value}}/>
 
                      </tr>
@@ -75,7 +67,7 @@ saveExperience =(e) => {
                        <label className="label-class"> Skills*</label>
                      </tr>
                      <tr>
-                       <textarea className="about-class"rows="1" cols="50" defaultValue={this.props.currentUserDetails.skills}
+                       <textarea className="about-class"rows="1" cols="50"
                        onChange={(event) => { this.userDetails.skills = event.target.value}}/>
 
                      </tr>
@@ -85,39 +77,15 @@ saveExperience =(e) => {
                      </tr>
                      <tr>
                        <td>
-                           <input className="name-class" type="text" defaultValue={this.props.currentUserDetails.company}
+                           <input className="name-class" type="text"
                              onChange={(event) => { this.userDetails.company = event.target.value}}/>
                        </td>
                        <td>
-                           <input className="lastname-class" type="number" defaultValue={this.props.currentUserDetails.experience}
+                           <input className="lastname-class" type="number"
                              onChange={(event) => { this.userDetails.experience = event.target.value}}/>
                        </td>
                      </tr>
-                     <tr>
-                       <td> <label className="label-class"> City </label> </td>
-                       <td> <label className="labellast-class"> State </label> </td>
-                     </tr>
-
-                     <tr>
-                       <td>
-                           <input className="name-class" type="text" defaultValue={this.props.currentUserDetails.city}
-                             onChange={(event) => { this.userDetails.city = event.target.value}}/>
-                       </td>
-                       <td>
-                           <input className="lastname-class" type="text" defaultValue={this.props.currentUserDetails.state}
-                             onChange={(event) => { this.userDetails.state = event.target.value}}/>
-                       </td>
-                     </tr>
                      <br></br>
-                     <tr>
-                       <label className="label-class"> Summary*</label><br></br><br></br>
-                     </tr>
-                     <tr>
-                       <textarea className="about-class"rows="4" cols="50" defaultValue={this.props.currentUserDetails.profile_summary}
-                       onChange={(event) => { this.userDetails.profile_summary = event.target.value}}/>
-                        <br></br><br></br>
-                     </tr>
-                     <input className="image-upload" type="file" name="photos" onChange={this.handleUpload}/>
                         </tbody>
                         </table>
                  </div>
@@ -132,22 +100,65 @@ saveExperience =(e) => {
                  <h2 className="dashboard-name1"> Experience</h2>
                  <hr/>
                  <br></br>
-                 {this.props.currentUserDetails.workexperience.length == 0 ? "Please update your skills":''}
-                 {this.props.currentUserDetails.workexperience.map((post) => {
+                 {this.props.currentUserDetails.workexperience.length == 0 ? "Please update your skills":
+                 this.props.currentUserDetails.workexperience.map((post) => {
                         return(
                                 <div>
                                    <h5 className="dashboard-name2">{post}</h5>
+                                   <br></br>
                                </div>
                              );
                            })
                          }
                                <h2 className="dashboard-name1"> Education</h2>
                                <br></br>
-                               <h5 className="dashboard-name2">{this.props.currentUserDetails.school!=null ? "Studies at : " +this.props.currentUserDetails.school : "Please enter educational details"}</h5>
-                               <br></br>
-                               <h5 className="dashboard-name2">{this.props.currentUserDetails.education!=null ? "Pursuing " +this.props.currentUserDetails.education : ""}</h5>
+                               {this.props.currentUserDetails.educationDetails.length == 0 ? "Please update your educational details":
+                               this.props.currentUserDetails.educationDetails.map((post) => {
+                                      return(
+                                              <div>
+                                                 <h5 className="dashboard-name2">{post}</h5>
+                                                 <br></br>
+                                             </div>
+                                           );
+                                         })
+                                       }
                                <br></br>
                                <br></br><br></br>
+                               <a href="" data-toggle="modal" data-target="#schoolModal">
+                                 <img className="edit-gly2"src="https://imageog.flaticon.com/icons/png/512/61/61456.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF"/>
+                               </a>
+                               <div className="modal fade" id="schoolModal" tabIndex="-1" role="dialog" aria-labelledby="schoolModal" aria-hidden="true" >
+                                   <div className="modal-dialog" role="document">
+                                     <div className="modal-content custommodel">
+                                     <div className="modal-body">
+                                       <table>
+                                       <tbody>
+                                             <tr>
+                                               <label className="label-class"> Education*</label>
+                                             </tr>
+                                             <tr>
+                                               <textarea className="about-class"rows="1" cols="50"
+                                               onChange={(event) => { this.userDetails.education = event.target.value}}/>
+
+                                             </tr>
+                                             <tr>
+                                                 <label className="label-class"> School*</label>
+                                             </tr>
+                                             <tr>
+                                               <textarea className="about-class"rows="1" cols="50"
+                                               onChange={(event) => { this.userDetails.school = event.target.value}}/>
+                                             </tr>
+                                         <br></br>
+                                            </tbody>
+                                            </table>
+                                     </div>
+                                         <div className="modal-footer">
+                                             <button type="button" className="btn btn-primary" data-dismiss="modal">Close</button>
+                                             <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(e) => {this.saveExperience(e)}}>Save changes</button>
+                                         </div>
+                                     </div>
+                                     </div>
+                               </div>
            </div>
            </div>
     		 </div>
@@ -164,5 +175,18 @@ saveExperience =(e) => {
       };
   }
 
+  function mapStateToProps(state) {
+    console.log("State",state);
+      return {
+         currentUser: state.LoginReducer.current_user,
+         currentUserDetails: state.LoginReducer.currentUserDetails,
+         userProfileDetails: state.LoginReducer.userProfileDetails
+      };
+  }
 
-export default connect(mapStateToProps,null)(Experience);
+function matchDispatchToProps(dispatch){
+    console.log("Dispatch",dispatch);
+    return bindActionCreators({profileUpdate: profileUpdate}, dispatch);
+}
+
+export default connect(mapStateToProps,matchDispatchToProps)(Experience);
