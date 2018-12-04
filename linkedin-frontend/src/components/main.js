@@ -25,10 +25,11 @@ import DeleteAccount from './applicant/deleteapplicantaccount';
 import LineChartExample from './applicant/linechartexample';
 import UserSearch from './applicant/usersearch';
 import ResumeView from './applicant/resumeview';
-import PlotylyGraph from './graph/plotly';
 import ApplicantHome from "./feed/applicantHome.js";
 import Resumes from "./JobApply/resumes.js";
 import Messages from './messages/messages.js';
+import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard';
+import RecruiterJobsDashboard from './RecruiterJobsDashboard/RecruiterJobsDashboard';
 import PieGraph from './graph/pie.js';
 
 class Main extends Component {
@@ -58,6 +59,8 @@ class Main extends Component {
                 <Route exact path="/usersearch" component={UserSearch}/>
                 <Route exact path="/resumeview" component={ResumeView}/>
                 <Route exact path="/feed" component={ApplicantHome} />
+                <Route exact path="/recruiter/dashboard" component={RecruiterDashboard} />
+                <Route exact path="/recruiter/myjobs" component={RecruiterJobsDashboard} />
                 <Route exact path="/mynetwork/connections" component={ShowConnectedUsers} />
                 <Route exact path="/messages" component={Messages} />
                 <Route exact path="/citywiseapplication" component={CityApplications} />
@@ -66,8 +69,6 @@ class Main extends Component {
                 </Switch>
             </Router>
             </Provider>
-
-
     );
   }
 }

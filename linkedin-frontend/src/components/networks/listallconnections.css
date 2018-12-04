@@ -1,11 +1,11 @@
-.card {
+.cardneha {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     width: 33%;
     
 }
 
-.outer-card {
+.outer-cardneha {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     width: 62%;
@@ -16,7 +16,7 @@
     width: 95%;
 }
 
-.card:hover {
+.cardneha:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 

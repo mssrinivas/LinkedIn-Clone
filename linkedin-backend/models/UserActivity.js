@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 
 var UserActivity = mongoose.model('UserActivity',{

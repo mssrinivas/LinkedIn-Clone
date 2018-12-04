@@ -96,6 +96,8 @@ var userschema = mongoose.Schema({
     ],
     waiting:[
     ],
+
+    
     resume_path: {type : Array, required : false},
     saved_job : {type : Array, required : false},
     applied_job:{type : Array, required : false}

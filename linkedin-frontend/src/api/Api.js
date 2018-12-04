@@ -1,3 +1,4 @@
+
 import BASE_URL from './../components/constants/constants.js';
 import {history} from "../util/utils";
 import {userLoggedIn} from './../actions/index';
@@ -48,7 +49,7 @@ export const userLogin = function(userDetail){
          dispatch(userLoggedIn(result));
          history.push('/feed');
          // history.push('/userprofile');
-          history.push('/listings');
+          //history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");
@@ -112,7 +113,7 @@ export const profileUpdate = function(userDetail){
 
 export const customApplyJob =  (values) =>  dispatch =>  {
   console.log("applicant name inside custom apply action: " + values.firstname);
-
+  
     axios.defaults.withCredentials = true;
     axios.post(`${server_url}/apply/job`, values)
         .then(res => {
@@ -123,14 +124,54 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 type :  CUSTOM_APPLY_SUCCESS,
                 payload: true
               })
+            } 
+            else if(res.status == 200 && res.data == "Already applied"){
+              // dispatch({
+              //   type :  CUSTOM_APPLY_FAIL,
+              //   payload: true
+              // })
+              alert("Already applied for this job")
             }
-            // else if(res.status==401){
-            //   alert(res.message);
-            //   // throw "userlogin Failed !!!"
-            // }
+           else {
+             alert("Oops !! Something went wrong. Login again")
+           }
         })
  };
 
+//  export const respondToFriendRequest =  (values) =>  dispatch =>  {
+//   console.log("User details while sending friend request: " + values.firstname);
+
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/user/respondtorequest`, values)
+//         .then(res => {
+//           console.log("response status : " + res.status);
+//           if(res.status == 200 && res.data == "Applied successfully"){
+//             // console.log("booking failure : " + res.data);
+//               dispatch({
+//                 type :  CUSTOM_APPLY_SUCCESS,
+//                 payload: true
+//               })
+//             }
+//         })
+//  };
+
+//  export const sendFriendRequest =  (values) =>  dispatch =>  {
+//   console.log("User details while sending friend request: " + values.firstname);
+
+//     axios.defaults.withCredentials = true;
+//     axios.post(`${server_url}/user/requestconnection`, values)
+//         .then(res => {
+//           console.log("response status : " + res.status);
+//           if(res.status == 200 && res.data == "Applied successfully"){
+//             // console.log("booking failure : " + res.data);
+//               dispatch({
+//                 type :  CUSTOM_APPLY_SUCCESS,
+//                 payload: true
+//               })
+//             }
+//         })
+//  };
+ 
 
 //  export const SendMessage =  (values) =>  dispatch =>  {
 //   console.log("Message to be added: " + values.Message);

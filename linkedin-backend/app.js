@@ -11,6 +11,11 @@ var messages = require('./routes/messages');
 var applications = require('./routes/applications');
 var dashboard = require('./routes/dashboard.js');
 const multer = require('multer');
+var jobpostings = require('./routes/postjob.js');
+var jobs = require('./routes/jobs.js');
+var activitytracker = require('./routes/activitytracker.js')
+var activitytrackerincomplete = require('./routes/activitytrackerincomplete.js')
+var dashboard = require('./routes/dashboard.js');
 var jobs = require('./routes/jobs.js');
 var getjobs = require('./routes/getjobs.js');
 var activitytracker = require('./routes/activitytracker.js')
@@ -21,6 +26,11 @@ const schema = require('./graphqlschema/schema');
 // var {User} = require('./models/user');
 var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
+var getjobs = require('./routes/getjobs');
+//const redis = require('redis');
+var jobpostings = require('./routes/postjob')
+
+
 const redis = require('redis');
 var fs=require('file-system');
 var useractivity = require('./routes/useractivity');
@@ -55,6 +65,14 @@ app.use("/jobs", jobs);
 app.use("/search", search);
 app.use('/user', listusernetwork);
 app.use('/uploadresume', uploadresume);
+app.use('/getjobs', getjobs);
+
+
+app.use('/userdata', activitytracker)
+app.use('/incomplete', activitytrackerincomplete)
+app.use('/jobs',jobs);
+app.use('/recruiter',dashboard);
+app.use('/',jobpostings)
 app.use('/messages', messages);
 app.use('/recruiter', dashboard);
 app.use('/getjobs',getjobs);
@@ -66,6 +84,25 @@ app.get("/start", (request, response) => {
     msg: "Welcome to Linkedin"
   });
 });
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "./resumeFolder");
+//   },
+//   filename: (req, file, cb) => {
+//     const newFilename = `${file.originalname}`;
+//     console.log("filename : " + newFilename);
+//     cb(null, newFilename);
+//   }
+// });
+
+// const uploadPhoto = multer({ storage });
+// app.post("/uploadresume", uploadPhoto.single("selectedFile"), (req, res) => {
+//   console.log("Inside photo upload Handler");
+//   res.writeHead(200, {
+//     "Content-Type": "text/plain"
+//   });
+// });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

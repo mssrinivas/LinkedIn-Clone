@@ -11,6 +11,7 @@ import {bindActionCreators} from 'redux';
 import {userSearch} from './../../api/Api';
 import {jobSearch} from './../../api/Api';
 import {searchCriteriaFilter} from './../../api/Api';
+import {searchFieldAction} from './../../actions/index';
 import {recuriterDashBoardSearch} from './../../api/Api';
 
 class Navbar extends Component {
@@ -416,6 +417,7 @@ class Navbar extends Component {
               >
                 <img src={PostJobIcon} style={{ width: 20 }} />
               </span>
+
               <span>
                 <div
                   style={{

@@ -1,0 +1,476 @@
+.image-class{
+    width:100%;
+    height: 200px;
+    display: float;
+  }
+  .applicant-image{
+    border-radius: 50%;
+    width: 200px;
+    border: 5px solid white;
+    display: float;
+    height: 140px;
+    margin-top: -80px;
+    margin-left: 100px;
+  }
+  .user-first{
+    width:500px;
+    margin-left: -100px;
+    font-family: sans-serif;
+  }
+  .cardstudent{
+    margin-top: 50px;
+    margin-left: -800px;
+    margin-bottom: -400px;
+  
+  }
+  .school-label{
+    margin-left: -50px;
+    font-size: 17px;
+  }
+  .school-text{
+      margin-left: -70px;
+      font-size:17px;
+       border-radius: 1px;
+       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+       padding: 5px;
+       margin-top: 20px;
+       text-align: left;
+  }
+  .education-label{
+    margin-top: 10px;
+    margin-left: -190px;
+    font-size: 17px;
+  }
+  .education-text{
+      margin-left: -70px;
+      font-size:17px;
+       border-radius: 1px;
+       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+       padding: 5px;
+       margin-top: 20px;
+       text-align: left;
+  }
+  .btn-primary{
+      background: #0073b1 none repeat scroll 0 0;
+    border-color: #f0ad4e;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 30px;
+    margin-top: 20px;
+      margin-left: 0px;
+    background-color : rgb(0, 90, 173);
+  }
+  .educationbutton{
+    display: inline-block;
+    width: 300px;
+    height: 38px;
+  }
+  .educationbutton1{
+    display: inline-block;
+    width: 300px;
+    height: 38px;
+    margin-top: 48px;
+  }
+  .skill-label{
+    margin-left: -220px;
+    font-size: 17px;
+  }
+  .skill-text{
+      margin-left: -70px;
+      font-size:17px;
+       border-radius: 1px;
+       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+       padding: 5px;
+       margin-top: 20px;
+       text-align: left;
+  }
+  .experience-label{
+    margin-top: 10px;
+    margin-left: -180px;
+    font-size: 17px;
+  }
+  .experience-text{
+      margin-left: -70px;
+      font-size:17px;
+       border-radius: 1px;
+       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+       padding: 5px;
+       margin-top: 20px;
+       text-align: left;
+  }
+  .cardstudent1{
+    margin-top: -470px;
+    margin-left: 750px;
+    height: 900px;
+    margin-bottom: -400px;
+  }
+  
+  .communitybutton{
+    margin-top: 28px;
+  }
+  .fake-input {
+    position: relative;
+    width:240px;
+  }
+  .fake-text{
+    display:block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size:17px;
+       border-radius: 1px;
+       box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+       padding: 5px;
+     width: 320px;
+       text-align: left;
+     margin-top: 80px;
+     height: 45px;
+   }
+  .fake-image {
+    position: absolute;
+    top: 2px;
+    right: -80px ;
+    height:40px;
+    margin-left: -1000px;
+  }
+  .cardstudent2{
+    margin-top: -920px;
+    margin-left: 1150px;
+  
+    margin-bottom: -400px;
+  }
+  .photo-header{
+    margin-left: 100px;
+  }
+  .image-selector__selector-icon--add-media {
+    background: white url('https://cdn4.iconfinder.com/data/icons/Pretty_office_icon_part_2/256/man.png ') right no-repeat;
+    width: 250px;
+    height: 150px;
+    margin-left: -700px;
+    margin: auto;
+  }
+  .photobutton {
+    margin-top: -120px;
+  }
+  .photobutton1{
+    margin-top: -90px;
+    margin-bottom: 0px;
+  }
+  .submitbutton{
+    position: absolute;
+    margin-top: 400px;
+    margin-left: -130px;
+  }
+  .upload{
+    margin-top: -600px;
+  }
+  .card-display{
+    width: 80%;
+    margin-left: 100px;
+  }
+  .profile{
+    width: 150px;
+    margin-left: 50px;
+  }
+  .profile-headline{
+    font-size: 20px;
+    font-family: Times New Roman;
+    font-weight: 900px;
+    margin-left: 50px;
+  
+  }
+  .profile-area{
+    font-size: 20px;
+    font-family: Times New Roman;
+    font-weight: 900px;
+    margin-left: 50px;
+  }
+  .profile-name{
+    font-size: 26px;
+    font-family: Times New Roman;
+    font-weight: bold;
+    margin-left: 50px;
+  }
+  .card-profilestrength{
+    position: relative;
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 80%;
+    background-color: grey;
+    opacity: .9;
+    background: url("https://previews.123rf.com/images/annaleni/annaleni1605/annaleni160500156/57318371-ley-delgada-l%C3%ADnea-azul-y-sin-fisuras-patr%C3%B3n-de-justicia-dise%C3%B1o-web-site-del-vector-y-fondo-transparente-en-e.jpg");
+    height: 950px;
+  }
+  .profile-resume{
+        border-radius: 1px;
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+        padding: 5px;
+        width: 640px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-color: #f3f6f8;
+        position: relative;
+        margin-left: 50px;
+  }
+  .resume-image{
+    font-size: 20px;
+    vertical-align: baseline;
+    background: 0 0;
+    width: 106px;
+  
+  }
+  .resume-pdf{
+    margin-left: 250px;
+    margin-top: 100px;
+    float: right;
+    position: absolute;
+  }
+  .connection-gly{
+    margin-left: 850px;
+    margin-top: 20px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .connection-link{
+    margin-left: 900px;
+    margin-top: 20px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .contact-gly{
+    margin-left: 850px;
+    margin-top: -30px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .contact-link{
+    margin-left: 900px;
+    margin-top: -30px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .edit-gly{
+    margin-left: 1040px;
+    margin-top: -50px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .edit-link{
+    margin-left: 900px;
+    margin-top: -20px;
+    float: right;
+    position: absolute;
+    height: 20px;
+  }
+  .name-class{
+    margin-left: 0px;
+    width:450px;
+    height: 40px;
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+    text-align: left;
+    padding:10px;
+  }
+  .image-model{
+    position: relative;
+    width:100%;
+    height: 200px;
+    display: float;
+    margin-top: 50px;
+    margin-left: -500px;
+    margin-right: 750px;
+  }
+  .applicant-model{
+    position: relative;
+    border-radius: 50%;
+    width: 200px;
+    border: 5px solid white;
+    display: float;
+    height: 140px;
+    margin-top: 100px;
+    margin-left: -1900px;
+    margin-right: 750px;
+  }
+  .custommodel{
+    width: 1000px;
+    margin-left: -200px;
+    float: left;
+  }
+  .about-class{
+    text-align: left;
+    margin-left: 0px;
+    margin-top: 0px;
+    width:918px;
+    font-weight: 500;
+    font-size: 16px;
+    padding:10px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+  }
+  .lastname-class{
+    margin-left: -450px;
+    width:450px;
+    height: 40px;
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 16px;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: white;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0);
+    text-align: left;
+    padding:10px;
+    position: relative;
+  }
+  .label-class{
+    margin-left: 0px;
+    margin-top: 2px;
+    width:305px;
+    font-weight: 200;
+    font-size: 16px;
+    text-align: left;
+    position: relative;
+  }
+  .labellast-class{
+    position: relative;
+    margin-left: -450px;
+    margin-top: 2px;
+    width:305px;
+    font-weight: 200;
+    font-size: 16px;
+    text-align: left;
+  }
+  .dashboard-name{
+    color:white;
+    margin-left: 50px;
+  }
+  .table{
+    background-color: white;
+    margin-left: 50px;
+    width: 1000px;
+  }
+  .static-card{
+    margin-left: 50px;
+    width: 1000px;
+  }
+  .table1{
+    background-color: white;
+    margin-left: 50px;
+    width: 1000px;
+  }
+  .table2{
+    background-color: white;
+    margin-left: 50px;
+    width: 1000px;
+    border: 1px solid grey;
+  }
+  .career-image{
+    height: 30px;
+    width: 30px;
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+  .details{
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  .details1{
+    margin-left: 50px;
+    font-size: 18px;
+  }
+  .card-experience{
+    position: relative;
+    margin-top: 30px;
+    margin-left: 100px;
+    width: 80%;
+    background-color: rgba(0,0,0,0.05);
+  
+  }
+  .dashboard-name1{
+    margin-left: 30px;
+    color: black;
+    opacity: 0.6;
+  }
+  .dashboard-name2{
+    margin-left: 60px;
+    color: black;
+  }
+  .graph-display{
+    margin-top: 40px;
+    width :500px;
+    height: 500px;
+  }
+  .profile-visitors{
+    color: #0073b1;
+  }
+  .header-graph{
+    margin-left: 200px;
+    margin-top: 100px;
+  }
+  .car-graph-3{
+    width :1000px;
+    height: 500px;
+  }
+  .chart{
+    margin-top: 10px;
+    width :100%;
+    height: 100%;
+  }
+  .user-search{
+    margin-left: 200px;
+    margin-top: 50px;
+  }
+  .image-btn{
+    background-color: white;
+    display: inline;
+    background: transparent;
+    border: white;
+  }
+  .applicantimage-model{
+    width: 300px;
+    height: 200px;
+  }
+  .card-image{
+    margin-left: 30px;
+    float: left;
+  }
+  .tile-container{
+    border: white;
+    position: relative;
+    margin-top: 30px;
+    margin-left: 150px;
+    width:60%;
+  }
+  .message-button{
+    float: right;
+    width: 100px;
+    margin-right: 50px;
+    background-color: white;
+    color: #0073b1;
+    padding-top: 2px;
+    border: 1px solid #0073b1;
+    font-weight: bold;
+    margin-top: -20px;
+    font-size: 16px;
+  }
+  .user-image{
+    border-radius: 50%;
+    width: 100px;
+    border: 5px solid white;
+    display: float;
+    height: 70px;
+    margin-top: 10px;
+    margin-left: 50px;
+  }

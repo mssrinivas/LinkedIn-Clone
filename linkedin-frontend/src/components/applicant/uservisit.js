@@ -18,6 +18,7 @@ import Experience from './experience'
 import ResumeView from './resumeview'
 import {history} from "../../util/utils";
 import {BASE_URL} from './../constants/constants.js';
+import swal from 'sweetalert';
 
 class UserVisit extends Component {
   constructor(props) {
@@ -48,6 +49,24 @@ class UserVisit extends Component {
        this.setState({error : "Connection timed out"});
    })
  }
+
+ RequestConnection = (email) => {
+  console.log("EMAIL IS",email)
+  console.log("current user IS",this.props.currentUser)
+  var data={
+      from:this.props.currentUser,
+      fromDetails:this.props.currentUserDetails,
+      to:email,
+  }
+  axios.post("http://localhost:3001/user/requestconnection",data)
+  .then(function (response) {
+      console.log("response",response.data.notifData.body)
+      // this.setState({
+      //     buttonDisabled:false
+      // })
+      swal("Request Sent", "Request Sent", 'success');
+  })
+}
   render() {
     let resume=""
     if(this.props.clickedUserDetails.resume_path!=null || this.props.clickedUserDetails.resume_path!=undefined) {
@@ -57,6 +76,75 @@ class UserVisit extends Component {
         resume = resume.split('-')[1];
       }
     }
+debugger
+    var connectButton=null;
+    if(this.props.currentUser.length>0){
+    var pendingUsers=this.props.currentUserDetails.pending;
+    var waitingUsers=this.props.currentUserDetails.waiting;
+    var friends=this.props.currentUserDetails.connections;
+    
+    if(this.props.clickedUserDetails.email==this.props.currentUser){
+      connectButton=null;
+    }
+    if(pendingUsers.length==0 && waitingUsers.length==0 && friends.length==0 && !(this.props.clickedUserDetails.email==this.props.currentUser))
+    {
+      console.log("hii...");
+      connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
+    }
+   else if(friends.length>0){
+    console.log("hii.2..")
+    for(var i=0;i<friends.length;i++)
+    {
+      console.log("loop1",friends[i]===this.props.clickedUserDetails.email)
+      console.log(friends[i].email,"--->",this.props.clickedUserDetails.email)
+      if(friends[i].email==this.props.clickedUserDetails.email)
+      {
+        console.log("Matched friends")
+        connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>You are Friends</button>
+      }
+      else{
+        connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
+      }
+    }
+  }
+
+   if(waitingUsers.length>0){
+    console.log("hii..3.")
+    for(var i=0;i<waitingUsers.length;i++)
+    {
+      console.log("loop2")
+      if(waitingUsers[i]==this.props.clickedUserDetails.email)
+      {
+        console.log("already send freind request")
+        connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>Reuqested Connection</button>
+      }
+    }
+    }
+   if(pendingUsers.length>0){
+      console.log("hii..3.")
+      for(var i=0;i<pendingUsers.length;i++)
+      {
+        console.log("loop2")
+        if(pendingUsers[i].email==this.props.clickedUserDetails.email)
+        {
+          console.log("already send freind request")
+          connectButton= <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" disabled>Pending Request</button>
+        }
+      }
+      }
+      // else{
+      //   connectButton=<button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile" onClick={()=>this.RequestConnection(this.props.clickedUserDetails.email)}>Connect</button>
+      // }
+    
+   
+  }
+//     for(var i=0;i<friends.length;i++)
+//     {
+//     if(!friends[i].email==this.props.clickedUserDetails.email){
+//     console.log("No friends")
+    
+//   }
+// }
     return (
     		 <div>
           <Navbar />
@@ -78,7 +166,8 @@ class UserVisit extends Component {
                   <a className="connection-link"> See Connection</a>
                   <br></br>
                   <h5 className="profile-area">{this.props.clickedUserDetails.city!=null? this.props.clickedUserDetails.address : "Please tell us where you stay"}</h5>
-                  <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Connections</button>
+                  {connectButton}
+    
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>
