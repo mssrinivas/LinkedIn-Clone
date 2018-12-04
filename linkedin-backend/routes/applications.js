@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {Applications} = require('./../models/application');
-var {jobpostings} = require('./../models/jobposting');
+var {JobPostings} = require('../models/JobPostings');
 var {User} = require('./../models/user');
 var kafka = require('./../kafka/client.js');
 
@@ -41,7 +41,7 @@ var kafka = require('./../kafka/client.js');
 //     },(err)=>{
 //         console.log("Error While applying custom job");
 //     })
-                  
+
 //   });
 // router.post('/job', function(req, res, next) {
 //     console.log("inside custom apply");
@@ -52,8 +52,8 @@ var kafka = require('./../kafka/client.js');
 //             if(doc){
 //                 console.log("\n..found saved application....\n");
 //                 Applications.update(
-//                     {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
-//                     {$set : 
+//                     {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},
+//                     {$set :
 //                          {
 //                             HowDidYouHear: req.body.hear,
 //                             Email : req.body.email,
@@ -124,8 +124,8 @@ var kafka = require('./../kafka/client.js');
 //             }
 //         }
 //     })
-    
-                  
+
+
 //   });
 router.post('/job', function(req, res, next) {
     console.log("inside custom apply");
@@ -136,8 +136,8 @@ router.post('/job', function(req, res, next) {
             if(doc){
                 console.log("\n..found saved application....\n");
                 Applications.update(
-                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
-                    {$set : 
+                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},
+                    {$set :
                          {
                             HowDidYouHear: req.body.hear,
                             Email : req.body.email,
@@ -262,12 +262,13 @@ router.post('/job', function(req, res, next) {
                     }
 
                 })
-                
+
+
             }
         }
     })
-    
-                  
+
+
   });
 // router.post('/job', function(req, res, next) {
 //     console.log("inside custom apply");
@@ -281,7 +282,7 @@ router.post('/job', function(req, res, next) {
 //                 status:"error",
 //                 msg:"System Error, Try Again."
 //             })
-//         }else{  
+//         }else{
 //             console.log("\nkafka results value : ",results.value);
 //             res.writeHead(200,{
 //                        'Content-Type' : 'application/json'
@@ -290,9 +291,9 @@ router.post('/job', function(req, res, next) {
 //      }
 //     })
 // })
-   
-    
-                  
+
+
+
 
   //applied jobs in dashboard
 
@@ -300,7 +301,7 @@ router.post('/job', function(req, res, next) {
     console.log("inside appled jobs");
     console.log("req sent from applied job dashboard", req.body);
     console.log("applicant id : " + req.params.ID)
-    Applications.find({Applicant_id:req.params.ID, Applied:true, Saved:false}).then((app)=> { 
+    Applications.find({Applicant_id:req.params.ID, Applied:true, Saved:false}).then((app)=> {
         console.log("\nNumber of applied jobs: " + app.length + "\n");
         console.log("Applied jobs : "+ app );
         res.writeHead(200,{
@@ -316,12 +317,12 @@ router.post('/job', function(req, res, next) {
     //     })
     //    res.end("Invalid details");
     }
-                  
+
   );
 });
 // router.get('/applied/:ID', function(req, res, next) {
 //     console.log("inside applied jobs");
-    
+
 //     console.log("applicant id : " + req.params.ID)
 //     kafka.make_request('applied_jobs',req.params.ID, function(err,results){
 //         console.log('\n---- kafka  result of applied jobs dashboard ----');
@@ -332,7 +333,7 @@ router.post('/job', function(req, res, next) {
 //                 status:"error",
 //                 msg:"System Error, Try Again."
 //             })
-//         }else{  
+//         }else{
 //             console.log("\nkafka results value : ",results.value);
 //             res.writeHead(200,{
 //                        'Content-Type' : 'application/json'
@@ -348,7 +349,7 @@ router.get('/saved/:ID', function(req, res, next) {
     console.log("inside saved jobs");
     console.log("req sent from saved job dashboard", req.body);
     console.log("applicant id : " + req.params.ID)
-    Applications.find({Applicant_id:req.params.ID, Saved:true, Applied:false}).then((app)=> { 
+    Applications.find({Applicant_id:req.params.ID, Saved:true, Applied:false}).then((app)=> {
         console.log("\nNumber of saved jobs: " + app.length + "\n");
         console.log("Saved jobs : "+ app );
         res.writeHead(200,{
@@ -364,7 +365,7 @@ router.get('/saved/:ID', function(req, res, next) {
     //     })
     //    res.end("Invalid details");
     }
-                  
+
   );
 });
 // router.get('/saved/:ID', function(req, res, next) {
@@ -379,7 +380,7 @@ router.get('/saved/:ID', function(req, res, next) {
 //                 status:"error",
 //                 msg:"System Error, Try Again."
 //             })
-//         }else{  
+//         }else{
 //             console.log("\nkafka results value : ",results.value);
 //             res.writeHead(200,{
 //                        'Content-Type' : 'application/json'
@@ -389,20 +390,46 @@ router.get('/saved/:ID', function(req, res, next) {
 //     })
 // });
 
+//==============================================================================================
+router.post('/getrecruiterdashboard', function (req,res,next) {
+  console.log("inside get recuriter applicants data",req.body);
+  var mydate = new Date().toISOString();
+  console.log("Value of mydate: ", mydate);
+  var d = new Date();
+  d.setMonth(d.getMonth() - 1);
+  console.log("Value of d: ", d);
+  Applications.find({
+              "RecruiterEmail" : req.body.RecruiterEmail
+
+            })
+  .exec()
+  .then(result => {
+    res.status(200).json({
+        message : "Applications data fetched for the recruiter",
+        userTraceDetails : result
+    });
+  })
+  .catch(err => {
+    console.log("Error : ", err.response);
+    res.status(500).json({
+      message: "internal server error"
+    });
+  });
+});
 router.post('/easy', function(req, res, next) {
     console.log("---Inside easy apply---");
     console.log("req sent from easy apply", req.body);
     Applications.findOne({Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},function(err, doc) {
         if(err){
             console.log(err)
-            res.sendStatus(201); 
+            res.sendStatus(201);
         }
         else{
             if(doc){
                 console.log("\n..found saved application....\n");
                 Applications.update(
-                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false}, 
-                    {$set : 
+                    {Applicant_id:req.body.Applicant_id, Job_id:req.body.Job_id, Saved:true, Applied:false},
+                    {$set :
                          {
                             Email : req.body.email,
                             resume: req.body.resume,
@@ -444,7 +471,7 @@ router.post('/easy', function(req, res, next) {
                     })
                     .catch(err => {
                         console.log("error while updating saved application", err);
-                        res.sendStatus(201); 
+                        res.sendStatus(201);
                     })
             }
             else{
@@ -452,6 +479,6 @@ router.post('/easy', function(req, res, next) {
             }
         }
     })
-                  
+
   });
   module.exports = router;

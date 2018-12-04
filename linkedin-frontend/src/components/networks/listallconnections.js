@@ -73,7 +73,7 @@ class listallconnections extends Component {
       <Navbar></Navbar>
       <div class="col-lg-12 row">
       <div class="col-lg-4">
-      <div class="card" style={{width: "19%",height: "50%",position: "fixed", marginTop:"4%"}}>
+      <div class="cardneha" style={{width: "19%",height: "50%",position: "fixed", marginTop:"4%"}}>
   <h3 style={{textAlign:"center"}}><span style={{fontSize: "30px",color:"#0084bf"}}>{this.state.count}</span></h3>
  <b style={{textAlign:"center"}}> <span>Your connections</span></b>
   <Link to="/mynetwork/connections" style={{cursor:"pointer",margin:"auto", color:"#0084bf"}}>see all</Link>
@@ -85,7 +85,7 @@ class listallconnections extends Component {
           <PendingInvitation ></PendingInvitation>
             </div>
           </div>
-          <div class="outer-card" style={{marginTop : "10%"}}>
+          <div class="outer-cardneha" style={{marginTop : "10%"}}>
           <div class="row">
           {userlist}
           </div>

@@ -20,7 +20,8 @@ class JobListing extends Component {
             customApply : false,
             easyApply : false,
             error : null,
-            saveApplyJobMessage : null
+            saveApplyJobMessage : null,
+            previoustime : new Date()
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -29,8 +30,7 @@ class JobListing extends Component {
         this.easyApply = this.easyApply.bind(this);
     }
 
-    componentDidMount(){
-
+    componentWillMount(){
         const url = BASE_URL+"/jobs/search";
         axios.get(url).then((response)=>{
             const {status} = response;
@@ -46,7 +46,6 @@ class JobListing extends Component {
     }
 
     async saveJob(position){
-
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
         const data = {
@@ -126,7 +125,7 @@ class JobListing extends Component {
         Last_name : data.lastname,
         postingDate : posting.postingDate,
         CompanyLogo : posting.CompanyLogo
-    } 
+    }
 
         if(data.file != null){
 
@@ -136,11 +135,11 @@ class JobListing extends Component {
             const timestamp = new Date().getTime();
             const resumeName = "http://localhost:3001/resumeFolder/"+this.props.user._id+"/"+timestamp+"-"+data.file.name;
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume:resumeName});
-            
+
             let formData = new FormData();
             formData.set("savejob",JSON.stringify(newDataToBeSent));
             formData.set("files",data.file);
-            
+
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){
@@ -186,6 +185,34 @@ class JobListing extends Component {
 
     jobPostCardClicked(position){
         this.setState({selectedIndex : position});
+        const obj = this.state.postings[position]
+        localStorage.setItem("RECRUITERNAME",obj.recruiterName)
+        var url = 'http://localhost:3001/userdata/job'
+        fetch(url, {
+          method: 'post',
+          credentials : 'include',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            Company: obj.CompanyName,
+            JobTitle: obj.JobTitle,
+            recruiterName: obj.recruiterName
+           })
+        })
+        .then(response => response.json())
+        .then(poststatus => {
+          console.log(poststatus)
+          if(poststatus === "Tracked Successfully")
+          {
+            alert("Click Tracked")  
+          }
+          else
+          {
+            alert("Click Not Tracked")
+          }
+      })
+
+
+
     }
 
     _onMessageWasSent(message) {
@@ -207,7 +234,9 @@ class JobListing extends Component {
       }
 
     render() {
-        
+      if(this.props.jobSearch.joblistings!=null && this.props.jobSearch.joblistings != undefined && this.props.jobSearch.joblistings.length!=0 && this.props.jobSearch.joblistings!=[]) {
+          this.state.postings = this.props.jobSearch.joblistings
+      }
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
@@ -242,6 +271,7 @@ class JobListing extends Component {
                     <div className={descriptionClassName}>
                         {jobdescription}
                         {launcher}
+                        &nbps;&nbps;&nbps;<p>Recruiter Name : {localStorage.getItem("RECRUITERNAME")}</p>
                     </div>
                     <div className="col-md-1"></div>
                 </div>
@@ -254,7 +284,9 @@ class JobListing extends Component {
 
 const mapStateToProps = (state) =>{
     return {
-        user : state.LoginReducer.currentUserDetails
+        user : state.LoginReducer.currentUserDetails,
+        jobSearch : state.LoginReducer.jobSearch,
+        jobSearchCriteria : state.LoginReducer.jobSearchCriteria
     }
 }
 

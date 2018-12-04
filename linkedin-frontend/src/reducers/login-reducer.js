@@ -8,11 +8,15 @@ import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 const initialState = {
         current_user: '',
         currentUserDetails:{},
+        clickedUserDetails:{},
         userTraceActivity:[],
         userDetails:{},
         applicant_id:'',
         message:'',
         userSearch:[],
+        applicationDetails:[],
+        jobSearch:[],
+        searchCriteria:'',
         recruiter_flag:false,
         applied : false,
         customJobPost : {}
@@ -55,10 +59,30 @@ export default function (state = initialState, action) {
               userTraceActivity : action.data.userTraceDetails
             })
             case 'USER_SEARCH_ACTIVITY':
-              console.log("User search activity", action.data.result);
               return Object.assign({}, state, {
               message: action.data.message,
               userSearch : action.data.result
+            })
+            case 'RECRUITER_DASHBOARD_FETCH':
+              return Object.assign({}, state, {
+              message: action.data.message,
+              applicationDetails : action.data.userTraceDetails
+            })
+            case 'USER_CLICK_ACTIVITY':
+              return Object.assign({}, state, {
+              message: action.data.message,
+              clickedUserDetails : action.data.userDetails
+            })
+            case 'SEARCH_FIELD_ACTIVITY':
+              console.log("Search Field activity: ", action.data);
+              return Object.assign({}, state, {
+              searchCriteria: action.data,
+              userSearch:[]
+            })
+            case 'JOBSEARCH_FIELD_ACTIVITY':
+              console.log("Search Field activity: ", action.data);
+              return Object.assign({}, state, {
+              jobSearchCriteria:action.data
             })
             case CUSTOM_APPLY_SUCCESS:
               console.log("Custom apply job reducer");

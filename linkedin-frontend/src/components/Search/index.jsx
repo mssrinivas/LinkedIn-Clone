@@ -20,28 +20,7 @@ class Search extends Component {
   }
   submitMessages = (ID, first_name, last_name, e) => {
     e.preventDefault();
-    
-    // if (this.props.currentUser.recruiter_flag == 0){ //current user is applicant
-    //   var values = {
-    //     Applicant_id : this.props.currentUser._id,
-    //     Recruiter_First_name : first_name,
-    //     Recruiter_Last_name : last_name,
-    //     Applicant_First_name : this.props.currentUser.first_name,
-    //     Applicant_Last_name : this.props.currentUser.last_name,
-    //     Recruiter_id : ID,
-    //     Message : ""
-    // }
-    // }else{
-    //   var values = {   
-    //     Recruiter_id : this.props.currentUser._id,
-    //     Recruiter_First_name : this.props.currentUser.first_name,
-    //     Recruiter_Last_name : this.props.currentUser.last_name,
-    //     Applicant_First_name : first_name,
-    //     Applicant_Last_name : last_name,
-    //     Applicant_id : ID,
-    //     Message : ""
-    //   }
-    // }
+
     const values = {
       From_id : this.props.currentUser._id,
       To_id : ID,
@@ -60,17 +39,17 @@ class Search extends Component {
                      if(response.status === 200 && response.data == "Started Conversation"){
                             console.log("inside")
                             console.log("response", response.data);
-                         
+
                          this.setState({
                           redirectVar : <Redirect to= "/messages"/>
                          })
-                      
+
                      }
     });
-    
+
 }
   render() {
-   
+
     let users_list = this.props.userSearch.map(user => {
       return (
         <div
@@ -101,11 +80,11 @@ class Search extends Component {
       );
     });
     return (
-      
+
       <React.Fragment>
       {this.state.redirectVar}
         <Navbar />
-        
+
         {users_list}
       </React.Fragment>
     );

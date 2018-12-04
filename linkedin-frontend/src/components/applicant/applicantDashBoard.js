@@ -5,6 +5,7 @@ import './applicantprofile.css';
 import LineChart from './../graph/line_chart';
 import Navbar from './../navbar/Navbar.jsx';
 import {userSearch} from './../../api/Api';
+import {recuriterDashBoardSearch} from './../../api/Api';
 
 class ApplicantDashBoard extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class ApplicantDashBoard extends Component {
     this.state={
       map:''
     }
+    this.userDetails={};
     this.userAnalysisData = {
       date:['23rd Nov','22nd Nov','21st Nov','20th Nov','19th Nov','18th Nov','17th Nov'],
       count: ['6','5','4','7','8','3','2']
@@ -110,7 +112,8 @@ class ApplicantDashBoard extends Component {
 
 clickSearch =(e) => {
   e.preventDefault();
-  this.props.userSearch();
+  this.userDetails.RecruiterEmail = this.props.currentUserDetails.email;
+  this.props.recuriterDashBoardSearch(this.userDetails);
 }
   render() {
     return (
@@ -139,12 +142,13 @@ clickSearch =(e) => {
 function mapStateToProps(state) {
     return {
         userTraceActivity: state.LoginReducer.userTraceActivity,
+        currentUserDetails : state.LoginReducer.currentUserDetails
     };
 
 }
 function matchDispatchToProps(dispatch){
     console.log("Dispatch",dispatch);
-    return bindActionCreators({userSearch: userSearch}, dispatch);
+    return bindActionCreators({userSearch: userSearch, recuriterDashBoardSearch: recuriterDashBoardSearch}, dispatch);
 }
 
 export default connect(mapStateToProps,matchDispatchToProps)(ApplicantDashBoard);

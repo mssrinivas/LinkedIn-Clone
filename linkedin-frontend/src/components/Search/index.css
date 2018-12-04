@@ -7,7 +7,7 @@
       inset 0 0 0 1px transparent;
     display: inline;
   }
-  
+
   #profile-image {
     border-radius: 49.9%;
   }
@@ -16,11 +16,11 @@
     color: rgba(0, 0, 0, 0.6);
     font-size: 12px;
   }
-  
+
   #designation {
     font-size: 14px;
   }
-  
+
   #name {
     font-size: 16px;
     font-weight: 600;

@@ -12,9 +12,14 @@
 	padding-left: 50px;
 
 }
+
+.textareawidth {
+	width: 400px !important;
+}
 .smally
 {
-    font-size: 12px;
+	font-size: 12px;
+	padding-left: 30px;
 }
 
 .leftbutton
@@ -22,6 +27,10 @@
 	align-content: left;
 }
 
+.widthdropdown
+{
+	width: 175px !important;
+}
 .shadowingcontainer
 {
 

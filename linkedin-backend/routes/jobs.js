@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {Applications} = require('./../models/application.js');
-var {jobpostings} = require('./../models/jobposting.js');
+var {JobPostings} = require('../models/JobPostings');
 var {User} = require('./../models/user.js');
 var {mongoose} = require('../db/mongoose');
 var jobpostings_db = require('../db/jobpostings.js');
@@ -46,7 +46,6 @@ router.get("/search",(request,response,next)=>{
     jobpostings_db.searchJobs(null).then((joblistings)=>{
         console.log(joblistings);
         response.status(200).json({ joblistings });
-
     }).catch((msg)=>{
         console.log(msg);
         response.status(201).json({ msg });
@@ -63,8 +62,8 @@ router.get("/search",(request,response,next)=>{
 //                 console.log("Inside err");
 //                 console.log(results.value);
 //                 response.status(201).json({ "msg" : results.value });
-               
-//             }else{  
+
+//             }else{
 //                 //const{value} = results;
 //                 console.log("\nApplication to be saved : ",results.value);
 //                 // res.writeHead(200,{
@@ -77,7 +76,7 @@ router.get("/search",(request,response,next)=>{
 // });
     // jobpostings.searchJobs(null).then((joblistings)=>{
     //     console.log(joblistings);
-        
+
 
     // }).catch((msg)=>{
     //     console.log(msg);
@@ -104,7 +103,7 @@ router.post("/save/:jobid", async (request, response, next) => {
             easyApply: easyApply,
             postingDate : postingDate
         });
-        
+
         const savedApplication = await application.save();
         console.log(savedApplication);
         response.sendStatus(200);
@@ -114,16 +113,16 @@ router.post("/save/:jobid", async (request, response, next) => {
     }
 });
 // router.post("/save/:jobid", function(req, res, next){
-    
+
 //         console.log("inside jobs save");
 //         const jobid = req.params.jobid;
 //         console.log("jobid ",jobid );
 //         const { companyName, jobTitle, jobLocation, applicant_id, email, companyLogo, easyApply } = req.body;
 //         // console.log(request.body);
-//         let reqBody = Object.assign({},req.body, {jobid})  
+//         let reqBody = Object.assign({},req.body, {jobid})
 //         console.log("reqBosy jobid" + reqBody.jobid)
 //         console.log("printing reqBody")
-//         console.log(reqBody); 
+//         console.log(reqBody);
 //         kafka.make_request('job_save',reqBody, function(err,results){
 //             console.log('---- kafka  result of saving job----');
 //             console.log("\nResults  :" + JSON.stringify(results));
@@ -133,15 +132,15 @@ router.post("/save/:jobid", async (request, response, next) => {
 //                     status:"error",
 //                     msg:"System Error, Try Again."
 //                 })
-//             }else{  
+//             }else{
 //                 console.log("\nApplication to be saved : ",results.value);
 //                 res.writeHead(200,{
 //                     'Content-Type' : 'application/json'
 //                 });
 //                 res.end(JSON.stringify(results.value));
 //          }
-//         })     
-        
+//         })
+
     // } catch (error) {
     //     console.log(error);
     //     response.sendStatus(201);
@@ -153,8 +152,8 @@ router.post("/easyapply/:jobid", async (request,response)=>{
     var data = request.body;
     console.log("job id:"+jobid);
     console.log("data :"+JSON.stringify(data));
-    
-    
+
+
     const easyApplyApplication = new Applications({
         Job_id :jobid,
         CompanyName : data.CompanyName,
@@ -173,16 +172,16 @@ router.post("/easyapply/:jobid", async (request,response)=>{
         postingDate : data.postingDate,
         CompanyLogo : data.CompanyLogo
     });
-    
+
     try{
         let saveApplication = await easyApplyApplication.save()
-        let incrementApplicants = await jobpostings.findOneAndUpdate({"_id":jobid},{$inc:{ "numberofApplicants":1}});
+        let incrementApplicants = await JobPostings.findOneAndUpdate({"_id":jobid},{$inc:{ "numberofApplicants":1}});
         let addToAppliedJobArray = await User.findByIdAndUpdate({"_id":data.Applicant_id},{ $addToSet:{applied_job:jobid}});
     }catch(err){
         console.log(err);
         response.status(201);
     }
-    
+
     console.log("saved");
     response.sendStatus(200);
 
@@ -198,7 +197,7 @@ router.post("/easyapply/:jobid", async (request,response)=>{
     Saved :{type : Boolean, default : false, required : true},
     easyApply : {type : Boolean, default : false, required : true},
     */
-   
+
 });
 
 router.post("/easyapplywithfile/:jobid",(request,response)=>{
@@ -232,17 +231,17 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                 CompanyLogo : savedjob.CompanyLogo
             });
 
-            
+
             easyApplyApplication.save((err,jobapplied)=>{
-                if(err){ 
+                if(err){
                     console.log(err);
-                    response.sendStatus(201); 
+                    response.sendStatus(201);
                 }
-                else{ 
+                else{
                     console.log("in success of easy apply with file")
-                    jobpostings.findOneAndUpdate({"_id":jobid},{$inc:{ "numberofApplicants":1}},(err,success)=>{
-                        if(err){ 
-                            console.log(err); 
+                    JobPostings.findOneAndUpdate({"_id":jobid},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                        if(err){
+                            console.log(err);
                             response.sendStatus(201);
                         }
                         else{
@@ -254,10 +253,10 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                                 }else{
                                     console.log("in success of applied job array user");
                                     response.sendStatus(200);
-                                    
+
                                 }
                             })
-                            
+
                         }
                     });
                     
