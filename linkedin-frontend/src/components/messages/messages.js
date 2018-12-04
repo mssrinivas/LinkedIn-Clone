@@ -31,8 +31,50 @@ class Messages extends Component {
     componentDidMount(){
         console.log("inside cwm")
         let ID = this.props.user._id;
-        if(this.props.user.recruiter_flag == 0){
-            axios.get(`${BASE_URL}/messages/ainbox/`+ID)
+        // if(this.props.user.recruiter_flag == 0){
+        //     axios.get(`${BASE_URL}/messages/ainbox/`+ID)
+        //          .then(response => {
+        //              console.log("status " ,response.status );
+        //              console.log("response", response.data);
+        //              //console.log("response data : " + JSON.stringify(response.data));
+        //              if(response.status === 200){
+        //                     console.log("inside")
+        //                     console.log("response", response.data);
+
+        //                     var {connections} = this.state;
+                            
+        //                  this.setState({
+        //                      connections : connections.concat(response.data)
+        //                  },()=>{
+        //                      console.log("connection state  updated");
+        //                      console.log(this.state.connections);
+        //                  })
+                         
+                      
+        //              }else {
+        //                  alert("Could not fetch conversations!!")
+        //              }
+        // });
+        // }else {
+        //     axios.get(`${BASE_URL}/messages/rinbox/`+ID)
+        //          .then(response => {
+        //              console.log("status " ,response.status );
+        //              console.log("response", response.data);
+        //              //console.log("response data : " + JSON.stringify(response.data));
+        //              if(response.status === 200){
+        //                     console.log("inside")
+        //                     console.log("response", response.data);
+                         
+        //                  this.setState({
+        //                      connections : this.state.connections.concat(response.data)
+        //                  })
+                      
+        //              }else {
+        //                 alert("Could not fetch conversations!!")
+        //             }
+        // });
+        // }
+        axios.get(`${BASE_URL}/messages/ainbox/`+ID)
                  .then(response => {
                      console.log("status " ,response.status );
                      console.log("response", response.data);
@@ -53,44 +95,6 @@ class Messages extends Component {
                       
                      }
         });
-        }else {
-            axios.get(`${BASE_URL}/messages/rinbox/`+ID)
-                 .then(response => {
-                     console.log("status " ,response.status );
-                     console.log("response", response.data);
-                     //console.log("response data : " + JSON.stringify(response.data));
-                     if(response.status === 200){
-                            console.log("inside")
-                            console.log("response", response.data);
-                         
-                         this.setState({
-                             connections : this.state.connections.concat(response.data)
-                         })
-                      
-                     }
-        });
-        }
-        // axios.get(`${BASE_URL}/messages/ainbox/`+ID)
-        //          .then(response => {
-        //              console.log("status " ,response.status );
-        //              console.log("response", response.data);
-        //              //console.log("response data : " + JSON.stringify(response.data));
-        //              if(response.status === 200){
-        //                     console.log("inside")
-        //                     console.log("response", response.data);
-
-        //                     var {connections} = this.state;
-                            
-        //                  this.setState({
-        //                      connections : connections.concat(response.data)
-        //                  },()=>{
-        //                      console.log("connection state  updated");
-        //                      console.log(this.state.connections);
-        //                  })
-                         
-                      
-        //              }
-        // });
         
     }
 
@@ -111,32 +115,23 @@ class Messages extends Component {
                 alert("Please select a connection")
                 return
             }
-            if(this.props.user.recruiter_flag == 0){
-                var values = {
-                    Applicant_id : this.props.user._id,
-                    Recruiter_id : this.state.connections[this.state.connectionClickedIndex].Recruiter_id,
-                    Message : this.props.user.first_name + ":" + this.state.message
-                }
-            }else{
-                var values = {
-                    Recruiter_id : this.props.user._id,
-                    Applicant_id : this.state.connections[this.state.connectionClickedIndex].Applicant_id,
-                    Message : this.props.user.first_name + ":" + this.state.message
-                }
+            // if(this.props.user.recruiter_flag == 0){
+            //     var values = {
+            //         Applicant_id : this.props.user._id,
+            //         Recruiter_id : this.state.connections[this.state.connectionClickedIndex].Recruiter_id,
+            //         Message : this.props.user.first_name + ":" + this.state.message
+            //     }
+            // }else{
+            //     var values = {
+            //         Recruiter_id : this.props.user._id,
+            //         Applicant_id : this.state.connections[this.state.connectionClickedIndex].Applicant_id,
+            //         Message : this.props.user.first_name + ":" + this.state.message
+            //     }
+            // }
+            const values = {
+                Message : this.props.user.first_name + " : " + this.state.message,
+                ID : this.state.connections[this.state.connectionClickedIndex]._id
             }
-            // if(this.props.user._id == this.state.connections[this.state.connectionClickedIndex].To_id)
-            // {
-            //     To_id = this.props.user._id
-            //     From_id = this.state.connections[this.state.connectionClickedIndex].From_id
-            // }else if (this.props.user._id == this.state.connections[this.state.connectionClickedIndex].From_id){
-            //     From_id = this.props.user._id
-            //     To_id = this.state.connections[this.state.connectionClickedIndex].To_id
-            // }
-            // const values = {
-            //      From_id :From_id, 
-            //      To_id : To_id, 
-            //      Message : this.props.user.first_name + " : " + this.state.message
-            // }
             // const userid = this.props.user._id;
             // const recruiterid = this.state.connections[this.state.connectionClickedIndex].Recruiter_id;
             // const message = this.state.message;
@@ -147,7 +142,7 @@ class Messages extends Component {
                 
                     if(res.status == 200){
                         var {connections,message,connectionClickedIndex} = this.state;
-                        connections[connectionClickedIndex].Chat.concat(this.props.user.first_name + ":" + this.state.message);
+                        connections[connectionClickedIndex].Chat.concat(this.props.user.first_name + " : " + this.state.message);
                         this.setState({
                             connections,
                             message:""
@@ -176,8 +171,17 @@ class Messages extends Component {
             chat = connections[connectionClickedIndex].Chat.map((message,index)=>{
                 return(<ChatCard key={index} text={message} />)
             });
-
-            connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].First_name} {connections[connectionClickedIndex].Last_name}</p>
+            // if(this.props.user.recruiter_flag == 0){
+            //     connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].Recruiter_First_name} {connections[connectionClickedIndex].Recruiter_Last_name}</p>
+            // }else{
+            //     connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].Applicant_First_name} {connections[connectionClickedIndex].Applicant_Last_name}</p>
+            // }
+            if(this.props.user.first_name == connections[connectionClickedIndex].From_First_name){
+                connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].To_First_name} {connections[connectionClickedIndex].To_Last_name}</p>
+            }else{
+                connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].From_First_name} {connections[connectionClickedIndex].From_Last_name}</p>
+            }
+            // connectionName = <p className="clearfix" style={{fontSize:'18px',fontWeight:'bold',verticalAlign:'center'}}>{connections[connectionClickedIndex].First_name} {connections[connectionClickedIndex].Last_name}</p>
 
         }else{
             console.log("connections are zero");

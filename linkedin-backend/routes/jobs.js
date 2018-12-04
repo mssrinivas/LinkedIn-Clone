@@ -228,8 +228,8 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                 First_name : savedjob.First_name,
                 Last_name : savedjob.Last_name,
                 resume : savedjob.resume,
-                postingDate : data.postingDate,
-                CompanyLogo : data.CompanyLogo
+                postingDate : savedjob.postingDate,
+                CompanyLogo : savedjob.CompanyLogo
             });
 
             
@@ -260,7 +260,7 @@ router.post("/easyapplywithfile/:jobid",(request,response)=>{
                             
                         }
                     });
-                    ;
+                    
                  }
             });
         }

@@ -67,14 +67,10 @@ class jobs extends Component {
         const { selectedFile } = this.state;
         console.log(form.Job_id);
         console.log(form.postingDate);
-    
-        var existingResumeFilePath = this.props.user.resume_path[form.existingresume];
-        const fields = existingResumeFilePath.split("/");
-        
-        var filename=fields.pop();
+       
         let Applicant_id = this.props.user._id;
-        console.log("existing resume path" , existingResumeFilePath)
-        console.log("existing resume" , filename)
+       
+      
         console.log("selected file name: " + selectedFile.name);
        
         if(selectedFile.name==undefined && form.existingresume==null){
@@ -124,6 +120,12 @@ class jobs extends Component {
             
         }
         else{
+            
+            var existingResumeFilePath = this.props.user.resume_path[form.existingresume];
+            const fields = existingResumeFilePath.split("/");
+            console.log("existing resume path" , existingResumeFilePath)
+            var filename=fields.pop();
+            console.log("existing resume" , filename)
             const values = {
                 Applicant_id : this.props.user._id,
                 Job_id : form.Job_id,
@@ -181,11 +183,15 @@ class jobs extends Component {
         let ID = this.props.user._id;
          axios.get(`${BASE_URL}/applications/saved/`+ID)
              .then((response) => {
-            console.log("response data : " + JSON.stringify(response.data));
-        
-            this.setState({
-                results : this.state.results.concat(response.data),
-            });
+                if(response.status == 200){
+                    console.log("response data : " + JSON.stringify(response.data));
+                    this.setState({
+                        results : this.state.results.concat(response.data),
+                    });
+                }else{
+                    alert("Oops! Something went wrong. Login again")
+                }
+            
         });
     //     axios.post(`${BASE_URL}/download/` + "EBT_BO.pdf")
     //                  .then(response => {

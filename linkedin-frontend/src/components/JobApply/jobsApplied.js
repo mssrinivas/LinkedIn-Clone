@@ -20,11 +20,17 @@ class jobsApplied extends Component {
         let ID = this.props.user._id;
          axios.get(`${BASE_URL}/applications/applied/`+ID)
              .then((response) => {
-            console.log("response data : " + response.data);
+            
+            if(response.status == 200) {
+                console.log("response data : " + response.data);
         
-            this.setState({
-                results : this.state.results.concat(response.data),
-            });
+                this.setState({
+                    results : this.state.results.concat(response.data),
+                });
+            }
+            else{
+                alert("Oops! Something went wrong. Login again")
+            }
         });
     }
     render() { 
@@ -38,6 +44,7 @@ class jobsApplied extends Component {
                      <h3 className="jobtitle">{item.JobTitle}</h3>
                     <h4 className="companyname">{item.CompanyName}</h4>
                     <h5 className="joblocation">{item.JobLocation}</h5>
+                    <h5 className="joblocation">Applied On: {new Date(item.appliedDate).toDateString()}</h5> 
                     <hr/>
                     </div>
                     

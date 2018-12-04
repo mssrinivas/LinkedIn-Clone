@@ -118,10 +118,16 @@ export const customApplyJob =  (values) =>  dispatch =>  {
                 payload: true
               })
             } 
-            // else if(res.status==401){
-            //   alert(res.message);
-            //   // throw "userlogin Failed !!!"
-            // }
+            else if(res.status == 200 && res.data == "Already applied"){
+              // dispatch({
+              //   type :  CUSTOM_APPLY_FAIL,
+              //   payload: true
+              // })
+              alert("Already applied for this job")
+            }
+           else {
+             alert("Oops !! Something went wrong. Login again")
+           }
         })
  };
 
