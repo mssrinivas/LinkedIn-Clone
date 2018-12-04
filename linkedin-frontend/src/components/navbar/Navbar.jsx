@@ -13,7 +13,7 @@ import {jobSearch} from './../../api/Api';
 import {searchCriteriaFilter} from './../../api/Api';
 import {searchFieldAction} from './../../actions/index';
 import {recuriterDashBoardSearch} from './../../api/Api';
-
+import * as UTIL from './../../util/utils';
 class Navbar extends Component {
   constructor() {
     super();
@@ -391,7 +391,7 @@ class Navbar extends Component {
                   Delete Account
                 </Link>
 
-                <Link
+                <Link onClick={UTIL.deleteServerToken}
                   to={{ pathname: "/", state: "" }}
                   className="dropdown-item"
                 >
