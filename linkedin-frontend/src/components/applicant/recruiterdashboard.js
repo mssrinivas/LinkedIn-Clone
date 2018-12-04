@@ -505,7 +505,7 @@ getArrayData() {
 
                 <div className="chart row">
                   <div className="col-md-6">
-                  <div className='bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>
+                  <div className='paddlefftt bg-light-orange dib br1 pa1 ma1 bw1 shadow-1'>
 
                       <div className="car-graph-3">
                       {this.parseData()}

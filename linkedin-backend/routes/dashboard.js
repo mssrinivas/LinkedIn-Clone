@@ -45,11 +45,7 @@ var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/halffilled', function(req, res) {
     console.log("Received Body for HALF FILLED", req.query)
-<<<<<<< HEAD
-    UserActivityIncomplete.find({RecruiterEmail:req.query.mail}).then((app)=> { 
-=======
     UserActivityIncomplete.find({RecruiterEmail:req.query.mail}).then((app)=> {
->>>>>>> f8afdad7ba4d29c8055faefd417aafd6c364afce
         console.log("\n Number of HALFFILLED" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{

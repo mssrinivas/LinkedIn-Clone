@@ -427,6 +427,13 @@
   width :1100px;
   height: 600px;
 }
+
+.paddlefftt
+{
+  margin-left: 30% !important;
+  padding-left: 30%;
+}
+
 .profile-visitors{
   color: #0073b1;
 }
@@ -434,13 +441,15 @@
   margin-left: 200px;
   margin-top: 100px;
   background-color: white;
-  background: transparent
+  background: transparent;
 }
 .header-graph1{
   margin-left: 0px;
   margin-top: -10px;
   background-color: white;
-  background: transparent
+  background: transparent;
+  padding-bottom : 100px !important;
+  padding-left: 9px;
 }
 .car-graph-3{
   width :1000px;

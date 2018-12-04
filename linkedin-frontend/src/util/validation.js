@@ -214,7 +214,7 @@ export function checkValidCity(cityname){
 
 	}
 export function checkValidState(statename){
-	console.log("check valid state ",statename,"statelist.indexOf(statename.toLowerCase())",statelist.indexOf(statename.toLowerCase()));
+//console.log("check valid state ",statename,"statelist.indexOf(statename.toLowerCase())",statelist.indexOf(statename.toLowerCase()));
 	if(typeof statename === "string"){
 		const res = statelist.indexOf(statename.toLowerCase()) > -1;
     if(res){

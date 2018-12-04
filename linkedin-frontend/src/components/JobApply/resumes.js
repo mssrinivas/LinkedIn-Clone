@@ -40,7 +40,11 @@ constructor(props){
           file={fileURL}
           onLoadSuccess={this.onDocumentLoad}
         >
-          <Page pageNumber={pageNumber} />
+        {/* {
+          Array.apply(null, {length: numPages}).map(Number.call, Number).map(page => ( }
+            <Page pageNumber={page} />
+          ))}*/}
+        <Page pageNumber={1} />
         </Document>
         <p>Page {pageNumber} of {numPages}</p>
         </div>

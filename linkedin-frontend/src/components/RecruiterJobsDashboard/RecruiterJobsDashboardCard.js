@@ -11,9 +11,9 @@ class RecruiterJobsDashboardCard extends Component {
 
     render() {
         var image_path=this.props.item.CompanyLogo;
-        const fields = this.props.item.resume.split("/");
-        var filename=fields.pop();
-        var url = "/resumes/"+this.props.item.Applicant_id+"/"+filename;
+        //const fields = this.props.item.resume.split("/");
+        //var filename=fields.pop();
+        var url = "/resumes/"+this.props.item.Applicant_id+"/"+this.props.item.resume;
         return (
             <div className="table2">
              <img className="user-image"src={image_path}/>
