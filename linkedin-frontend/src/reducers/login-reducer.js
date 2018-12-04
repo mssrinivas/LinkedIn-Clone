@@ -84,7 +84,19 @@ export default function (state = initialState, action) {
                  console.log("Inside updated search job criteria")
                  console.log(action.payload);
                  return Object.assign({},state,{jobSearchCriteria:action.payload })
+            
+            case ADD_JOB_ID_TO_APPLIED_JOB :
+                 console.log("Job add redux");
+                 const appliedJobArray = this.state.currentUserDetails.applied_job;
+                 appliedJobArray.push(action.payload)
+                 return Object.assign({},state,{applied_job:appliedJobArray})
                  
+            case ADD_JOB_ID_TO_SAVED_JOB :
+                 console.log("Job saved redux");
+                 const savedJobArray = this.state.currentUserDetails.saved_job;
+                 savedJobArray.push(action.payload)
+                 return Object.assign({},state,{saved_job:savedJobArray})      
+            
             case 'USER_SEARCH_ACTIVITY':
                   console.log("User search activity", action.data.result);
                   return Object.assign({}, state, {

@@ -21,7 +21,9 @@ class JobListing extends Component {
             customApply : false,
             easyApply : false,
             error : null,
-            saveApplyJobMessage : null
+            saveApplyJobMessage : null,
+            saved_job : [],
+            applied_job:[]
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -42,7 +44,8 @@ class JobListing extends Component {
                 const listings = response.data.joblistings;
 
                 const {applied_job,saved_job} = this.props.user;
-                const notShowJobs = [].concat(applied_job,saved_job);
+                const notShowJobs = [].concat(applied_job,saved_job,this.state.applied_job,this.state.saved_job);
+                
 
                 console.log("not show jobs :"+JSON.stringify(notShowJobs));
 
@@ -64,9 +67,10 @@ class JobListing extends Component {
     }
 
     async saveJob(position){
-
+        console.log("inside save job ")
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
+        console.log(url);
         const data = {
             "companyName" :posting.CompanyName,
             "jobTitle" : posting.JobTitle,
@@ -78,13 +82,21 @@ class JobListing extends Component {
             "RecruiterEmail" : posting.Email
         };
 
+        console.log(data);
         try {
             const response = await axios.post(url,data);
-            switch(response.status){
-                case 200 : this.setState({saveApplyJobMessage:"Job saved successfully",error:null});break;//alert(" Job saved successfully");
-                case 201 : this.setState({saveApplyJobMessage:null,error:"We could not save the job"});break;//alert("We could not save the job");break;
-                default : this.setState({saveApplyJobMessage:null,error:"There was a connection error"});break;//alert("There was a connection error");break;
+            console.log("response status after save"+response.status);
+
+            if(response.status === 200){
+                //alert("Job Saved successfully");
+                const a = this.state.saved_job;
+                a.push(posting._id);
+                this.setState({saveApplyJobMessage:"Job Saved successfully",error:null,saved_job:a,selectedIndex:null});
+                //this.props.addJobIdToSavedJob(posting._id);
+            }else{
+                this.setState({saveApplyJobMessage:null,error:"We could not save the job"});
             }
+            
         } catch (error) {
             //alert("Could not connect to db");
             this.setState({saveApplyJobMessage:null,error : "Could not connect to db"});
@@ -159,7 +171,13 @@ class JobListing extends Component {
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){
-                    this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                    
+                    const a = this.state.applied_job;
+                    a.push(posting._id);
+                    this.setState({saveApplyJobMessage:"Successfully applied for job",error:null,applied_job:a});
+                    //alert("Job applied successfully")
+                    //this.props.addJobIdToAppliedJob(posting._id);
+                    
                 }else{
                     this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
                 }
@@ -188,7 +206,11 @@ class JobListing extends Component {
             const newDataToBeSent = Object.assign({},dataToBeSent,{resume : this.props.user.resume_path[parseInt(data.existingresume)]});
             axios.post(url,newDataToBeSent).then((response)=>{
                     if(response.status === 200){
-                        this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                        const a = this.state.applied_job;
+                        a.push(posting._id);
+                        this.setState({saveApplyJobMessage:"Successfully applied for job",error:null,applied_job:a});
+                        //alert("Job applied successfully");
+                        //this.props.addJobIdToAppliedJob(posting._id);
                     }else{
                         this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
                     }
@@ -226,7 +248,7 @@ class JobListing extends Component {
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
         
-        var {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage} = this.state;
+        var {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage,saved_job,applied_job} = this.state;
         var searchCriteria = this.props.searchCriteria;
 
         /*  Filtering list */
@@ -269,6 +291,11 @@ class JobListing extends Component {
         */
 
         const newPostings = postings.map((post,index)=>{
+        
+        if(applied_job.includes(post._id) || saved_job.includes(post._id)){
+            return false;
+        }    
+        
         var companyNameFilterResult = true;
         var postingDateFilterResult = true;
         var seniorityLevelFilterResult = true;
@@ -278,6 +305,17 @@ class JobListing extends Component {
             const regexCompanyName = new RegExp(CompanyNameFilter,'i');
             companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
             console.log("Company name regex");
+        }
+
+        if(postingDateFilter != ""){
+            const postDate = new Date(post.postingDate).getTime();
+            const filteredDate = new Date(postingDateFilter).getTime();
+
+            if(postDate-filteredDate <0){
+                postingDateFilterResult = false;
+            }
+
+            console.log("Posting Date regex");
         }
 
         if(seniorityLevelFilter != ""){

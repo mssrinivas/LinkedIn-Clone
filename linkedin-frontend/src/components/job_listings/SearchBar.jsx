@@ -32,7 +32,8 @@ class SearchBar extends Component {
   filterByDate =(e)=>{
     //var d =new Date(e).toISOString().substring(0,10);
     //console.log("Date :" + d);
-    this.setState({date : e});
+    console.log("Date :"+e.target.value);
+    this.setState({date : e.target.value});
   }
 
   filterBySeniorityLevel =(e)=>{
@@ -82,7 +83,8 @@ class SearchBar extends Component {
           <div style={{ display: "inline-block", padding: 10 }}>
             
             <div className="form-group form-control">
-              <DatePicker selected={this.state.date} onChange={this.filterByDate} />
+              {/* <DatePicker selected={this.state.date} onChange={this.filterByDate} /> */}
+              <input type="date" onChange={this.filterByDate} placeholder="YYYY-MM-DD" />
             </div>
 
           </div>

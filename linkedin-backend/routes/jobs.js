@@ -124,6 +124,7 @@ router.post("/save/:jobid", async (request, response, next) => {
         
         const savedApplication = await application.save();
         console.log(savedApplication);
+        let addToAppliedJobArray = await User.findOneAndUpdate({"_id":applicant_id},{ $addToSet:{saved_job:jobid}});
         response.sendStatus(200);
     } catch (error) {
         console.log(error);
