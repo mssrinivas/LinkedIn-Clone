@@ -43,7 +43,7 @@ class SearchBar extends Component {
 
   updateJobSearchCriteria = (e)=>{
     const criteria = {
-      CompanyName : this.state.CompanyName,
+      //CompanyName : this.state.CompanyName,
       date : this.state.date=="" ? "" : new Date(this.state.date).toISOString().substring(0,10) ,//YYYY-MM-DD
       seniorityLevel : this.state.seniorityLevel,
       location : this.state.location
