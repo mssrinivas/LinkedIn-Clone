@@ -10,10 +10,7 @@ import {userTraceAction} from './../actions/index';
 import {userSearchAction} from './../actions/index';
 import {searchFieldAction} from './../actions/index';
 import {jobsearchFieldAction} from './../actions/index';
-<<<<<<< HEAD
-=======
 import {recuriterDashBoardTraceAction} from './../actions/index';
->>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 import * as UTIL from './../util/utils';
 import axios from "axios";
 export const CUSTOM_APPLY_SUCCESS = "custom_apply_success";
@@ -140,7 +137,6 @@ export const customApplyJob =  (values) =>  dispatch =>  {
         })
  };
 
-<<<<<<< HEAD
 //  export const respondToFriendRequest =  (values) =>  dispatch =>  {
 //   console.log("User details while sending friend request: " + values.firstname);
 
@@ -175,7 +171,6 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //         })
 //  };
  
-=======
 
 //  export const SendMessage =  (values) =>  dispatch =>  {
 //   console.log("Message to be added: " + values.Message);
@@ -233,7 +228,6 @@ export const customApplyJob =  (values) =>  dispatch =>  {
 //                 };
 // };
 //       };
->>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 
   export const userDelete = function(userDetail){
         return (dispatch) => {
@@ -324,39 +318,9 @@ export const userSearch = function(userDetail){
 export const jobSearch = function(userDetail){
     console.log("Data sent to API:", userDetail);
     return (dispatch) => {
-<<<<<<< HEAD
-    fetch(`${server_url}/jobs/search`, {
-          method: 'POST',
-          credentials:'include',
-          headers: { ...headers,'Content-Type': 'application/json' },
-          mode: 'cors',
-          body: JSON.stringify(userDetail)
-                    }).then(res => {
-                        if(res.status === 200){
-                          console.log("job search data status:",res.status);
-                          return res.json();
-                        }else{
-                          throw "Job data can not be fetched"
-                        }
-                   }).then(result=>{
-                       console.log("result",result," token :",result)
-                       dispatch(jobsearchFieldAction(result));
-                       history.push('/listings');
-                }).catch(err => {
-                  alert(err);
-                        console.log("Error while searching for job!!!");
-                        return err;
-                      });
-                  };
-};
-
-
-
-=======
                           dispatch(jobsearchFieldAction(userDetail));
                   };
                 };
->>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 export const onUserClicked = function(userDetail){
     console.log("Data sent to API on user click:", userDetail);
     return (dispatch) => {
@@ -384,8 +348,6 @@ export const onUserClicked = function(userDetail){
                       });
                   };
 };
-<<<<<<< HEAD
-=======
 export const recuriterDashBoardSearch = function(userDetail){
   console.log("Data sent to API:", userDetail);
       return (dispatch) => {
@@ -413,7 +375,6 @@ export const recuriterDashBoardSearch = function(userDetail){
             });
         };
 };
->>>>>>> 784e76321e1f243d0dd5032e247d2cfecd448a4b
 
 export const searchCriteriaFilter = function(searchCriteria){
     console.log("Data sent to API on entering search criteria click:", searchCriteria);
