@@ -29,6 +29,10 @@ class DeleteAccount extends Component {
 		this.props.userDelete(this.delete);
 	}
 	render() {
+		if(!localStorage.getItem('servertoken'))
+		{
+			history.push('/')
+		}
 		return(
 			<div>
 						<Navbar />

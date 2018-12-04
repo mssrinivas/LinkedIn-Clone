@@ -1,6 +1,7 @@
 import * as UTIL from './../util/utils';
-import {SELECTED_CUSTOM_JOB_POST} from './../components/constants/reduxActionConstants';
+import {SELECTED_CUSTOM_JOB_POST,UPDATED_JOB_SEARCH_CRITERIA,ADD_JOB_ID_TO_APPLIED_JOB,ADD_JOB_ID_TO_SAVED_JOB} from './../components/constants/reduxActionConstants';
 import {CUSTOM_APPLY_SAVED_JOB} from './../components/constants/reduxActionConstants';
+import {RESPOND_TO_FRIEND_REQUEST} from './../components/constants/reduxActionConstants';
 import { CUSTOM_APPLY_SUCCESS } from "../api/Api";
 // import { CUSTOM_APPLY_FAILURE } from "../api/Api";
 
@@ -19,7 +20,15 @@ const initialState = {
         searchCriteria:'',
         recruiter_flag:false,
         applied : false,
-        customJobPost : {}
+        customJobPost : {},
+        jobSearchCriteria : {
+            CompanyName : null,
+            date : "",//YYYY-MM-DD
+            seniorityLevel : null,
+            location : null
+        },
+        userNetworks:{},
+        jobTitle:''
 };
 
 export default function (state = initialState, action) {
@@ -81,8 +90,15 @@ export default function (state = initialState, action) {
             })
             case 'JOBSEARCH_FIELD_ACTIVITY':
               console.log("Search Field activity: ", action.data);
+              // return Object.assign({}, state, {
+              // jobSearchCriteria:action.data
+              const newJobSearchCriteriaFromNavbar = Object.assign({},state.jobSearchCriteria,{CompanyName:action.data.CompanyName});
+              //return Object.assign({}, state, {jobSearchCriteria:action.data})
+              return Object.assign({},state,{jobSearchCriteria : newJobSearchCriteriaFromNavbar});
+            case 'JOBTITLE_UPDATE_ACTIVITY':
+              console.log("Job title Field : ", action.data);
               return Object.assign({}, state, {
-              jobSearchCriteria:action.data
+              jobTitle:action.data
             })
             case CUSTOM_APPLY_SUCCESS:
               console.log("Custom apply job reducer");
@@ -90,7 +106,7 @@ export default function (state = initialState, action) {
                 ...state,
                 applied : action.payload
             }
-            
+
             // case CUSTOM_APPLY_FAILURE:
             //   console.log("Custom apply job reducer failure");
             //   return {
@@ -106,7 +122,36 @@ export default function (state = initialState, action) {
                   console.log("inside custom apply for saved job in dashboard");
                   console.log("payload : " + action.payload)
                   return Object.assign({},state,{customJobPost:action.payload});
-                  
+
+            case UPDATED_JOB_SEARCH_CRITERIA :
+                 console.log("Inside updated search job criteria")
+                 const newJobSerachCriteriaFromSearchBar = Object.assign({},state.jobSearchCriteria,{
+                  date : action.payload.date,//YYYY-MM-DD
+                  seniorityLevel : action.payload.seniorityLevel,
+                  location : action.payload.location
+                 });
+                 //return Object.assign({},state,{jobSearchCriteria:action.payload })
+                 return Object.assign({},state,{jobSearchCriteria:newJobSerachCriteriaFromSearchBar});
+
+
+            case ADD_JOB_ID_TO_APPLIED_JOB :
+                 console.log("Job add redux");
+                 const appliedJobArray = this.state.currentUserDetails.applied_job;
+                 appliedJobArray.push(action.payload)
+                 return Object.assign({},state,{applied_job:appliedJobArray})
+
+            case ADD_JOB_ID_TO_SAVED_JOB :
+                 console.log("Job saved redux");
+                 const savedJobArray = this.state.currentUserDetails.saved_job;
+                 savedJobArray.push(action.payload)
+                 return Object.assign({},state,{saved_job:savedJobArray})
+
+            case RESPOND_TO_FRIEND_REQUEST :
+                  console.log("inside friend request ignore or accept");
+                  console.log("payload : " + action.payload)
+                  return Object.assign({},state,{userNetworks:action.payload});
+
+
             case 'USER_SEARCH_ACTIVITY':
                   console.log("User search activity", action.data.result);
                   return Object.assign({}, state, {

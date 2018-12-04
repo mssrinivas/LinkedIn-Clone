@@ -6,7 +6,7 @@ import axios from 'axios';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
 import RecruiterJobsDashboardCard from './RecruiterJobsDashboardCard';
-
+import {history} from "../../util/utils";
 class RecruiterJobsDashboard extends Component {
     constructor(props){
         super(props)
@@ -17,7 +17,7 @@ class RecruiterJobsDashboard extends Component {
     }
 
     componentDidMount(){
-            const url = " http://localhost:3001/getjobs/myjobs";
+            const url = `${BASE_URL}/getjobs/myjobs`;
             axios.get(url,{
                 params: {
                   mail: this.props.user.email
@@ -32,13 +32,17 @@ class RecruiterJobsDashboard extends Component {
             })
     }
     render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         var SHOWVALUES = null;
         console.log("VALUE",this.state.jobListings.length);
         if(this.state.jobListings.length != 0)
         {
             SHOWVALUES = (this.state.jobListings.map(function (item, index) {
                 console.log("ITEM IS", item)
-                return (                
+                return (
                     <RecruiterJobsDashboardCard item={item}/>
                 )
             }));
@@ -47,7 +51,7 @@ class RecruiterJobsDashboard extends Component {
             <div>
                 <Navbar />
                 <div className="tile-container">
-                 {  
+                 {
                   SHOWVALUES
                  }
               </div>

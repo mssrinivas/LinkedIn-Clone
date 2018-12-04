@@ -11,7 +11,9 @@ import {CUSTOM_APPLY_SAVED_JOB} from './../constants/reduxActionConstants.js';
 import { ReactPDF} from 'react-pdf';
 import PDF from 'react-pdf-js';
 import serialize from 'form-serialize';
+import {history} from "../../util/utils";
 import { Document, Page } from 'react-pdf';
+
 var swal = require('sweetalert')
 var resume = "";
 
@@ -24,7 +26,7 @@ function ExistingResume(props){
     console.log("userid:"+userid+"-filename:"+filename);
     return(
         <div>
-            <input type="radio" name="existingresume" value={index} /> <Link to={url} target="_blank">{filename}</Link>   
+            <input type="radio" name="existingresume" value={index} /> <Link to={url} target="_blank">{filename}</Link>
         </div>
     );
 }
@@ -32,7 +34,7 @@ function ExistingResume(props){
 class jobs extends Component {
     constructor(props){
         super(props);
-        
+
         this.state = {
             results:[],
             easyButton : false,
@@ -67,23 +69,19 @@ class jobs extends Component {
         const { selectedFile } = this.state;
         console.log(form.Job_id);
         console.log(form.postingDate);
-    
-        var existingResumeFilePath = this.props.user.resume_path[form.existingresume];
-        const fields = existingResumeFilePath.split("/");
-        
-        var filename=fields.pop();
+
         let Applicant_id = this.props.user._id;
-        console.log("existing resume path" , existingResumeFilePath)
-        console.log("existing resume" , filename)
+
+
         console.log("selected file name: " + selectedFile.name);
-       
+
         if(selectedFile.name==undefined && form.existingresume==null){
             alert("You cannot apply without a resume");
             return;
         }
         if(selectedFile.name != undefined){
             if(selectedFile.name.slice(-3) !="pdf"){
-                alert("Please upload a pdf file");    
+                alert("Please upload a pdf file");
             }else{
                 console.log("Applicant_id for file upload: " + Applicant_id);
                 console.log("selected file name: " + selectedFile.name);
@@ -116,14 +114,20 @@ class jobs extends Component {
                             }else{
                                 alert("Something went wrong!!")
                             }
-                            
+
                         })
                     }
                 })
             }
-            
+
         }
         else{
+
+            var existingResumeFilePath = this.props.user.resume_path[form.existingresume];
+            const fields = existingResumeFilePath.split("/");
+            console.log("existing resume path" , existingResumeFilePath)
+            var filename=fields.pop();
+            console.log("existing resume" , filename)
             const values = {
                 Applicant_id : this.props.user._id,
                 Job_id : form.Job_id,
@@ -144,12 +148,12 @@ class jobs extends Component {
                 }else{
                     alert("Something went wrong!!")
                 }
-                
+
             })
         }
-        
-       
-        
+
+
+
         // var form = serialize(e.target, { hash: true });
         // const {file} = this.state;
         // console.log("file " , file)
@@ -158,43 +162,47 @@ class jobs extends Component {
         //     alert("You cannot apply without a resume");
         //     return;
         // }
-    
+
         // if(file != null){
         //     if(file.name.slice(-3) !="pdf"){
-        //         alert("Please upload a pdf file");    
+        //         alert("Please upload a pdf file");
         //     }else{
         //         const newForm = Object.assign({},form,{file});
         //         this.props.onSubmitApplication(newForm);
         //     }
-            
+
         // }
         // else{
         //     this.props.onSubmitApplication(form);
         // }
-        
-    
-        
+
+
+
     }
     componentDidMount(){
-        
+
         console.log("inside componentdidmount of saved jobs")
         let ID = this.props.user._id;
          axios.get(`${BASE_URL}/applications/saved/`+ID)
              .then((response) => {
-            console.log("response data : " + JSON.stringify(response.data));
-        
-            this.setState({
-                results : this.state.results.concat(response.data),
-            });
+                if(response.status == 200){
+                    console.log("response data : " + JSON.stringify(response.data));
+                    this.setState({
+                        results : this.state.results.concat(response.data),
+                    });
+                }else{
+                    alert("Oops! Something went wrong. Login again")
+                }
+
         });
     //     axios.post(`${BASE_URL}/download/` + "EBT_BO.pdf")
     //                  .then(response => {
     //                      console.log("---\ninside response of download--- "+ response.data);
     //                      this.setState( {fileName :response.data})
-                            
-                        
+
+
     //                      var imagePreview1 = 'data:application/pdf;base64, ' + response.data;
-                        
+
     //                     //  var propertyArr = nextProps.dashboard.slice();
     //                     //  propertyArr[i].photos = imagePreview1;
     //                     this.setState({
@@ -207,20 +215,24 @@ class jobs extends Component {
         const {results} = this.state
         console.log("easyApply value ", Item.easyApply);
         if(Item.easyApply){
-            
+
             this.setState({easyButton : true});
         }else{
             this.props.SavedCustomApply(Item);
             this.setState({customButton : true});
-            
+
         }
 
     }
-    render() { 
+    render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         const { pageNumber, numPages } = this.state;
         var redirectVar = null;
         if(this.state.customButton){ redirectVar = <Redirect to="/customapply" /> }
-        
+
 
         let jobItem = this.state.results.map(item =>{
             var applyButton = null;
@@ -231,7 +243,7 @@ class jobs extends Component {
   <div class="modal-dialog" role="document">
 
   <form onSubmit={this.submitApplicationHandler} >
-    <div class="modal-content"> 
+    <div class="modal-content">
       <div class="modal-header">
         <h4 className="modalhead">Apply to {item.CompanyName}</h4>
     </div>
@@ -256,7 +268,7 @@ class jobs extends Component {
                 this.props.user.resume_path.map((filename,index)=>{
                     return( <ExistingResume key={index} file={filename} index={index} />  );
                 })
-            
+
             }
         </div>
         <div className="spacing">
@@ -265,7 +277,7 @@ class jobs extends Component {
         </div>
         </div>
       <div class="modal-footer d-flex justify-content-center">
-      
+
       <button type="button" className="but" data-dismiss="modal">Cancel</button>
       <button className="but" type="submit" >Submit Application</button>
       </div>
@@ -290,13 +302,13 @@ class jobs extends Component {
                     {applyButton}
                     </div>
                     <hr/>
-                
-                   
+
+
                 </div>
             )
         })
-        return ( 
-            
+        return (
+
 
             <div className="back">
             {redirectVar}
@@ -311,14 +323,14 @@ class jobs extends Component {
                 <br/>
                 <h4 style={{'margin-top':'30px','margin-left':'100px'}}>Saved Jobs({this.state.results.length})</h4>
                 <hr/>
-                
+
                 {jobItem}
-                    
-                
+
+
                 </div>
                 {/* <div class="modal fade" id="easyApplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content"> 
+    <div class="modal-content">
       <div class="modal-header">
         <h4 className="modalhead">Apply to Mozilla</h4>
     </div>
@@ -341,12 +353,12 @@ class jobs extends Component {
                 this.props.user.resume_path.map((filename,index)=>{
                     return( <ExistingResume key={index} file={filename} index={index} />  );
                 })
-            
+
             }
         </div>
         <div className="spacing">
             <label for="emailid">Resume</label>
-            
+
              {/* <Link to="/test.pdf" target = "_blank">Download Pdf</Link>
              <Link to="/resumes/EBT_BO.pdf" target = "_blank">EBT_BO.pdf</Link> */}
             {/* <Document
@@ -372,7 +384,7 @@ class jobs extends Component {
       </div>
     </div>
   </div>
-</div> */} 
+</div> */}
             </div>
          );
     }

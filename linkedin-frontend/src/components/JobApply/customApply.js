@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 import {BASE_URL} from './../../components/constants/constants.js';
 import Navbar from './../navbar/Navbar.jsx';
 import { Prompt } from 'react-router'
+import {history} from "../../util/utils";
 var swal = require('sweetalert')
 var resume = "";
 var Job_id = "";
@@ -252,6 +253,7 @@ submitApplication = (e) => {
                 console.log("Resume upload Status: " + response.status );
                 console.log("file which was uploaded: " + response.data );
                 resume = response.data;
+                if(this.state.race && this.state.veteran && this.state.gender && this.state.disability && this.state.hear) {
                 const values = {
                     Applicant_id : this.props.user._id,
                     RecruiterEmail : RecruiterEmail,
@@ -277,6 +279,9 @@ submitApplication = (e) => {
                 }
                 console.log("input values" , values)
                 this.props.customApplyJob(values)
+            }else {
+                alert("Please check if all fields are filled")
+            }
             }
 
     });
@@ -289,11 +294,16 @@ submitApplication = (e) => {
     }
 }
     render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
         return (
             <div>
             <Navbar />
             <div className="headerback">
             <div className="applytitle">
+
                 {/* <img className="image1" src="https://media.licdn.com/dms/image/C4E0BAQGHz8JwrMTQ0A/company-logo_200_200/0?e=1550102400&v=beta&t=rYxO6tzuIqWcPYuH6AzMQPsbxiTptwndzJb_q6XTzqo"/> */}
                 <img className="image1" src={this.props.customJobPost.CompanyLogo}/>
             </div>
@@ -321,7 +331,7 @@ submitApplication = (e) => {
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="contact">Phone*</label>
-                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" id="contact" required/>
+                        <input onChange = {this.contactChangeHandler} class="form-control1" type="text" name="contact" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone No. format should be xxx-xxx-xxxx" id="contact" required/>
                     </div>
                     <div class="form-group1">
                         <label className="field-label" for="address">Address*</label>

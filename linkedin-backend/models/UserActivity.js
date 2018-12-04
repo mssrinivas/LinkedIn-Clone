@@ -7,10 +7,3 @@ var UserActivity = mongoose.model('UserActivity',{
 });
 
 module.exports = {UserActivity};
-
-
-
-
-
-
-

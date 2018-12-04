@@ -6,7 +6,7 @@ import Navbar from './../navbar/Navbar.jsx';
 import PendingInvitation from './pendinginvitations';
 import {connect} from 'react-redux';
 import { Link } from "react-router-dom";
-
+import {history} from "../../util/utils";
 class listallconnections extends Component {
   constructor() {
     super();
@@ -15,7 +15,7 @@ class listallconnections extends Component {
         count:0,
     };
     //this.connectRequest=this.connectRequest.bind(this);
-  
+
 }
   componentWillMount(){
   var self=this;
@@ -40,23 +40,18 @@ class listallconnections extends Component {
                 if(response.data.responseData!=null)
                 {
                   self.setState({
-                    data: response.data.responseData,       
+                    data: response.data.responseData,
                 })
                 }
             })
   }
   }
 
-  // connectRequest(user){
-  //   console.log("on hover selected",user);
-  //   axios.get("http://localhost:3001/user/requestconnection")
-  //   .then(function (response) {
-  //       console.log("response",response)
-     
-  //   })
-  // }
-
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let userlist;
     const {data} = this.state;
     if(this.state.data!=null)
@@ -64,7 +59,7 @@ class listallconnections extends Component {
     userlist = this.state.data.map(user => {
       console.log("USER-->",user)
       return(
-          <UserInfoCard email={user.email} firstname={user.first_name} lastname={user.last_name}></UserInfoCard>
+          <UserInfoCard email={user.email} firstname={user.first_name} lastname={user.last_name} headline={user.headline}></UserInfoCard>
       )
     })
   }
@@ -75,8 +70,8 @@ class listallconnections extends Component {
       <div class="col-lg-4">
       <div class="cardneha" style={{width: "19%",height: "50%",position: "fixed", marginTop:"4%"}}>
   <h3 style={{textAlign:"center"}}><span style={{fontSize: "30px",color:"#0084bf"}}>{this.state.count}</span></h3>
- <b style={{textAlign:"center"}}> <span>Your connections</span></b>
-  <Link to="/mynetwork/connections" style={{cursor:"pointer",margin:"auto", color:"#0084bf"}}>see all</Link>
+ <div><center><b style={{textAlign:"center"}}> Your connections</b></center></div>
+ <center><Link to="/mynetwork/connections" style={{cursor:"pointer",margin:"auto", color:"#0084bf"}}>see all</Link></center>
 </div>
       </div>
       <div class="col-lg-8">
@@ -89,7 +84,7 @@ class listallconnections extends Component {
           <div class="row">
           {userlist}
           </div>
-          </div>     
+          </div>
       </div>
       </div>
       </div>

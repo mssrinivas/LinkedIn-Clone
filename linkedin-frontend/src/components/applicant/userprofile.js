@@ -17,12 +17,15 @@ import Navbar from './../navbar/Navbar.jsx';
 import Experience from './experience'
 import ResumeView from './resumeview'
 import {history} from "../../util/utils";
+import {BASE_URL} from './../../components/constants/constants.js';
 
 class UserProfile extends Component {
   constructor(props){
         super(props);
         this.state={
-          show : false
+          show : false,
+          file: true,
+          image: true
         };
         this.data={
         };
@@ -67,8 +70,8 @@ class UserProfile extends Component {
         skills: this.props.currentUserDetails.skills,
         status: this.props.currentUserDetails.status,
         student_flag: (this.props.currentUserDetails.student_flag!=1 ? false : true),
-        profileResume:"http://localhost:3001/resumeFolder/"+this.props.currentUserDetails.applicant_id,
-        profileImage:"http://localhost:3001/uploads/"+this.props.currentUserDetails.applicant_id+".jpeg",
+        profileResume:`${BASE_URL}/resumeFolder/`+this.props.currentUserDetails.applicant_id,
+        profileImage:`${BASE_URL}/uploads/`+this.props.currentUserDetails.applicant_id+".jpeg",
       }
     }
    handleSave=(e)=> {
@@ -76,8 +79,13 @@ class UserProfile extends Component {
       this.userDetails.status = 'Active';
       this.userDetails.applicant_id = this.props.currentUserDetails.applicant_id;
       this.userDetails.student_flag = (this.props.currentUserDetails.student_flag!=1 ? false : true);
-      this.userDetails.profileResume= "http://localhost:3001/resumeFolder/"+this.props.currentUserDetails.applicant_id+"/"+this.userDetails.resumeName,
-      this.props.profileUpdate(this.userDetails);
+      this.userDetails.profileResume= `${BASE_URL}/resumeFolder/`+this.props.currentUserDetails.applicant_id+"/"+this.userDetails.resumeName;
+      if(this.state.file && this.state.image) {
+        this.props.profileUpdate(this.userDetails);
+      }
+      else{
+        alert("Please upload file in correct format only");
+      }
    }
    handleUpload=(event)=> {
          event.preventDefault();
@@ -86,18 +94,25 @@ class UserProfile extends Component {
          const fd=new FormData();
          fd.append('applicant_id',applicantId);
          fd.append('photos',photos,photos.name);
+         if(photos.name.substring(photos.name.lastIndexOf('.')+1) == "pdf") {
          var contentType={
            headers : {
              "content-type" : "multipart/form-data"
            }
          }
-         axios.post('http://localhost:3001/uploadResume/uploadresume',fd,contentType)
+         axios.post(`${BASE_URL}/uploadResume/uploadresume`,fd,contentType)
            .then(res=> {
              console.log("Response here: ", res);
              this.message=res.data.message
              this.userDetails.resumeName=res.data.filename;
+             this.state.file = true;
              alert("Resume uploaded Successfully.!!!");
          })
+       }
+       else {
+         this.state.file = false;
+         alert("Please upload resume only in PDF format")
+       }
  }
  handleImageUpload = (event)=> {
    event.preventDefault();
@@ -106,17 +121,24 @@ class UserProfile extends Component {
    const fd=new FormData();
    fd.append('applicant_id',applicantId);
    fd.append('photos',photos,photos.name);
+   if(photos.name.substring(photos.name.lastIndexOf('.')+1) == "jpeg" || photos.name.substring(photos.name.lastIndexOf('.')+1) == "png" || photos.name.substring(photos.name.lastIndexOf('.')+1) == "jpg") {
    var contentType={
      headers : {
        "content-type" : "multipart/form-data"
      }
    }
-   axios.post('http://localhost:3001/users/uploadprofilepic',fd,contentType)
+   axios.post(`${BASE_URL}/users/uploadprofilepic`,fd,contentType)
      .then(res=> {
        console.log("Response here: ", res);
-       this.message=res.data.message
+       this.message=res.data.message;
+       this.state.image = true;
        alert("Image uploaded Successfully.!!!");
    })
+  }
+  else {
+    this.state.image = false;
+    alert("Please enter the image only in png or jpeg format");
+  }
  }
  graphData =(e) => {
    e.preventDefault();
@@ -134,6 +156,10 @@ class UserProfile extends Component {
  }
 
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     let resume="";
     let workdetails="Working professional with experience of :" +this.userDetails.experience;
     if(this.props.currentUserDetails.resume_path!=null || this.props.currentUserDetails.resume_path!=undefined) {
@@ -221,6 +247,13 @@ class UserProfile extends Component {
 
                             </tr>
                             <tr>
+                              <label className="label-class"> School*</label>
+                            </tr>
+                            <tr>
+                              <textarea className="about-class"rows="1" cols="50" defaultValue={this.props.currentUserDetails.school}
+                            onChange={(event) => { this.userDetails.school = event.target.value}}/>
+                            </tr>
+                            <tr>
                               <label className="label-class"> Job Title*</label>
                             </tr>
                             <tr>
@@ -296,7 +329,10 @@ class UserProfile extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-primary" data-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" data-dismiss="modal" onClick={(e) => { this.handleSave(e) }}>Save changes</button>
+                            <button type="button" onClick={(e) =>
+                            (VALIDATION.checkValidState(this.userDetails.state) && VALIDATION.validatePinCode(this.userDetails.zip_code))==true?this.handleSave(e):''}
+                             className="btn btn-primary">Save changes</button>
+
                         </div>
                 </div>
             </div>
@@ -312,7 +348,7 @@ class UserProfile extends Component {
                   <a className="connection-link"> See Connection</a>
                   <br></br>
                   <h5 className="profile-area">{this.props.currentUserDetails.city!=null? this.props.currentUserDetails.address : "Please tell us where you stay"}</h5>
-                  <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Connections</button>
+
                   <button type="button" data-toggle="modal" data-target="#exampleModal"className="btn-primary profile">Add Profile Section</button>
                   <button type="button" onClick={()=> {this.clickHandler()}} className="btn-primary profile">More...</button>
                   <hr/>

@@ -35,8 +35,12 @@ import RecruiterJobsDashboard from './RecruiterJobsDashboard/RecruiterJobsDashbo
 class Main extends Component {
     render(){
         localStorage.setItem("counter",0)
+<<<<<<< HEAD
         localStorage.setItem("HALFFILLEDRECRUITER","")
         localStorage.setItem("HALFFILLEDJOBTITLE","")
+=======
+        localStorage.setItem("RECRUITERNAME","");
+>>>>>>> f8afdad7ba4d29c8055faefd417aafd6c364afce
         return(
             <Provider store={store}>
             <Router history={history}>

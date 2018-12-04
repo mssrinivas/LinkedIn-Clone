@@ -26,6 +26,11 @@ class ResumeView extends Component {
           }
 
     render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
+
         const {fileName,pageNumber,numPages} = this.state;
         const fileURL = this.props.currentUserDetails.resume_path[0];
         return (
@@ -35,7 +40,11 @@ class ResumeView extends Component {
           file={this.props.currentUserDetails.resume_path[0]}
           onLoadSuccess={this.onDocumentLoad}
         >
-          <Page pageNumber={pageNumber} />
+        {
+          Array.apply(null, {length: numPages}).map(Number.call, Number).map(page => (
+            <Page pageNumber={page} />
+        ))}
+  }
         </Document>
         <p>Page {pageNumber} of {numPages}</p>
         <button onClick ={() => {history.push('./userprofile')}} className="btn btn-primary bookingsuccess1"><strong>Return to User Profile</strong></button>

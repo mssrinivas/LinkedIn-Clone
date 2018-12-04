@@ -6,6 +6,7 @@ import LineChart from './../graph/line_chart';
 import Navbar from './../navbar/Navbar.jsx';
 import {userSearch} from './../../api/Api';
 import {recuriterDashBoardSearch} from './../../api/Api';
+import {history} from "../../util/utils";
 
 class ApplicantDashBoard extends Component {
   constructor(props) {
@@ -116,6 +117,10 @@ clickSearch =(e) => {
   this.props.recuriterDashBoardSearch(this.userDetails);
 }
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     return (
             <div>
               <Navbar />
@@ -129,7 +134,8 @@ clickSearch =(e) => {
                       {this.getAdminDashBoardGraph(this.state.map,
                       "User Views"," User Profile views for last one month")}
                       </div>
-                      <button type="button" onClick={(e) => { this.clickSearch(e) }} className="btn-primary profile">Display Users</button>
+                      <button onClick ={() => {history.push('./userprofile')}} className="btn btn-primary bookingsuccess1"><strong>Return to User Profile</strong></button>
+
                   </div>
                 </div>
                 </div>

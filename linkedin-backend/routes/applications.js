@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var {Applications} = require('./../models/application');
+var {JobPostings} = require('../models/JobPostings');
+var {User} = require('./../models/user');
 var kafka = require('./../kafka/client.js');
 
 //apply custom job
@@ -154,10 +156,31 @@ router.post('/job', function(req, res, next) {
                      })
                     .then(item => {
                         console.log("application after update : ", item);
-                        res.writeHead(200,{
-                            'Content-Type' : 'application/json'
+                        JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                            if(err){
+                                console.log(err);
+                                response.sendStatus(201);
+                            }
+                            else{
+                                console.log("in success");
+                                User.findByIdAndUpdate({"_id":req.body.Applicant_id},{ $addToSet:{applied_job:req.body.Job_id} },(err,success)=>{
+                                    if(err){
+                                        console.log(err);
+                                        response.sendStatus(201);
+                                    }else{
+                                        console.log("In success of custom apply job");
+                                        // response.sendStatus(200);
+                                        res.writeHead(200,{
+                                            'Content-Type' : 'application/json'
+                                        });
+                                        res.end(JSON.stringify("Applied successfully"));
+
+                                    }
+                                })
+
+                            }
                         });
-                        res.end(JSON.stringify("Applied successfully"));
+
                     })
                     .catch(err => {
                         console.log("error while updating saved application", err);
@@ -172,9 +195,13 @@ router.post('/job', function(req, res, next) {
                     else {
                         if(doc){
                             console.log("Already applied to this job ")
-                            res.status(401).json({
-                                message: "Already applied to this job"
+                            // res.status(401).json({
+                            //     message: "Already applied to this job"
+                            // });
+                            res.writeHead(200,{
+                                'Content-Type' : 'application/json'
                             });
+                            res.end(JSON.stringify("Already applied"));
                         }
                         else{console.log("-----it's new application....")
                         const customApplyDetail = new Applications({
@@ -204,14 +231,32 @@ router.post('/job', function(req, res, next) {
                         });
                         customApplyDetail.save().then((result)=> {
                             console.log("apply successful : ",result);
-                                             // res.sendStatus(200).end();
-                                             res.writeHead(200,{
-                                                 'Content-Type' : 'application/json'
-                                             });
-                                             res.end(JSON.stringify("Applied successfully"));
-                        },(err)=>{
-                            console.log("Error While applying to custom job");
+                            JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                                if(err){
+                                    console.log(err);
+                                    response.sendStatus(201);
+                                }
+                                else{
+                                    console.log("in success");
+                                    User.findByIdAndUpdate({"_id":req.body.Applicant_id},{ $addToSet:{applied_job:req.body.Job_id} },(err,success)=>{
+                                        if(err){
+                                            console.log(err);
+                                            response.sendStatus(201);
+                                        }else{
+                                            console.log("In success of custom apply job");
+                                            // response.sendStatus(200);
+                                            res.writeHead(200,{
+                                                'Content-Type' : 'application/json'
+                                            });
+                                            res.end(JSON.stringify("Applied successfully"));
 
+                                        }
+                                    })
+
+                                }
+                            });
+                        },(err)=>{
+                            console.log("Error While applying to custom job", err);
 
                         })}
                     }
@@ -266,10 +311,11 @@ router.post('/job', function(req, res, next) {
     }, (err) => {
         console.log("error : " + err)
         console.log("inside 400");
-        res.writeHead(400,{
-            'Content-Type' : 'text/plain'
-        })
-       res.end("Invalid details");
+        res.sendStatus(400);
+    //     res.writeHead(400,{
+    //         'Content-Type' : 'text/plain'
+    //     })
+    //    res.end("Invalid details");
     }
 
   );
@@ -313,10 +359,11 @@ router.get('/saved/:ID', function(req, res, next) {
     }, (err) => {
         console.log("error : " + err)
         console.log("inside 400");
-        res.writeHead(400,{
-            'Content-Type' : 'text/plain'
-        })
-       res.end("Invalid details");
+        res.sendStatus(400);
+    //     res.writeHead(400,{
+    //         'Content-Type' : 'text/plain'
+    //     })
+    //    res.end("Invalid details");
     }
 
   );
@@ -395,11 +442,32 @@ router.post('/easy', function(req, res, next) {
                          }
                      })
                     .then(item => {
-                        console.log("application after update : ", item);
-                        res.writeHead(200,{
-                            'Content-Type' : 'application/json'
+                        console.log("application after update : ", JSON.stringify(item));
+                        JobPostings.findOneAndUpdate({"_id":req.body.Job_id},{$inc:{ "numberofApplicants":1}},(err,success)=>{
+                            if(err){
+                                console.log(err);
+                                response.sendStatus(201);
+                            }
+                            else{
+                                console.log("in success");
+                                User.findByIdAndUpdate({"_id":req.body.Applicant_id},{ $addToSet:{applied_job:req.body.Job_id} },(err,success)=>{
+                                    if(err){
+                                        console.log(err);
+                                        response.sendStatus(201);
+                                    }else{
+                                        console.log("In success of easy apply job");
+                                        // response.sendStatus(200);
+                                        res.writeHead(200,{
+                                            'Content-Type' : 'application/json'
+                                        });
+                                        res.end(JSON.stringify("Applied successfully"));
+
+                                    }
+                                })
+
+                            }
                         });
-                        res.end(JSON.stringify("Applied successfully"));
+
                     })
                     .catch(err => {
                         console.log("error while updating saved application", err);

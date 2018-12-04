@@ -1,7 +1,6 @@
 .HeadingClass
 {
     font-size: 0.3in;
-    padding-bottom: 10%;
     padding-left: 45%;
 }
 
@@ -9,7 +8,7 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
     width: 20%;
-    
+
 }
 
 .card-srinivas-chart:hover {
@@ -18,7 +17,7 @@
 
 .container-srinivas-chart {
     padding: 2px 16px;
-    
+
 }
 
 .chart-side

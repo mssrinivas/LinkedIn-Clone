@@ -6,7 +6,7 @@ var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/getuserclicks', function(req, res) {
     console.log("Received Body ", req.query)
-    UserActivity.find({recruiterName:req.query.mail}).then((app)=> { 
+    UserActivity.find({recruiterName:req.query.mail}).then((app)=> {
      //   console.log("\n Number of Clicks for" + app + "\n");
       //  console.log(app.length);
         res.writeHead(200,{
@@ -25,7 +25,7 @@ var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/savedjobs', function(req, res) {
     console.log("Received Body ", req.query)
-    Applications.find({Saved:"true",RecruiterEmail:req.query.mail}).then((app)=> { 
+    Applications.find({Saved:"true",RecruiterEmail:req.query.mail}).then((app)=> {
        // console.log("\nJobs are " + app + "\n");
        // console.log(app.length);
         res.writeHead(200,{
@@ -45,7 +45,11 @@ var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/halffilled', function(req, res) {
     console.log("Received Body for HALF FILLED", req.query)
+<<<<<<< HEAD
     UserActivityIncomplete.find({RecruiterEmail:req.query.mail}).then((app)=> { 
+=======
+    UserActivityIncomplete.find({RecruiterEmail:req.query.mail}).then((app)=> {
+>>>>>>> f8afdad7ba4d29c8055faefd417aafd6c364afce
         console.log("\n Number of HALFFILLED" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{
@@ -64,7 +68,7 @@ var {UserActivityIncomplete} = require('../models/UserActivityIncomplete');
 
   router.get('/fullfilled', function(req, res) {
     console.log("Received Body ", req.query)
-    Applications.find({Applied:"true",RecruiterEmail:req.query.mail}).then((app)=> { 
+    Applications.find({Applied:"true",RecruiterEmail:req.query.mail}).then((app)=> {
         console.log("\n Fully applied jobs" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{

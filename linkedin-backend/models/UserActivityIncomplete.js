@@ -6,10 +6,3 @@ var UserActivityIncomplete = mongoose.model('UserActivityIncomplete',{
 });
 
 module.exports = {UserActivityIncomplete};
-
-
-
-
-
-
-

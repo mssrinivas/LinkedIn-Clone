@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import Chart from "./Chart";
 import axios from "axios";
 import {connect} from 'react-redux';
-
+import {history} from "../../util/utils";
 import './RecruiterDashboard.css'
+import {BASE_URL} from './../../components/constants/constants.js';
+
 class RecruiterDashboard extends Component {
   constructor(props) {
     super(props);
@@ -18,11 +20,11 @@ class RecruiterDashboard extends Component {
     };
   }
 
-  componentWillMount() { 
+  componentWillMount() {
     this.getArrayData();
   }
-  componentDidMount() { 
-    
+  componentDidMount() {
+
   }
   getArrayData() {
     var labeldb = [];
@@ -38,7 +40,7 @@ class RecruiterDashboard extends Component {
     var labelalljobs = [];
     var labelalljobsdata = [];
 
-    const url = " http://localhost:3001/getjobs/tenjobs";
+    const url = `${BASE_URL}/getjobs/tenjobs`;
     axios.get(url,{
         params: {
           mail: this.props.user.email
@@ -88,9 +90,7 @@ class RecruiterDashboard extends Component {
         error => {
         }
       )
-    
-    
-    axios.get("http://localhost:3001/recruiter/getuserclicks",
+    axios.get(`${BASE_URL}/recruiter/getuserclicks`,
     {
       params: {
         mail: this.props.user.first_name + " " + this.props.user.last_name 
@@ -150,7 +150,33 @@ class RecruiterDashboard extends Component {
       }
     )
 
-    axios.get("http://localhost:3001/recruiter/fullfilled",{
+    //axios.get("http://localhost:3001/recruiter/fullfilled",{
+    // axios.get("http://localhost:3001/recruiter/halffilled").then(
+    //     response => {
+    //     var halfFilledJobdatadb = [];
+    //     halfFilledJobdatadb = response.data;
+    //     var counterdb = {};
+    //     halfFilledJobdatadb.forEach(function(obj) {
+    //         console.log("OBJ IS" + JSON.stringify(obj));
+    //       var key = obj.Company.jobId + " " + obj.Title;
+    //       counterdb[key] = (counterdb[key] || 0) + 1;
+    //       var resulthalfFilledJobsdb = Object.keys(counterdb).map(function(key) {
+    //         var key1 = key.substr(key.indexOf(" ") + 1);
+    //         return [key1, counterdb[key]];
+    //       });
+    //       for (var i = 0; i < resulthalfFilledJobsdb.length; i++) {
+    //         labelhalffilled[i] = resulthalfFilledJobsdb[i][0];
+    //         labelhalffilleddata[i] = resulthalfFilledJobsdb[i][1];
+    //       }
+    //     });
+    //     console.log("labelk for db", labelhalffilled);
+    //     console.log("labeldata for db", labelhalffilleddata);
+    //     this.setState({});
+    //   },
+    //   error => {
+    //   }
+    // )
+    axios.get(`${BASE_URL}/recruiter/fullfilled`,{
       params: {
         mail: this.props.user.email
       }}).then(
@@ -180,7 +206,7 @@ class RecruiterDashboard extends Component {
     )
 
       // Saved Jobs
-      axios.get("http://localhost:3001/recruiter/savedjobs",
+      axios.get(`${BASE_URL}/recruiter/savedjobs`,
       {
         params: {
           mail: this.props.user.email
@@ -200,7 +226,7 @@ class RecruiterDashboard extends Component {
             });
             var i;
             for (i = 0; i < resultsavedJobs.length; i++) {
-              console.log("inside loop ", resultsavedJobs[0]); 
+              console.log("inside loop ", resultsavedJobs[0]);
               labelsavedJobs[i] = resultsavedJobs[i][0];
               labelsavedjobsdata[i] = resultsavedJobs[i][1];
             }
@@ -211,7 +237,7 @@ class RecruiterDashboard extends Component {
       error => {
       }
     );
-      
+
 
     this.setState({
       savedJobData: {
@@ -415,8 +441,12 @@ class RecruiterDashboard extends Component {
     console.log("REC NAME : ")
   }
 
-  
+
   render() {
+    if(!localStorage.getItem('servertoken'))
+    {
+      history.push('/')
+    }
     console.log("chart", this.state.chartData);
     console.log("jobdata", this.state.jobData);
     console.log("savedJobData", this.state.savedJobData);
@@ -459,4 +489,3 @@ const mapStateToProps = (state) =>{
 }
 
 export default connect(mapStateToProps,null)(RecruiterDashboard);
-

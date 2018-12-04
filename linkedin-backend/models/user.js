@@ -43,7 +43,7 @@ var userschema = mongoose.Schema({
       type : String
     },
     zip_code : {
-        type : Number
+        type : String
     },
     company : {
       type : String
@@ -75,8 +75,8 @@ var userschema = mongoose.Schema({
     workexperience : {
       type: Array
     },
-    education : {
-      type : Array
+    educationDetails : {
+      type: Array
     },
     connections:[
         {
@@ -96,6 +96,8 @@ var userschema = mongoose.Schema({
     ],
     waiting:[
     ],
+
+    
     resume_path: {type : Array, required : false},
     saved_job : {type : Array, required : false},
     applied_job:{type : Array, required : false}

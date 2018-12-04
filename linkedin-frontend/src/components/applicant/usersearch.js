@@ -5,9 +5,13 @@ import './applicantprofile.css';
 import {bindActionCreators} from 'redux';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
-
+import {history} from "../../util/utils";
 class UserSearch extends Component {
     render() {
+      if(!localStorage.getItem('servertoken'))
+      {
+        history.push('/')
+      }
       let name = this.props.userSearch
         return (
             <div>

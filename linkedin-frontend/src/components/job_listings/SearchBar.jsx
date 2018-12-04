@@ -1,22 +1,56 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
 import moment from "moment";
-import "react-datepicker/dist/react-datepicker.css";
+import { connect } from 'react-redux';
+//import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import {UPDATED_JOB_SEARCH_CRITERIA} from './../constants/reduxActionConstants.js';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      date: moment().toDate()
+      
+      CompanyName : null,
+      date : "",//YYYY-MM-DD
+      seniorityLevel : null,
+      location : null
     };
+
+    this.filterByLocation = this.filterByLocation.bind(this);
+    this.filterByDate = this.filterByDate.bind(this);
+    this.filterBySeniorityLevel = this.filterBySeniorityLevel.bind(this);
+    this.updateJobSearchCriteria = this.updateJobSearchCriteria.bind(this);
   }
 
-  handleDateChange = date => {
-    this.setState({
-      date: date
-    });
-  };
+  
+  filterByLocation =(e)=>{
+    console.log("Location :" + e.target.value);
+    this.setState({location : e.target.value});
+  }
+
+  filterByDate =(e)=>{
+    //var d =new Date(e).toISOString().substring(0,10);
+    //console.log("Date :" + d);
+    console.log("Date :"+e.target.value);
+    this.setState({date : e.target.value});
+  }
+
+  filterBySeniorityLevel =(e)=>{
+    console.log("Seniority Level :" + e.target.value);
+    this.setState({seniorityLevel : e.target.value});
+  }
+
+  updateJobSearchCriteria = (e)=>{
+    const criteria = {
+      //CompanyName : this.state.CompanyName,
+      date : this.state.date=="" ? "" : new Date(this.state.date).toISOString().substring(0,10) ,//YYYY-MM-DD
+      seniorityLevel : this.state.seniorityLevel,
+      location : this.state.location
+    }
+    console.log("job criteria "+JSON.stringify(criteria));
+    this.props.updateJobSearchCriteriaRedux(criteria);
+  }
 
   render() {
     return (
@@ -47,12 +81,12 @@ class SearchBar extends Component {
             />
           </div>
           <div style={{ display: "inline-block", padding: 10 }}>
+            
             <div className="form-group form-control">
-              <DatePicker
-                selected={this.state.date}
-                onChange={this.handleDateChange}
-              />
+              {/* <DatePicker selected={this.state.date} onChange={this.filterByDate} /> */}
+              <input type="date" onChange={this.filterByDate} placeholder="YYYY-MM-DD" />
             </div>
+
           </div>
           <button
             id="login-btn"
@@ -62,34 +96,39 @@ class SearchBar extends Component {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Seniority Level
+            {this.state.seniorityLevel==null ? "Seniority Level": this.state.seniorityLevel }
           </button>
           <div
-            className="dropdown-menu"
-            data-toggle="dropdown"
-            aria-labelledby="dropdownMenuButton"
-          >
-            <input type="button" className="dropdown-item" value="Internship" />
-            <input type="button" className="dropdown-item" value="Mid Level" />
-            <input
-              type="button"
-              className="dropdown-item"
-              value="Senior Level"
-            />
-            <input type="button" className="dropdown-item" value="Director" />
+            className="dropdown-menu" data-toggle="dropdown" aria-labelledby="dropdownMenuButton">
+            <input type="button" onClick={this.filterBySeniorityLevel} className="dropdown-item" value="Internship" />
+            <input type="button" onClick={this.filterBySeniorityLevel} className="dropdown-item" value="Mid Level" />
+            <input type="button" onClick={this.filterBySeniorityLevel} className="dropdown-item" value="Senior Level"/>
+            <input type="button" onClick={this.filterBySeniorityLevel} className="dropdown-item" value="Director" />
           </div>
+
           <div style={{ display: "inline-block", padding: 10 }}>
-            <button
-              onClick={this.addToCart}
-              className="btn btn-secondary rounded-0"
-            >
-              Search
-            </button>
+            <button onClick={this.updateJobSearchCriteria} className="btn btn-secondary rounded-0" >Search</button>
           </div>
+
         </nav>
       </React.Fragment>
     );
   }
 }
 
-export default SearchBar;
+const mapStateToProps = (state)=>{
+  return{}
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    updateJobSearchCriteriaRedux : (jobSearchCriteria)=>{
+        dispatch({
+          type : UPDATED_JOB_SEARCH_CRITERIA,
+          payload : jobSearchCriteria
+        })
+    }
+  }
+}
+//export default SearchBar;
+export default connect(mapStateToProps,mapDispatchToProps)(SearchBar);

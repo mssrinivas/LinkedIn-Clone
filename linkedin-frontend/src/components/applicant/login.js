@@ -8,7 +8,7 @@ import { Button,Modal,Checkbox } from 'react-bootstrap';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {userSignUp} from './../../api/Api';
-// import * as VALIDATION from './../util/validation';
+import * as VALIDATION from './../../util/validation';
 
 class Login extends Component {
 	constructor(props) {
@@ -65,7 +65,9 @@ class Login extends Component {
                                   <option value=""></option><option value="Applicant">Applicant</option><option value="Recruiter">Recruiter</option>
                             </select>
                       <p className="footer">By clicking Join now, you agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy.</p>
-    						      <button type="button" onClick={() =>this.props.userSignUp(this.userDetails)} className="btn btn-primary join">Join now</button>
+											<button type="button" onClick={(e) =>
+											(VALIDATION.emptyDate(this.userDetails.first_name,"First Name") && VALIDATION.emptyDate(this.userDetails.last_name,"Last Name") && VALIDATION.validateEmail(this.userDetails.email) && VALIDATION.emptyDate(this.userDetails.password,"Password") && VALIDATION.emptyDate(this.userDetails.recruiter_value,"User Type"))==true?this.props.userSignUp(this.userDetails):''}
+											 className="btn btn-primary join">Join now</button>
     							</table>
 						   </form>
 					   </div>

@@ -30,19 +30,16 @@ User.find({
 			{
 			for(var i=0;i<userone[0].connections.length;i++) //for all conn
 			{
-				console.log("Coming Here")
+			
 				if(user.email!=userone[0].connections[i].email) // if not in conection
-				{
-					list.push(user)
+				{ 
+					list.push(user);
 				}
 			}}
 
-			else{
-				console.log("In ELSE")
-				list.push(user)
-				console.log("------------")
+			else{	
+				list.push(user)		
 				console.log(list)
-				console.log("------------")
 			}
 	})
 	console.log("before sending response is ",list)

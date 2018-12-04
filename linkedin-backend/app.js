@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var users = require('./routes/users');
 var messages = require('./routes/messages');
 var applications = require('./routes/applications');
+var dashboard = require('./routes/dashboard.js');
 const multer = require('multer');
 var jobpostings = require('./routes/postjob.js');
 var jobs = require('./routes/jobs.js');
@@ -16,6 +17,9 @@ var activitytracker = require('./routes/activitytracker.js')
 var activitytrackerincomplete = require('./routes/activitytrackerincomplete.js')
 var dashboard = require('./routes/dashboard.js');
 var jobs = require('./routes/jobs.js');
+var getjobs = require('./routes/getjobs.js');
+var activitytracker = require('./routes/activitytracker.js')
+var activitytrackerincomplete = require('./routes/activitytrackerincomplete.js')
 var listusernetwork = require('./routes/listusernetworks');
 const graphqlHTTP = require('express-graphql');
 const schema = require('./graphqlschema/schema');
@@ -69,6 +73,10 @@ app.use('/jobs',jobs);
 app.use('/recruiter',dashboard);
 app.use('/',jobpostings)
 app.use('/messages', messages);
+app.use('/recruiter', dashboard);
+app.use('/getjobs',getjobs);
+app.use('/userdata',activitytracker);
+app.use('/incomplete',activitytrackerincomplete);
 //app.use('/useractivity',useractivity)
 app.get("/start", (request, response) => {
   response.status(200).json({

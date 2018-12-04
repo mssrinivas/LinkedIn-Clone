@@ -87,14 +87,14 @@ router.post("/login", function(req, res, next) {
   User.find({"email":req.body.email, status:'Active'})
     .exec()
     .then(doc => {
-      console.log("response got : ", doc);
+      // console.log("response got : ", doc);
       if (doc != undefined && doc.length > 0) {
         if (bcrypt.compareSync(password, doc[0].password)) {
           const server_token = jwt.sign(
             { uid: doc[0].email },
             utils.server_secret_key
           );
-          console.log("UID from JWT: ", doc[0].email);
+          // console.log("UID from JWT: ", doc[0].email);
           res.status(200).json({
             message: "User Logged in Successfully",
             server_token: server_token,
@@ -125,7 +125,6 @@ router.post("/login", function(req, res, next) {
 //==============================================================================================
 router.post("/signup", function(req, res, next) {
   console.log("inside signup");
-  console.log("req sent from signup page: ", req.body);
   var recruiter_flag = req.body.recruiter_value == "Recruiter" ? 1 : 0;
   var passwordToSave = bcrypt.hashSync(req.body.password, salt);
   const userDetails = new User({
@@ -141,14 +140,14 @@ router.post("/signup", function(req, res, next) {
     .then(doc=>{
         if(doc==undefined || doc.length==0) {
             userDetails.save().then(result=> {
-                console.log("response obtained is : ", result);
+                // console.log("response obtained is : ", result);
                 const server_token = jwt.sign({uid:result.email},utils.server_secret_key);
                 console.log("UID from JWT: ", result.email);
                 User.updateOne({_id : result._id},{$set:{
                     applicant_id : result._id
                   }})
                   .then( res => {
-                      console.log("Applicant ID: " , res);
+                      // console.log("Applicant ID: " , res);
                   })
                   .catch(errors => {
                      console.log("error while updating applicant id", errors);
@@ -182,11 +181,15 @@ router.post('/updateProfile', function (req,res,next) {
 	console.log("inside update profile",req.body);
   console.log("Student flag is : ", req.body.student_flag);
   var workexperience="";
+  var educationDetails="";
   if(req.body.company != undefined && req.body.experience !='') {
       workexperience = req.body.experience +" years of experience at : " + req.body.company;
   }
+  if(req.body.school != undefined && req.body.education !='') {
+      educationDetails = "Pursued " +req.body.education + " at " + req.body.school;
+  }
   var student_flag = req.body.student_flag == true ? 1 : 0;
-  var dataChange={$push: { workexperience: workexperience},$set:
+  var dataChange={$push: { workexperience: workexperience, educationDetails: educationDetails},$set:
   {
     last_name : req.body.last_name,
     email : req.body.email,
@@ -414,3 +417,5 @@ router.post("/users", function(req, res, next) {
 
 
 module.exports = router;
+
+
