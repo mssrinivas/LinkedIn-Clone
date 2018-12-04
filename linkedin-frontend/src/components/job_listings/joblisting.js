@@ -7,7 +7,8 @@ import {Launcher} from 'react-chat-window'
 import axios from 'axios';
 import Navbar from './../navbar/Navbar.jsx';
 import {BASE_URL} from './../constants/constants.js';
-import {SELECTED_CUSTOM_JOB_POST} from './../constants/reduxActionConstants.js';
+import {SELECTED_CUSTOM_JOB_POST,ADD_JOB_ID_TO_APPLIED_JOB,ADD_JOB_ID_TO_SAVED_JOB} from './../constants/reduxActionConstants.js';
+import SearchBar from './SearchBar.jsx';
 import EasyApplyModal from './EasyApplyModal/easyApplyModal.js';
 
 class JobListing extends Component {
@@ -21,7 +22,9 @@ class JobListing extends Component {
             easyApply : false,
             error : null,
             saveApplyJobMessage : null,
-            previoustime : new Date()
+            saved_job : [],
+            applied_job:[],
+            previoustime : new Date(),
         };
 
         this.jobPostCardClicked = this.jobPostCardClicked.bind(this);
@@ -30,24 +33,44 @@ class JobListing extends Component {
         this.easyApply = this.easyApply.bind(this);
     }
 
-    componentWillMount(){
+    componentDidMount(){
         const url = BASE_URL+"/jobs/search";
+        console.log("inside cdm")
+        console.log(url);
         axios.get(url).then((response)=>{
-            const {status} = response;
-            if(status===200){
-                console.log(response.data);
-                this.setState({ postings : response.data.joblistings });
+                        
+            if(response.status===200){
+                console.log("in response");
+                const listings = response.data.joblistings;
+
+                const {applied_job,saved_job} = this.props.user;
+                const notShowJobs = [].concat(applied_job,saved_job,this.state.applied_job,this.state.saved_job);
+                
+
+                console.log("not show jobs :"+JSON.stringify(notShowJobs));
+
+                const filteredList = listings.filter((post)=>{
+                    const id = post._id;
+                    return !notShowJobs.includes(id);
+
+                })
+
+                this.setState({ postings : filteredList });
+
             }else{
-                this.setState({error : response.data.msg});
+                this.setState({error : "Could not fetch jobs!!!"});
             }
         }).catch((error)=>{
+            console.log("inside error");
             this.setState({error : "Connection timed out"});
         })
     }
 
     async saveJob(position){
+        console.log("inside save job ")
         const posting = this.state.postings[position];
         const url = BASE_URL+"/jobs/save/"+posting._id;
+        console.log(url);
         const data = {
             "companyName" :posting.CompanyName,
             "jobTitle" : posting.JobTitle,
@@ -60,13 +83,21 @@ class JobListing extends Component {
             "postingDate" : posting.postingDate
         };
 
+        console.log(data);
         try {
             const response = await axios.post(url,data);
-            switch(response.status){
-                case 200 : this.setState({saveApplyJobMessage:"Job saved successfully",error:null});break;//alert(" Job saved successfully");
-                case 201 : this.setState({saveApplyJobMessage:null,error:"We could not save the job"});break;//alert("We could not save the job");break;
-                default : this.setState({saveApplyJobMessage:null,error:"There was a connection error"});break;//alert("There was a connection error");break;
+            console.log("response status after save"+response.status);
+
+            if(response.status === 200){
+                //alert("Job Saved successfully");
+                const a = this.state.saved_job;
+                a.push(posting._id);
+                this.setState({saveApplyJobMessage:"Job Saved successfully",error:null,saved_job:a,selectedIndex:null});
+                //this.props.addJobIdToSavedJob(posting._id);
+            }else{
+                this.setState({saveApplyJobMessage:null,error:"We could not save the job"});
             }
+            
         } catch (error) {
             //alert("Could not connect to db");
             this.setState({saveApplyJobMessage:null,error : "Could not connect to db"});
@@ -143,7 +174,13 @@ class JobListing extends Component {
             console.log(newDataToBeSent);
             axios.post(url,formData,config).then((response)=>{
                 if(response.status === 200){
-                    this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                    
+                    const a = this.state.applied_job;
+                    a.push(posting._id);
+                    this.setState({saveApplyJobMessage:"Successfully applied for job",error:null,applied_job:a});
+                    //alert("Job applied successfully")
+                    //this.props.addJobIdToAppliedJob(posting._id);
+                    
                 }else{
                     this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
                 }
@@ -173,7 +210,11 @@ class JobListing extends Component {
 
             axios.post(url,newDataToBeSent).then((response)=>{
                     if(response.status === 200){
-                        this.setState({saveApplyJobMessage:"Successfully applied for job",error:null});
+                        const a = this.state.applied_job;
+                        a.push(posting._id);
+                        this.setState({saveApplyJobMessage:"Successfully applied for job",error:null,applied_job:a});
+                        //alert("Job applied successfully");
+                        //this.props.addJobIdToAppliedJob(posting._id);
                     }else{
                         this.setState({saveApplyJobMessage:null,error:"We could not apply for the job. There was a connection error"});
                     }
@@ -234,28 +275,126 @@ class JobListing extends Component {
       }
 
     render() {
-      if(this.props.jobSearch.joblistings!=null && this.props.jobSearch.joblistings != undefined && this.props.jobSearch.joblistings.length!=0 && this.props.jobSearch.joblistings!=[]) {
-          this.state.postings = this.props.jobSearch.joblistings
-      }
+      
         var redirectVar = null;
         var saveApplyMessageDiv = null;
         var errorMessageDiv = null;
-        const {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage} = this.state;
+        
+        var {postings,error,selectedIndex,easyApply,customApply,saveApplyJobMessage,saved_job,applied_job} = this.state;
+        var searchCriteria = this.props.searchCriteria;
+
+        /*  Filtering list */
+        const CompanyNameFilter = (searchCriteria.CompanyName==null || searchCriteria.CompanyName==undefined) ? "" : searchCriteria.CompanyName;
+        const postingDateFilter = (searchCriteria.date==null || searchCriteria.date==undefined) ? "" : searchCriteria.date;
+        const seniorityLevelFilter = (searchCriteria.seniorityLevel==null || searchCriteria.seniorityLevel==undefined) ? "" : searchCriteria.seniorityLevel;
+        const locationFilter = (searchCriteria.location==null || searchCriteria.location==undefined) ? "" : searchCriteria.location;
+
+        //console.log("Printing filtering criterias");
+        //console.log(CompanyNameFilter,postingDateFilter,seniorityLevelFilter,locationFilter);
+
+        /*
+        const newPostings = postings.filter((post)=>{
+            var companyNameFilterResult = true;
+            var postingDateFilterResult = true;
+            var seniorityLevelFilterResult = true;
+            var locationFilterResult = true;
+
+            if(CompanyNameFilter != ""){
+                const regexCompanyName = new RegExp(CompanyNameFilter,'i');
+                companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+                console.log("Company name regex");
+            }
+
+            if(seniorityLevelFilter != ""){
+                const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
+                seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+                console.log("Seniority level regex");
+            }
+
+            if(locationFilter != ""){
+                const regexLocationFilter = new RegExp(locationFilter,'i');
+                locationFilterResult = regexLocationFilter.test(post.JobLocation);
+                console.log("Location regex");  
+            }
+
+            return (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
+        });
+
+        */
+
+        const newPostings = postings.map((post,index)=>{
+        
+        if(applied_job.includes(post._id) || saved_job.includes(post._id)){
+            return false;
+        }    
+        
+        var companyNameFilterResult = true;
+        var postingDateFilterResult = true;
+        var seniorityLevelFilterResult = true;
+        var locationFilterResult = true;
+
+        if(CompanyNameFilter != "" || CompanyNameFilter != " "){
+            const regexCompanyName = new RegExp(CompanyNameFilter,'i');
+            companyNameFilterResult = regexCompanyName.test(post.CompanyName); 
+            //console.log("Company name regex");
+        }
+
+        if(postingDateFilter != "" || postingDateFilter != " "){
+            const postDate = new Date(post.postingDate).getTime();
+            const filteredDate = new Date(postingDateFilter).getTime();
+
+            if(postDate-filteredDate <0){
+                postingDateFilterResult = false;
+            }
+
+           // console.log("Posting Date regex");
+        }
+
+        if(seniorityLevelFilter != "" || seniorityLevelFilter != " "){
+            const regexSeniorityLevelFilter = new RegExp(seniorityLevelFilter,'i');
+            seniorityLevelFilterResult = regexSeniorityLevelFilter.test(post.seniorityLevel);  
+            //console.log("Seniority level regex");
+        }
+
+        if(locationFilter != "" || locationFilter != " "){
+            const regexLocationFilter = new RegExp(locationFilter,'i');
+            locationFilterResult = regexLocationFilter.test(post.JobLocation);
+            //console.log("state :"+post.state);
+            if(!(post.State==null || post.State==undefined || post.State=="" || post.State==" ")){
+                locationFilterResult = locationFilterResult || regexLocationFilter.test(post.State)
+                //console.log("state filter regex :" + regexLocationFilter.test(post.State));
+            }
+            //console.log("Location regex");  
+        }
+
+        const cond = (companyNameFilterResult && postingDateFilterResult && seniorityLevelFilterResult && locationFilterResult);
+
+        return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} show={cond} />);
+
+    });
+
+        console.log("Printing new postings");
+        console.log(newPostings.length);
+        console.log(newPostings);
+
+        //console.log("\n\n new Postings"+ JSON.stringify(newPostings));
+
         const isSelected = selectedIndex!=null;
         const joblistClassName = isSelected ? "col-md-4 postings-parent" : "col-md-10 postings-parent"
         const descriptionClassName = isSelected ?"col-md-6" : "col-md-0" ;
         const jobdescription= isSelected ? <JobDescription data={postings[selectedIndex]} position={selectedIndex} onSave={this.saveJob} onApply={this.applyJob} onEasyApply={this.easyApply} /> : null;
         const launcher = isSelected ? <Launcher agentProfile={{ teamName: postings[selectedIndex].recruiterName,imageUrl: postings[selectedIndex].CompanyLogo }} onMessageWasSent={this._onMessageWasSent.bind(this)} messageList={this.state.messageList} showEmoji /> : null;
+        
         errorMessageDiv = error ? <div class="alert alert-danger" role="alert">{error}</div> : null;
         saveApplyMessageDiv = saveApplyJobMessage ? <div class="alert alert-success" role="alert">{saveApplyJobMessage}</div> : null
 
         if(customApply){ redirectVar = <Redirect to="/customapply" /> }
-        //else if(easyApply){  redirectVar = <Redirect to="/easyapply" /> }
 
         return (
             <div>
                 {redirectVar}
                 <Navbar />
+                <SearchBar />
                 {errorMessageDiv}
                 {saveApplyMessageDiv}
 
@@ -263,9 +402,13 @@ class JobListing extends Component {
                     <div className="col-md-1"></div>
                     <div className={joblistClassName} style={{ border: '1px solid #E0E0E0' }}>
                         {
+                            /*
                             postings.map((post, index) => {
-                                return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} />);
+                                return (<JobListCard data={post} onCardClicked={this.jobPostCardClicked} key={index} position={index} show={true}/>);
                             })
+                            */
+                            
+                           newPostings
                         }
                     </div>
                     <div className={descriptionClassName}>
@@ -283,20 +426,36 @@ class JobListing extends Component {
 }
 
 const mapStateToProps = (state) =>{
+    console.log("In map state to props of job listings");
+    console.log("search criteria");
+    console.log(state.LoginReducer.jobSearchCriteria);
     return {
         user : state.LoginReducer.currentUserDetails,
-        jobSearch : state.LoginReducer.jobSearch,
-        jobSearchCriteria : state.LoginReducer.jobSearchCriteria
+        searchCriteria : state.LoginReducer.jobSearchCriteria
     }
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
+const mapDispatchToProps = (dispatch)=>{
+    return {
         jobPost: (jobpost)=>{
             dispatch({
                 type:SELECTED_CUSTOM_JOB_POST,
                 payload : jobpost
             });
+        },
+
+        addJobIdToAppliedJob : (jobid)=>{
+            dispatch({
+                type : ADD_JOB_ID_TO_APPLIED_JOB,
+                payload:jobid
+            })
+        },
+
+        addJobIdToSavedJob : (jobid)=>{
+            dispatch({
+                type : ADD_JOB_ID_TO_SAVED_JOB,
+                payload:jobid
+            })
         }
     }
 }

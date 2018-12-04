@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {Applications} = require('./../models/application.js');
-var {JobPostings} = require('../models/JobPostings');
+var {JobPostings} = require('../models/jobpostings.js');
 var {User} = require('./../models/user.js');
 var {mongoose} = require('../db/mongoose');
 var jobpostings_db = require('../db/jobpostings.js');
@@ -41,8 +41,20 @@ const storage=multer.diskStorage({
 
 var upload = multer({ storage: storage }).any();
 
-router.get("/search",(request,response,next)=>{
-    console.log("Inside Jobs search");
+router.get("/search",async (request,response,next)=>{
+    console.log("Inside new Jobs search");
+
+    try{
+        const joblistings = await JobPostings.find({});
+        console.log(joblistings);
+        response.status(200).json({joblistings});
+    }
+    catch(error){
+        console.log(error);
+        response.sendStatus(201);
+    }
+    
+    /*
     jobpostings_db.searchJobs(null).then((joblistings)=>{
         console.log(joblistings);
         response.status(200).json({ joblistings });
@@ -50,9 +62,36 @@ router.get("/search",(request,response,next)=>{
         console.log(msg);
         response.status(201).json({ msg });
     });
+    */
+    
 });
 
 //job listing with kafka
+
+/*
+router.get("/search",function(request,response,next){
+    console.log("Inside Jobs search");
+    kafka.make_request('job_listing',null, function(err,results){
+        console.log('---- kafka  result of job listing----');
+            console.log("\nResults  :" + JSON.stringify(results));
+            if (err){
+                console.log("Inside err");
+                console.log(results.value);
+                response.status(201).json({ "msg" : results.value });
+               
+            }else{  
+                //const{value} = results;
+                console.log("\nApplication to be saved : ",results.value);
+                // res.writeHead(200,{
+                //     'Content-Type' : 'application/json'
+                // });
+                response.end(JSON.stringify(results.value));
+                response.status(200).json({ "joblistings":results.value});
+         }
+    });
+});
+
+*/
 // router.get("/search",function(request,response,next){
 //     console.log("Inside Jobs search");
 //     kafka.make_request('job_listing',null, function(err,results){
@@ -101,11 +140,12 @@ router.post("/save/:jobid", async (request, response, next) => {
             Saved: true,
             CompanyLogo: companyLogo,
             easyApply: easyApply,
-            postingDate : postingDate
+            postingDate : postingDate,
         });
-
+        
         const savedApplication = await application.save();
         console.log(savedApplication);
+        let addToAppliedJobArray = await User.findOneAndUpdate({"_id":applicant_id},{ $addToSet:{saved_job:jobid}});    
         response.sendStatus(200);
     } catch (error) {
         console.log(error);
@@ -113,12 +153,17 @@ router.post("/save/:jobid", async (request, response, next) => {
     }
 });
 // router.post("/save/:jobid", function(req, res, next){
+    
 
 //         console.log("inside jobs save");
 //         const jobid = req.params.jobid;
 //         console.log("jobid ",jobid );
 //         const { companyName, jobTitle, jobLocation, applicant_id, email, companyLogo, easyApply } = req.body;
 //         // console.log(request.body);
+//         let reqBody = Object.assign({},req.body, {jobid})  
+//         console.log("reqBosy jobid" + reqBody.jobid)
+//         console.log("printing reqBody")
+//         console.log(reqBody); 
 //         let reqBody = Object.assign({},req.body, {jobid})
 //         console.log("reqBosy jobid" + reqBody.jobid)
 //         console.log("printing reqBody")
@@ -132,6 +177,7 @@ router.post("/save/:jobid", async (request, response, next) => {
 //                     status:"error",
 //                     msg:"System Error, Try Again."
 //                 })
+//             }else{  
 //             }else{
 //                 console.log("\nApplication to be saved : ",results.value);
 //                 res.writeHead(200,{
@@ -139,6 +185,12 @@ router.post("/save/:jobid", async (request, response, next) => {
 //                 });
 //                 res.end(JSON.stringify(results.value));
 //          }
+//         })     
+        
+//     // } catch (error) {
+//     //     console.log(error);
+//     //     response.sendStatus(201);
+//     // }
 //         })
 
     // } catch (error) {

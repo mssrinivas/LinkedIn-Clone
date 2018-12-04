@@ -48,7 +48,7 @@ export const userLogin = function(userDetail){
          dispatch(userLoggedIn(result));
          history.push('/feed');
          // history.push('/userprofile');
-          history.push('/listings');
+          //history.push('/listings');
   }).catch(err => {
     alert(err);
           console.log("Error while Sign up!!!");

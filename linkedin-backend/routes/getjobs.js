@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var {mongoose} = require('./../db/mongoose');
 var {Applications} = require('./../models/application');
-var {JobPostings} = require('../models/JobPostings');
+var {JobPostings} = require('../models/jobpostings');
 
 router.get("/myjobs",(request,response,next)=>{
     console.log("Inside Jobs search");

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var {Applications} = require('./../models/application');
-var {JobPostings} = require('../models/JobPostings');
+var {JobPostings} = require('../models/jobpostings');
 var {User} = require('./../models/user');
 var kafka = require('./../kafka/client.js');
 
