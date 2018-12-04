@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var {mongoose} = require('./../db/mongoose');
 var {Applications} = require('./../models/application');
-
+var {JobPostings} = require('../models/JobPostings');
 
 router.get("/myjobs",(request,response,next)=>{
     console.log("Inside Jobs search");
@@ -20,7 +20,7 @@ router.get("/myjobs",(request,response,next)=>{
 router.get("/tenjobs",(request,response,next)=>{
     console.log("Inside Jobs search");
     console.log("<MAIL IS> ", request.query.mail)
-    Applications.find({RecruiterEmail:request.query.mail}).limit(10).then((joblistings)=>{
+    JobPostings.find({Email:request.query.mail}).limit(10).then((joblistings)=>{
         console.log("Here", JSON.stringify(joblistings));
         response.status(200).json({ joblistings });
     }).catch((msg)=>{

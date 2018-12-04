@@ -7,6 +7,7 @@ var cors = require("cors");
 var cookieParser = require("cookie-parser");
 var bodyParser = require('body-parser');
 var users = require('./routes/users');
+var messages = require('./routes/messages');
 var applications = require('./routes/applications');
 const multer = require('multer');
 var jobpostings = require('./routes/postjob.js');
@@ -23,9 +24,14 @@ var search = require("./routes/search");
 var uploadresume = require('./routes/uploadResume');
 var getjobs = require('./routes/getjobs');
 //const redis = require('redis');
+var jobpostings = require('./routes/postjob')
 
+
+const redis = require('redis');
+var fs=require('file-system');
+var useractivity = require('./routes/useractivity');
 const url = "http://localhost:3000";
-
+//const url = "hosting url";
 app.use(cors({ origin: url, credentials: true }));
 
 app.use(function(req, res, next) {
@@ -63,10 +69,12 @@ app.use('/incomplete', activitytrackerincomplete)
 app.use('/jobs',jobs);
 app.use('/recruiter',dashboard);
 app.use('/',jobpostings)
-app.get("/start",(request,response)=>{
-	response.status(200).json({
-		msg : "Welcome to Linkedin"
-	});
+app.use('/messages', messages);
+//app.use('/useractivity',useractivity)
+app.get("/start", (request, response) => {
+  response.status(200).json({
+    msg: "Welcome to Linkedin"
+  });
 });
 
 // const storage = multer.diskStorage({
@@ -89,7 +97,7 @@ app.get("/start",(request,response)=>{
 // });
 
 const storage = multer.diskStorage({
-  destination: function(req, file, cb){
+  destination: (req, file, cb) => {
     console.log("req body " + JSON.stringify(req.body))
     console.log("applicant id passed in destination : " + req.body.applicant_id);
     console.log("selected file  : " + req.body.selectedFile);
@@ -103,19 +111,15 @@ const storage = multer.diskStorage({
         cb(null , currentFolder);
       }
     });
-   
   },
   filename: function(req, file, cb){
-  const newFilename = `${file.originalname}`;
-  console.log("applicant id passed in filename: " + req.body.applicant_id);
-  // console.log("request applicant id :" + req.body.applicant_id);
-  console.log("filename : " + newFilename);
-  cb(null, Date.now()+'-'+newFilename);
-  
+  console.log("File to be uploaded : " + file.originalname);
+  filename=Date.now()+'-'+file.originalname;
+  cb(null, filename);
   }
 });
 
-const upload = multer({ 
+const upload = multer({
   storage:storage,
   limits: {
     fileSize :1024*1024*5
@@ -123,19 +127,18 @@ const upload = multer({
  });
 app.post('/uploadresume', upload.single('selectedFile'), function(req, res, next){
   console.log("applicant id in uploadPhoto " + req.body.applicant_id)
+  console.log("Filename " + filename)
     console.log("Inside photo upload Handler");
     res.writeHead(200,{
          'Content-Type' : 'text/plain'
-         })
+        })
+      res.end(JSON.stringify(filename))
 });
-
 
 app.use("/graphql",graphqlHTTP({
   schema,
   graphiql: true
 }));
-
-
 var server = app.listen(3001,()=>{
     console.log("Linkedin server has started to listen at http://localhost:3001" );
 });

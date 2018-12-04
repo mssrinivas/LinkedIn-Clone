@@ -14,7 +14,7 @@ class Chart extends Component {
       onlyClickedJob : props.onlyClickedJob,
       options : null,
       data : null,
-      topTenJobs : props.topTenJobsData
+      topTenJobs : props.topTenJobs
     };
   }
 

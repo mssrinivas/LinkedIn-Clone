@@ -8,8 +8,8 @@ const bodyParser = require('body-parser');
 var app = express();
 var {User} = require('../models/user');
 var {Notification}=require('../models/notification');
-// const io = require('socket.io')();
-// io.listen(3000)
+//const io = require('socket.io')();
+//io.listen(3000)
 
 
 router.get('/listallconnections', function(req, res, next) {
@@ -182,7 +182,7 @@ router.post('/respondtorequest', function (req, res) {
 								pending:pnd
 							};
 							var newNotify = new Notification(notification).save(function (err) {
-							//	io.sockets.emit('notification', {notificationData: notification});
+								//io.sockets.emit('notification', {notificationData: notification});
 								res.status(200).json({ disabled:true, success: true, notifData: notification });
                                 //res.status(200).json({notification})
 								//res.redirect('/users/'+from);

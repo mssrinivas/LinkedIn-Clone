@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import Chart from "./Chart";
 import axios from "axios";
+import {connect} from 'react-redux';
+
 import './RecruiterDashboard.css'
 class RecruiterDashboard extends Component {
   constructor(props) {
@@ -11,8 +13,8 @@ class RecruiterDashboard extends Component {
       savedJobData: {},
       userActivityData: {},
       clickJobData: {},
-      jobListings: [],
-      topTenJobsData : {}
+      jobListings: {},
+      topTenJobsData : []
     };
   }
 
@@ -37,7 +39,7 @@ class RecruiterDashboard extends Component {
     const url = " http://localhost:3001/getjobs/tenjobs";
     axios.get(url,{
         params: {
-          mail: 'recruiter@gmail.com'
+          mail: this.props.user.email
         }}).then((response)=>{
           var TenJobdatadb = [];
           TenJobdatadb = response.data.joblistings;
@@ -45,7 +47,7 @@ class RecruiterDashboard extends Component {
           var counterdb = {};
           TenJobdatadb.forEach(function(obj) {
               console.log("OBJ IS" + JSON.stringify(obj));
-            var key = obj.CompanyName + " " + obj.jobTitle;
+            var key = obj.CompanyName + " " + obj.JobTitle;
             counterdb[key] = (counterdb[key] || 0) + 1;
             var resultTenJobsdb = Object.keys(counterdb).map(function(key) {
               var key1 = key.substr(key.indexOf(" ") + 1);
@@ -56,16 +58,19 @@ class RecruiterDashboard extends Component {
               labeltopjobsdata[i] = resultTenJobsdb[i][1];
             }
           });
-          console.log("labelk for db", labeltopjobs);
-          console.log("labeldata for db", labeltopjobsdata);
+          console.log("label for db Ten Jobs", labeltopjobs);
+          console.log("labeldata for db Ten Jobs", labeltopjobsdata);
           this.setState({});
         },
         error => {
         }
       )
     
-
-    axios.get("http://localhost:3001/recruiter/getuserclicks").then(
+    axios.get("http://localhost:3001/recruiter/getuserclicks",
+    {
+      params: {
+        mail: this.props.user.first_name
+      }}).then(
         response => {
         var clickedJobdatadb = [];
         clickedJobdatadb = response.data;
@@ -117,7 +122,10 @@ class RecruiterDashboard extends Component {
     //   }
     // )
 
-    axios.get("http://localhost:3001/recruiter/fullfilled").then(
+    axios.get("http://localhost:3001/recruiter/fullfilled",{
+      params: {
+        mail: this.props.user.email
+      }}).then(
         response => {
         var fullFilledJobdatadb = [];
         fullFilledJobdatadb = response.data;
@@ -144,7 +152,11 @@ class RecruiterDashboard extends Component {
     )
 
       // Saved Jobs
-      axios.get("http://localhost:3001/recruiter/savedjobs").then(
+      axios.get("http://localhost:3001/recruiter/savedjobs",
+      {
+        params: {
+          mail: this.props.user.email
+        }}).then(
         response => {
             var savedJobs = [];
             savedJobs = response.data;
@@ -382,15 +394,15 @@ class RecruiterDashboard extends Component {
     console.log("savedJobData", this.state.savedJobData);
     console.log("clickJobData", this.state.userActivityData);
 
-    let JobButtons = null;
+  //   let JobButtons = null;
 
-    if(this.state.joblist!=0)
-    {
-      console.log("LENGTH - " , this.state.jobListings.length)
-     JobButtons = (this.state.jobListings.map(function (item, index) {
-      console.log("ITEM IS")
-  }));
-    }
+  //   if(this.state.joblist!=0)
+  //   {
+  //     console.log("LENGTH - " , this.state.jobListings.length)
+  //    JobButtons = (this.state.jobListings.map(function (item, index) {
+  //     console.log("ITEM IS")
+  // }));
+  //   }
 
     return (
       <div>
@@ -408,11 +420,15 @@ class RecruiterDashboard extends Component {
         />
         <br />
         <br />
-        {JobButtons}
       </div>
     );
   }
 }
+const mapStateToProps = (state) =>{
+  return {
+      user : state.LoginReducer.currentUserDetails,
+  }
+}
 
-export default RecruiterDashboard;
+export default connect(mapStateToProps,null)(RecruiterDashboard);
 

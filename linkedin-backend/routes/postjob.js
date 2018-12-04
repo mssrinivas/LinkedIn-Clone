@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var {JobPostings} = require('../models/JobPostings');
 
 router.post('/postjob', function(req, res) {
@@ -20,8 +21,10 @@ router.post('/postjob', function(req, res) {
         industryType : req.body.Industry,
         experience : req.body.Experience,
         degree: req.body.Degree,
-        budget : 120,
-        recruiterName : "Srinivas"
+        budget : req.body.Budget,
+        recruiterName : req.body.RecruiterName,
+        State : req.body.state,
+        ZipCode : req.body.ZipCode
         // CompanyName : "Yahoo",
         // Email : "srinivas@yahoo.com",
         // CompanyLogo : "https://img.icons8.com/color/200/5e6d77/yahoo.png",

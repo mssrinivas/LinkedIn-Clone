@@ -38,29 +38,29 @@ class Login extends Component {
                   <br></br>
                     <tr><label className="login-label"> First Name </label><br></br></tr>
     						      <tr>
-    						      		<td><input type="text" className="txt-field-lg"
+    						      		<td><input type="text" className="txt-field-lg" required
                           onChange={(userinput) => {
                               this.userDetails.first_name=userinput.target.value}}/>
                           </td>
     						      </tr>
                       <tr><label className="login-label"> Last Name </label><br></br></tr>
                       <tr>
-                        <td> <input type="text" className="txt-field-lg"
+                        <td> <input type="text" className="txt-field-lg" required
                         onChange={(userinput) => {
                             this.userDetails.last_name=userinput.target.value}}/>
                         </td>
                       </tr>
                       <tr><label className="email-label"> Email</label><br></br></tr>
-    						      <tr> <td><input type="text" className="txt-field-lg"  onChange={(userinput) => {
+    						      <tr> <td><input type="text" className="txt-field-lg"  required onChange={(userinput) => {
                           this.userDetails.email=userinput.target.value}}/>
                       </td> </tr>
                       <tr><label className="pwd-label"> Password (6 or more characters) </label><br></br></tr>
-    						      <tr > <td><input type="password" className="txt-field-lg"
+    						      <tr > <td><input type="password" required className="txt-field-lg"
                       onChange={(userinput) => {
                           this.userDetails.password=userinput.target.value}}/>
                       </td></tr>
 											<tr><label className="login-label"> User Type</label><br></br></tr>
-											<select className="txt-field-lg"
+											<select className="txt-field-lg" required
                             onChange={(event) => { this.userDetails.recruiter_value = event.target.value}} name="UserType">
                                   <option value=""></option><option value="Applicant">Applicant</option><option value="Recruiter">Recruiter</option>
                             </select>

@@ -12,7 +12,8 @@ import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import { Container, Button, Row, Col, Step, Input } from 'mdbreact';
 import {connect} from 'react-redux';
-
+//import validatePinCode from '../../util/validation.js';
+import * as VALIDATION from './../../util/validation';
 var swal = require('sweetalert')
 class JobPostings extends Component {
    constructor(props) {
@@ -29,18 +30,20 @@ class JobPostings extends Component {
         Info : "",
         Skills : [],
         Experience : 0,
+        ZipCode: null,
         Degree : [],
         Budget : 15,
         EmploymentType : "",
         RecruiterName : "Srinivas",
         PostingDate : "",
-        EasyApply : 0,
+        EasyApply : null,
         RedirecttoDescription: true,
         RedirecttoQualification: false,
         RedirecttoBudget : false,
         Redirection_Value : false,
         formActivePanel3: 1,
         formActivePanel3Changed: false,
+        State: "",
            steps: [{
         title: 'Step One',
         href: 'http://example1.com',
@@ -160,6 +163,12 @@ SliderChangeBudget = (value) => {
   }
 
   onSubmitClicked = () => {
+    if(this.state.EasyApply === '1')
+    {
+        this.setState({EasyApply : 1})
+    }
+    if(VALIDATION.validatePinCode(this.state.ZipCode) === true)
+    {
     var url = 'http://localhost:3001/postjob'
     fetch(url, {
       method: 'post',
@@ -179,7 +188,9 @@ SliderChangeBudget = (value) => {
         EmploymentType : this.state.EmploymentType,
         RecruiterName: this.props.currentUserDetails.first_name+" "+this.props.currentUserDetails.last_name,
         EasyApply: this.state.EasyApply,
-        Industry : this.state.Industry
+        Industry : this.state.Industry,
+        State: this.state.State,
+        ZipCode: this.state.ZipCode
        })
     })
     .then(response => response.json())
@@ -193,10 +204,10 @@ SliderChangeBudget = (value) => {
       {
         swal("Job couldn't be posted due to errors!"," ", "failure");
       }
+    
   })
-
-  
-  }
+    }
+  } 
 
   render ()
   {
@@ -216,6 +227,8 @@ SliderChangeBudget = (value) => {
         Info = {this.state.Info}
         Change = {this.inputHandler}
         EasyApply = {this.state.EasyApply}
+        State = {this.state.State}
+        ZipCode = {this.state.ZipCode}
         />)
     }
 

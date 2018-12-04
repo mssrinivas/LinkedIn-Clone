@@ -4,8 +4,8 @@ var {UserActivity} = require('../models/UserActivity');
 var {Applications} = require('../models/application.js');
 
   router.get('/getuserclicks', function(req, res) {
-    console.log("Received Body ", req.body)
-    UserActivity.find({recruiterName:"Srinivas"}).then((app)=> { 
+    console.log("Received Body ", req.query)
+    UserActivity.find({recruiterName:req.query.mail}).then((app)=> { 
      //   console.log("\n Number of Clicks for" + app + "\n");
       //  console.log(app.length);
         res.writeHead(200,{
@@ -23,8 +23,8 @@ var {Applications} = require('../models/application.js');
   });
 
   router.get('/savedjobs', function(req, res) {
-    console.log("Received Body ", req.body)
-    Applications.find({Saved:"false"}).then((app)=> { 
+    console.log("Received Body ", req.query)
+    Applications.find({Saved:"true",RecruiterEmail:req.query.mail}).then((app)=> { 
        // console.log("\nJobs are " + app + "\n");
        // console.log(app.length);
         res.writeHead(200,{
@@ -43,8 +43,8 @@ var {Applications} = require('../models/application.js');
 
 
   router.get('/halffilled', function(req, res) {
-    console.log("Received Body ", req.body)
-    Applications.find({recruiterName:"Srinivas"}).then((app)=> { 
+    console.log("Received Body ", req.query)
+    Applications.find({recruiterName:req.query.mail}).then((app)=> { 
         console.log("\n Number of Clicks for" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{
@@ -62,8 +62,8 @@ var {Applications} = require('../models/application.js');
   });
 
   router.get('/fullfilled', function(req, res) {
-    console.log("Received Body ", req.body)
-    Applications.find({Applied:"true"}).then((app)=> { 
+    console.log("Received Body ", req.query)
+    Applications.find({Applied:"true",RecruiterEmail:req.query.mail}).then((app)=> { 
         console.log("\n Fully applied jobs" + app + "\n");
         console.log(app.length);
         res.writeHead(200,{

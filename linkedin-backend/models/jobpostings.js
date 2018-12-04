@@ -6,6 +6,7 @@ var JobPostings = mongoose.model('JobPostings',{
     JobTitle :{type : String, required: true},
     jobFunction :{type : String, required: true},
     JobLocation :{type : String, required: true},
+    State:{type: String, required: false},
     numberofApplicants :{type : Number, required: false}, //number of applicants applied for this job
     seniorityLevel : {type : String, required: true},
     description :{type : String, required: true}, 
@@ -16,7 +17,8 @@ var JobPostings = mongoose.model('JobPostings',{
     degree: {type : String, required: true}, 
     budget : {type : Number, required: true}, 
     easyApply : {type : Boolean, default : false, required : true},
-    recruiterName : {type : String, required: true}
+    recruiterName : {type : String, required: true},
+    ZipCode : {type : Number, required: true}
 });
 
 module.exports = {JobPostings};
