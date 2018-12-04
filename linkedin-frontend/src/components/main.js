@@ -30,7 +30,7 @@ import Resumes from "./JobApply/resumes.js";
 import Messages from './messages/messages.js';
 import RecruiterDashboard from './RecruiterDashboard/RecruiterDashboard';
 import RecruiterJobsDashboard from './RecruiterJobsDashboard/RecruiterJobsDashboard';
-import PieGraph from './graph/pie.js';
+//import PieGraph from './graph/pie.js';
 
 class Main extends Component {
     render(){
