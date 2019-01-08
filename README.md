@@ -1,19 +1,31 @@
-## SJSU  Fall-18  CMPE-273 Group Project-LinkedIn
-## Team-4
-### Members:
-1.Arihant Sai Paruchuru
-2.Neha Sharma
-3.Sayali Patil
-4.Shivam Waghela
-5.Surabhi Sinha
-6.Srinivas Mudambi
+## Professional Networking 
 
- [Linkedin  Website](http://linkedin-1584315674.us-west-1.elb.amazonaws.com:3000/)
+### LinkedIn-Clone
 
- [Linkedin  Architecture](https://drive.google.com/file/d/1rcryvthERAduQ0VlBHmru4xbn4SKjdyR/view)
+Developed user profile, connections, job listing and application modules using MERN Stack and Kafka. Implemented Redis for data caching, containerized the application services and hosted on AWS. Implemented MongoDB replication and tested the performance on JMeter and Mocha. Developed by a team of 6 (please check contributors for more details).
 
- [Linkedin  User Schema](https://drive.google.com/file/d/1E3JRfeYBttz-61_3ns1ekFrpsTL_QpbL/view?usp=sharing)
 
+## Application Link
+
+<have_to_update>
+
+## Application Architecture Diagram
+ 
+![Architecture](Architecture.png)
+
+## Database Schema
+ 
+![Database_Schema](Database_Schema.png)
+
+ 
+## Performace Trace ( JMeter Testing )
+
+![Performace](Performace_1.png)
+
+
+![Performance](Performance_2.png)
+
+ 
 #### Features Provided
 
  - User Login and Sign Up
@@ -28,7 +40,7 @@
  - Post Jobs
  - Specific To Recruiter 
  - Send / Receive Messages
- -  View Half Filled Forms (specific to recruiter)
+ - View Half Filled Forms (specific to recruiter)
  - Number of views of your post (specific to recruiter)
  - View Clicks on your post (specific to recruiter)
  - View Number of Applicants of your post (specific to recruiter)
@@ -45,21 +57,76 @@
  - Plotly
  - S3 Buckets
  - Json Web Token
+ 
 
 #### What is Kafka?
-Kafka is a distributed messaging queue which is an imperative programming structure which is based event-driven programming. 
+Kafka is a distributed messaging queue which is an imperative programming structure which is based event-driven programming.
+
 ###### Kafka Features
 - Publish and subscribe messaging queue.
 - Reacts to events in a real time
 - High tolerance with highly available .
+
 ###### Kafka Semantics
 - Atleast Once
 - Atmost Once
 - Only once (most difficult one)
 
-
 #### Scaling Techniques
-- Mongo DB Cluster
+- Mongo DB Cluster with Replica sets
 - Auto Scaling  groups with Elastic Load Balancing 
 - AWS RDS Cluster
 
+## Installation Requirements
+
+For development, you will only need Node.js installed on your environement.
+And please use the appropriate [Editorconfig](http://editorconfig.org/) plugin for your Editor (not mandatory).
+
+### Node
+
+[Node](http://nodejs.org/) is really easy to install & now include [NPM](https://npmjs.org/).
+You should be able to run the following command after the installation procedure
+below.
+
+    $ node --version
+    v0.10.24
+
+    $ npm --version
+    1.3.21
+
+#### Node installation on Linux
+
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:chris-lea/node.js
+    sudo apt-get update
+    sudo apt-get install nodejs
+
+#### Node installation on Windows
+
+Just go on [official Node.js website](http://nodejs.org/) & grab the installer.
+Also, be sure to have `git` available in your PATH, `npm` might need it.
+
+---
+
+## Front End 
+## Install
+
+    $ git clone https://github.com/mssrinivas/LinkedIn-Clone.git
+    $ cd LinkedIn-Clone/linkedin-frontend
+    $ npm install
+
+## Start & watch
+
+    $ npm start
+
+    
+## Back End 
+## Install
+
+    $ git clone https://github.com/mssrinivas/LinkedIn-Clone.git
+    $ cd LinkedIn-Clone/linkedin-backend/
+    $ npm install
+
+## Start & watch
+
+    $ npm start
