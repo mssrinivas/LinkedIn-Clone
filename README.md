@@ -2,7 +2,11 @@
 
 ### LinkedIn-Clone
 
-Developed user profile, connections, job listing and application modules using MERN Stack and Kafka. Implemented Redis for data caching, containerized the application services and hosted on AWS. Implemented MongoDB replication and tested the performance on JMeter and Mocha. Developed by a team of 6 (please check contributors for more details).
+ - Developed user profile, connections, job listing and application modules using <b>MERN Stack</b> and <b>Kafka</b>. 
+ - Implemented Redis for data caching, containerized the application services and hosted on AWS. 
+ - Implemented MongoDB replication and tested the performance on JMeter and Mocha. 
+
+Developed by a team of 6 (please check contributors for more details).
 
 
 ## Application Link
@@ -11,19 +15,19 @@ Developed user profile, connections, job listing and application modules using M
 
 ## Application Architecture Diagram
  
-![Architecture](Architecture.png)
+![Architecture](Architecture/Architecture.png)
 
 ## Database Schema
  
-![Database_Schema](Database_Schema.png)
+![Database_Schema](Architecture/Database_Schema.png)
 
  
 ## Performace Trace ( JMeter Testing )
 
-![Performace](Performace_1.png)
+![Performance_1](Architecture/Performance_1.png)
 
 
-![Performance](Performance_2.png)
+![Performance_2](Architecture/Performance_2.png)
 
  
 #### Features Provided
