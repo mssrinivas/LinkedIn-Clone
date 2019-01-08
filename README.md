@@ -15,7 +15,7 @@ Developed by a team of 6 (please check contributors for more details).
 
 ## Application Architecture Diagram
  
-![Architecture](Architecture/Architecture.png)
+![Architecture](Architecture/LinkedIn_Architecture.png)
 
 ## Database Schema
  
