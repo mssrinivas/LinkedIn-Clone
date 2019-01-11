@@ -11,7 +11,7 @@ Developed by a team of 6 (please check contributors for more details).
 
 ## Application Link
 
-<have_to_update>
+https://cmpe-273-linkedin.herokuapp.com
 
 ## Application Architecture Diagram
  
